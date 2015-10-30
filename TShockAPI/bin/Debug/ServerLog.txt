@@ -1,0 +1,4 @@
+[10/28/15 23:55:58] [Server API] Verbose: TerrariaApi - Server v1.22.0.0 started.
+[10/28/15 23:55:58] [Server API] Verbose: 	Command line: "C:\Users\i\Downloads\TShock-4.3.11\TShockAPI\bin\Debug\TerrariaServer.exe" 
+[10/28/15 23:55:58] [Server API] Verbose: 	OS: Microsoft Windows NT 6.2.9200.0 (64bit: True)
+[10/28/15 23:55:58] [Server API] Verbose: 	Mono: False
