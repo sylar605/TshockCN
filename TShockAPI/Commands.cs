@@ -217,58 +217,58 @@ namespace TShockAPI
 			{
 				HelpText = "用于验证您已经正确设置了 TShock。"
 			});
-			add(new Command(Permissions.user, ManageUsers, "user")
+			add(new Command(Permissions.user, ManageUsers, "账户", "user" )
 			{
 				DoLog = false,
-				HelpText = "Manages user accounts."
+				HelpText = "管理玩家账户"
 			});
 
 			#region Account Commands
-			add(new Command(Permissions.canlogin, AttemptLogin, "login")
+			add(new Command(Permissions.canlogin, AttemptLogin, "登录", "login")
 			{
 				AllowServer = false,
 				DoLog = false,
-				HelpText = "Logs you into an account."
+				HelpText = "登录您的账号"
 			});
-			add(new Command(Permissions.canlogout, Logout, "logout")
+			add(new Command(Permissions.canlogout, Logout, "登出", "logout")
 			{
 				AllowServer = false,
 				DoLog = false,
-				HelpText = "Logs you out of your current account."
+				HelpText = "退出当前账户"
 			});
 			add(new Command(Permissions.canchangepassword, PasswordUser, "改密码", "password")
 			{
 				AllowServer = false,
 				DoLog = false,
-				HelpText = "Changes your account's password."
+				HelpText = "更改您的账户密码"
 			});
-			add(new Command(Permissions.canregister, RegisterUser, "register")
+			add(new Command(Permissions.canregister, RegisterUser, "注册", "register")
 			{
 				AllowServer = false,
 				DoLog = false,
-				HelpText = "Registers you an account."
+				HelpText = "注册账户"
 			});
 			#endregion
 			#region Admin Commands
-			add(new Command(Permissions.ban, Ban, "ban")
+			add(new Command(Permissions.ban, Ban, "封禁", "ban")
 			{
-				HelpText = "Manages player bans."
+				HelpText = "管理和封禁账户"
 			});
-			add(new Command(Permissions.broadcast, Broadcast, "broadcast", "bc", "say")
+			add(new Command(Permissions.broadcast, Broadcast, "广播", "说", "broadcast", "bc", "say")
 			{
-				HelpText = "Broadcasts a message to everyone on the server."
+				HelpText = "广播一条消息"
 			});
 			add(new Command(Permissions.logs, DisplayLogs, "displaylogs")
 			{
-				HelpText = "Toggles whether you receive server logs."
+				HelpText = "接收服务器log"
 			});
-			add(new Command(Permissions.managegroup, Group, "group")
+			add(new Command(Permissions.managegroup, Group, "组", "用户组", "group")
 			{
-				HelpText = "Manages groups."
+				HelpText = "管理用户组"
 			});
-			add(new Command(Permissions.manageitem, ItemBan, "itemban")
+			add(new Command(Permissions.manageitem, ItemBan, "封禁物品", "itemban")
 			{
-				HelpText = "Manages item bans."
+				HelpText = "管理违禁品"
 			});
             add(new Command(Permissions.manageprojectile, ProjectileBan, "projban")
             {
