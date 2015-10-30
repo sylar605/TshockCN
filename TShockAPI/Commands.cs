@@ -211,7 +211,7 @@ namespace TShockAPI
 			add(new Command(AuthToken, "auth")
 			{
 				AllowServer = false,
-				HelpText = "Used to authenticate as superadmin when first setting up TShock."
+				HelpText = "第一次设定Tshock的时候用来认证 superadmin 的。"
 			});
 			add(new Command(Permissions.authverify, AuthVerify, "auth-verify")
 			{
