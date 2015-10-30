@@ -1,4 +1,3 @@
-# TshockCN
-TshockCN Tshock汉化
-source code from https://github.com/NyxStudios/TShock
-just a chinese version
+TshockCN Tshock汉化<br>
+source code from https://github.com/NyxStudios/TShock<br>
+just a chinese version<br>
