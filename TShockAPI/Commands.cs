@@ -215,7 +215,7 @@ namespace TShockAPI
 			});
 			add(new Command(Permissions.authverify, AuthVerify, "auth-verify")
 			{
-				HelpText = "Used to verify that you have correctly set up TShock."
+				HelpText = "用于验证您已经正确设置了 TShock。"
 			});
 			add(new Command(Permissions.user, ManageUsers, "user")
 			{
