@@ -736,8 +736,8 @@ namespace TShockAPI
 				var r = new Random((int)DateTime.Now.ToBinary());
 				AuthToken = r.Next(100000, 10000000);
 				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.WriteLine("TShock 提醒:进入游戏输入{0}auth {1}认证成管理员", Commands.Specifier, AuthToken);
-				Console.WriteLine("输入({0}auth-verify 关闭以上提示)", Commands.Specifier);
+				Console.WriteLine("TShock提示:进入游戏输入{0}auth {1}认证成管理员", Commands.Specifier, AuthToken);
+				Console.WriteLine("输入{0}auth-verify 关闭认证系统", Commands.Specifier);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				FileTools.CreateFile(Path.Combine(SavePath, "authcode.txt"));
 				using (var tw = new StreamWriter(Path.Combine(SavePath, "authcode.txt")))
@@ -753,9 +753,9 @@ namespace TShockAPI
 				}
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.WriteLine(
-                    "TShock 提醒: authcode.txt is still present, and the AuthToken located in that file will be used.");
+                    "TShock提示:认证代码已生成到authcode.txt内 请更改或者通关以下方法认证成管理员后关闭认证系统");
 				Console.WriteLine("进入游戏输入{0}auth {1}认证成管理员", Commands.Specifier, AuthToken);
-				Console.WriteLine("输入({0}auth-verify 关闭以上提示)", Commands.Specifier);
+				Console.WriteLine("输入{0}auth-verify 关闭认证系统)", Commands.Specifier);
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 			else

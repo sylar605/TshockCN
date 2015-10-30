@@ -1,4 +1,4 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -5151,20 +5151,20 @@ namespace Terraria
 							'\t',
 							'\t', Main.WorldList[j].Name
 						};
-						Console.WriteLine("{0,-4}{1,-22}{2}, {3}, {4,-6}{5}",
+						Console.WriteLine("{0,-4}{1,-22}{2} {3} {4,-6}{5}",
 							j + 1,
 							Main.WorldList[j].Name,
-							Main.WorldList[j].IsHardMode ? "hard" : "norm",
-							Main.WorldList[j].HasCrimson ? "crim" : "corr",
-							Main.WorldList[j].IsExpertMode ? "exp" : "norm",
-							String.Format("Last used: {0}",
+							Main.WorldList[j].IsHardMode ? "肉前" : "肉后",
+							Main.WorldList[j].HasCrimson ? "血地" : "腐地",
+							Main.WorldList[j].IsExpertMode ? "专家" : "普通",
+							String.Format("最后使用时间: {0}",
 								File.GetLastWriteTime(Main.WorldList[j].Path).ToString("g")));
 					}
 					Console.WriteLine();
-					Console.WriteLine("n           \tNew World");
-					Console.WriteLine("d   <number>\tDelete World");
+					Console.WriteLine("n           \t创建新地图");
+					Console.WriteLine("d   <序号>\t删除地图");
 					Console.WriteLine("");
-					Console.Write("Choose World: ");
+					Console.Write("选择地图: ");
 					string str2 = Console.ReadLine() ?? "";
 					try
 					{
@@ -5187,7 +5187,7 @@ namespace Terraria
 							{
 								Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 								Console.WriteLine("");
-								Console.WriteLine(string.Concat("Really delete ", Main.WorldList[num].Name, "?"));
+								Console.WriteLine(string.Concat("是否要删除 (y是 n否)", Main.WorldList[num].Name, "?"));
 								Console.Write("(y/n): ");
 								if (Console.ReadLine().ToLower() == "y")
 								{
@@ -5223,11 +5223,11 @@ namespace Terraria
 						{
 							Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 							Console.WriteLine("");
-							Console.WriteLine(string.Concat("1", '\t', "Small"));
-							Console.WriteLine(string.Concat("2", '\t', "Medium"));
-							Console.WriteLine(string.Concat("3", '\t', "Large"));
+							Console.WriteLine(string.Concat("1", '\t', "小型"));
+							Console.WriteLine(string.Concat("2", '\t', "中型"));
+							Console.WriteLine(string.Concat("3", '\t', "大型"));
 							Console.WriteLine("");
-							Console.Write("Choose size: ");
+							Console.Write("选择地图大小: ");
 							str = Console.ReadLine();
 							try
 							{
@@ -5277,10 +5277,10 @@ namespace Terraria
 						{
 							Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 							Console.WriteLine("");
-							Console.WriteLine(string.Concat("1", '\t', "Normal"));
-							Console.WriteLine(string.Concat("2", '\t', "Expert"));
+							Console.WriteLine(string.Concat("1", '\t', "普通"));
+							Console.WriteLine(string.Concat("2", '\t', "专家"));
 							Console.WriteLine("");
-							Console.Write("Choose difficulty: ");
+							Console.Write("选择困难度: ");
 							str = Console.ReadLine();
 							try
 							{
@@ -5322,7 +5322,7 @@ namespace Terraria
 						{
 							Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 							Console.WriteLine("");
-							Console.Write("Enter world name: ");
+							Console.Write("输入地图名(禁止中文): ");
 							Main.newWorldName = Console.ReadLine();
 							if (Main.newWorldName != "" && Main.newWorldName != " " && Main.newWorldName != null)
 							{
@@ -5403,7 +5403,7 @@ namespace Terraria
 								{
 									Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 									Console.WriteLine("");
-									Console.Write("Max players (press enter for {0}): ", Main.maxNetPlayers);
+									Console.Write("最大玩家数量 (默认{0}): ", Main.maxNetPlayers);
 									string str3 = Console.ReadLine();
 									try
 									{
@@ -5450,7 +5450,7 @@ namespace Terraria
 									}
 									Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 									Console.WriteLine("");
-									Console.Write("Server port (press enter for 7777): ");
+									Console.Write("端口 (默认 7777): ");
 									string str4 = Console.ReadLine();
 									try
 									{
@@ -5549,10 +5549,10 @@ namespace Terraria
 
 #endif
 			}
-			Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber));
+			Console.WriteLine(string.Concat("Terraria服务器 ", Main.versionNumber));
 			Console.WriteLine("");
-			Console.WriteLine(string.Concat("Listening on port ", Netplay.ListenPort));
-			Console.WriteLine("Type 'help' for a list of commands.");
+			Console.WriteLine(string.Concat("正在监听端口:", Netplay.ListenPort));
+			Console.WriteLine("输入/help /帮助 查看更多指令和帮助");
 			Console.WriteLine("");
 			Console.Title = string.Concat("Terraria Server: ", Main.worldName);
 
