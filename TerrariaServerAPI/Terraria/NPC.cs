@@ -1,4 +1,4 @@
-using System;
+锘縰sing System;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -3645,7 +3645,7 @@ namespace Terraria
 				this.townNPC = true;
 				this.friendly = true;
 				this.name = "Merchant";
-                this.cname = "商人";
+                this.cname = "鍟嗕汉";
                 this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -3661,7 +3661,7 @@ namespace Terraria
 				this.townNPC = true;
 				this.friendly = true;
 				this.name = "Nurse";
-                this.cname = "护士";
+                this.cname = "鎶ゅ＋";
                 this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -3722,7 +3722,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-				this.name = "向导";
+				this.cname = "鍚戝";
                 this.name = "Guide";
                 this.width = 18;
 				this.height = 40;
@@ -9057,7 +9057,7 @@ namespace Terraria
 				this.townNPC = true;
 				this.friendly = true;
 				this.name = "Travelling Merchant";
-                this.cname = "游商";
+                this.cname = "娓稿晢";
                 this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -9855,7 +9855,7 @@ namespace Terraria
 			{
 				this.friendly = true;
 				this.name = "Skeleton Merchant";
-                this.cname = "骷髅商人";
+                this.cname = "楠烽珔鍟嗕汉";
                 this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
