@@ -7,7 +7,9 @@ namespace Terraria
 	{
 		public string name = "";
 
-		public int whoAmI;
+        public string cname = "";
+
+        public int whoAmI;
 
 		public bool active;
 
