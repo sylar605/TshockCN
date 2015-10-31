@@ -1889,8 +1889,10 @@ namespace TShockAPI
 			{
 				if (args.Parameters.Count < 1)
 				{
-					args.Player.SendErrorMessage("格式错误。 格式: {0}invade <invasion type> [wave]", Specifier);
-					return;
+					args.Player.SendErrorMessage("指令错误 使用/invade 入侵名 入侵初始波数开启", Specifier);
+                    args.Player.SendErrorMessage("例如 /invade 霜月 1 代表从第一波开始召唤霜月", Specifier);
+                    args.Player.SendErrorMessage("入侵名如下 海盗 哥布林 雪人 南瓜月 霜月 火星人", Specifier);
+                    return;
 				}
 
 				int wave = 1;
@@ -1898,24 +1900,28 @@ namespace TShockAPI
 				{
 					case "goblin":
 					case "goblins":
-						TSPlayer.All.SendInfoMessage("{0} has started a goblin army invasion.", args.Player.Name);
+                    case "哥布林":
+						TSPlayer.All.SendInfoMessage("{0}召唤了哥布林入侵", args.Player.Name);
 						TShock.StartInvasion(1);
 						break;
 
 					case "snowman":
 					case "snowmen":
-						TSPlayer.All.SendInfoMessage("{0} has started a snow legion invasion.", args.Player.Name);
+                    case "雪人":
+						TSPlayer.All.SendInfoMessage("{0}召唤了雪人军团入侵", args.Player.Name);
 						TShock.StartInvasion(2);
 						break;
 
 					case "pirate":
 					case "pirates":
-						TSPlayer.All.SendInfoMessage("{0} has started a pirate invasion.", args.Player.Name);
+                    case "海盗":
+						TSPlayer.All.SendInfoMessage("{0}召唤了海盗入侵", args.Player.Name);
 						TShock.StartInvasion(3);
 						break;
 
 					case "pumpkin":
 					case "pumpkinmoon":
+                    case "南瓜月":
 						if (args.Parameters.Count > 1)
 						{
 							if (!int.TryParse(args.Parameters[1], out wave) || wave <= 0)
@@ -1929,7 +1935,7 @@ namespace TShockAPI
 						Main.bloodMoon = false;
 						NPC.waveKills = 0f;
 						NPC.waveCount = wave;
-						TSPlayer.All.SendInfoMessage("{0} started the pumpkin moon at wave {1}!", args.Player.Name, wave);
+						TSPlayer.All.SendInfoMessage("{0}从第{1}波开始召唤了南瓜月!", args.Player.Name, wave);
 						break;
 
 					case "frost":
@@ -1947,19 +1953,20 @@ namespace TShockAPI
 						Main.bloodMoon = false;
 						NPC.waveKills = 0f;
 						NPC.waveCount = wave;
-						TSPlayer.All.SendInfoMessage("{0} started the frost moon at wave {1}!", args.Player.Name, wave);
+						TSPlayer.All.SendInfoMessage("{0}从第{1}波开始召唤了霜月!", args.Player.Name, wave);
 						break;
 
 					case "martian":
 					case "martians":
-						TSPlayer.All.SendInfoMessage("{0} has started a martian invasion.", args.Player.Name);
+                    case "火星人":
+						TSPlayer.All.SendInfoMessage("{0}从第{1}波开始召唤了火星人入侵!", args.Player.Name);
 						TShock.StartInvasion(4);
 						break;
 				}
 			}
 			else
 			{
-				TSPlayer.All.SendInfoMessage("{0} has ended the invasion.", args.Player.Name);
+				TSPlayer.All.SendInfoMessage("{0}结束了召唤", args.Player.Name);
 				Main.invasionSize = 0;
 			}
 		}
