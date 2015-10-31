@@ -5154,7 +5154,7 @@ namespace Terraria
 						Console.WriteLine("{0,-4}{1,-22}{2} {3} {4,-6}{5}",
 							j + 1,
 							Main.WorldList[j].Name,
-							Main.WorldList[j].IsHardMode ? "肉前" : "肉后",
+							Main.WorldList[j].IsHardMode ? "肉后" : "肉前",
 							Main.WorldList[j].HasCrimson ? "血地" : "腐地",
 							Main.WorldList[j].IsExpertMode ? "专家" : "普通",
 							String.Format("最后使用时间: {0}",
