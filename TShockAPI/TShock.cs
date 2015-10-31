@@ -753,7 +753,7 @@ namespace TShockAPI
 				}
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.WriteLine(
-                    "TShock提示:认证代码已生成到authcode.txt内 请更改或者通关以下方法认证成管理员后关闭认证系统");
+                    "TShock提示:认证代码已生成到authcode.txt内 请更改或者通过以下方法认证成管理员后关闭认证系统");
 				Console.WriteLine("进入游戏输入{0}auth {1}认证成管理员", Commands.Specifier, AuthToken);
 				Console.WriteLine("输入{0}auth-verify 关闭认证系统)", Commands.Specifier);
 				Console.ForegroundColor = ConsoleColor.Gray;
