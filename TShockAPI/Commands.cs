@@ -422,7 +422,7 @@ namespace TShockAPI
 				AllowServer = false,
 				HelpText = "Sends you to the world's spawn point."
 			});
-			add(new Command(Permissions.tp, TP, "传送", "tp")
+			add(new Command(Permissions.tp, TP, "传", "tp")
 			{
 				AllowServer = false,
 				HelpText = "Teleports a player to another player."
@@ -479,7 +479,7 @@ namespace TShockAPI
 			{
 				HelpText = "Sets an eclipse."
 			});
-			add(new Command(Permissions.halloween, ForceHalloween, "完胜", "forcehalloween")
+			add(new Command(Permissions.halloween, ForceHalloween, "万圣节", "forcehalloween")
 			{
 				HelpText = "Toggles halloween mode (goodie bags, pumpkins, etc)."
 			});
@@ -1836,11 +1836,11 @@ namespace TShockAPI
 			WorldGen.dropMeteor();
 			if (args.Silent)
 			{
-				args.Player.SendInfoMessage("A meteor has been triggered.");
+				args.Player.SendInfoMessage("一颗陨石坠落了");
 			}
 			else
 			{
-				TSPlayer.All.SendInfoMessage("{0} triggered a meteor.", args.Player.Name);
+				TSPlayer.All.SendInfoMessage("{0}引来了一颗陨石", args.Player.Name);
 			}
 		}
 
@@ -1849,11 +1849,11 @@ namespace TShockAPI
 			TSPlayer.Server.SetFullMoon();
 			if (args.Silent)
 			{
-				args.Player.SendInfoMessage("Started a full moon.");
+				args.Player.SendInfoMessage("满月降临");
 			}
 			else
 			{
-				TSPlayer.All.SendInfoMessage("{0} started a full moon.", args.Player.Name);
+				TSPlayer.All.SendInfoMessage("{0}开启了满月", args.Player.Name);
 			}
 		}
 
@@ -1862,11 +1862,11 @@ namespace TShockAPI
 			TSPlayer.Server.SetBloodMoon(!Main.bloodMoon);
 			if (args.Silent)
 			{
-				args.Player.SendInfoMessage("{0}ed a blood moon.", Main.bloodMoon ? "start" : "stopp");
+				args.Player.SendInfoMessage("血色之月已{0}", Main.bloodMoon ? "升起" : "停止");
 			}
 			else
 			{
-				TSPlayer.All.SendInfoMessage("{0} {1}ed a blood moon.", args.Player.Name, Main.bloodMoon ? "start" : "stopp");
+				TSPlayer.All.SendInfoMessage("{0}{1}了血色之月", args.Player.Name, Main.bloodMoon ? "召唤" : "结束");
 			}
 		}
 
@@ -1875,11 +1875,11 @@ namespace TShockAPI
 			TSPlayer.Server.SetEclipse(!Main.eclipse);
 			if (args.Silent)
 			{
-				args.Player.SendInfoMessage("{0}ed an eclipse.", Main.eclipse ? "start" : "stopp");
+				args.Player.SendInfoMessage("日蚀已{0}", Main.eclipse ? "开始" : "结束");
 			}
 			else
 			{
-				TSPlayer.All.SendInfoMessage("{0} {1}ed an eclipse.", args.Player.Name, Main.eclipse ? "start" : "stopp");
+				TSPlayer.All.SendInfoMessage("{0} {1}了日蚀", args.Player.Name, Main.eclipse ? "召唤" : "结束");
 			}
 		}
 
@@ -1889,8 +1889,8 @@ namespace TShockAPI
 			{
 				if (args.Parameters.Count < 1)
 				{
-					args.Player.SendErrorMessage("指令错误 使用/invade 入侵名 入侵初始波数开启", Specifier);
-                    args.Player.SendErrorMessage("例如 /invade 霜月 1 代表从第一波开始召唤霜月", Specifier);
+					args.Player.SendErrorMessage("指令错误 使用{0}invade 入侵名 入侵初始波数开启", Specifier);
+                    args.Player.SendErrorMessage("例如 {0}invade 霜月 1 代表从第一波开始召唤霜月", Specifier);
                     args.Player.SendErrorMessage("入侵名如下 海盗 哥布林 雪人 南瓜月 霜月 火星人", Specifier);
                     return;
 				}
@@ -1926,7 +1926,7 @@ namespace TShockAPI
 						{
 							if (!int.TryParse(args.Parameters[1], out wave) || wave <= 0)
 							{
-								args.Player.SendErrorMessage("Invalid wave!");
+								args.Player.SendErrorMessage("错误的波数");
 								break;
 							}
 						}
@@ -1940,11 +1940,12 @@ namespace TShockAPI
 
 					case "frost":
 					case "frostmoon":
+                    case "霜月":
 						if (args.Parameters.Count > 1)
 						{
 							if (!int.TryParse(args.Parameters[1], out wave) || wave <= 0)
 							{
-								args.Player.SendErrorMessage("Invalid wave!");
+								args.Player.SendErrorMessage("错误的波数");
 								return;
 							}
 						}
@@ -1959,7 +1960,7 @@ namespace TShockAPI
 					case "martian":
 					case "martians":
                     case "火星人":
-						TSPlayer.All.SendInfoMessage("{0}从第{1}波开始召唤了火星人入侵!", args.Player.Name);
+						TSPlayer.All.SendInfoMessage("{0}召唤了火星人入侵!", args.Player.Name);
 						TShock.StartInvasion(4);
 						break;
 				}
@@ -2001,7 +2002,7 @@ namespace TShockAPI
 		{
 			Main.expertMode = !Main.expertMode;
 			TSPlayer.All.SendData(PacketTypes.WorldInfo);
-			args.Player.SendSuccessMessage("Expert mode is now {0}.", Main.expertMode ? "on" : "off");
+			args.Player.SendSuccessMessage("专家模式已{0}.", Main.expertMode ? "开启" : "关闭");
 		}
 
 		private static void Hardmode(CommandArgs args)
@@ -2010,16 +2011,16 @@ namespace TShockAPI
 			{
 				Main.hardMode = false;
 				TSPlayer.All.SendData(PacketTypes.WorldInfo);
-				args.Player.SendSuccessMessage("Hardmode is now off.");
+				args.Player.SendSuccessMessage("恢复成肉山前");
 			}
 			else if (!TShock.Config.DisableHardmode)
 			{
 				WorldGen.StartHardmode();
-				args.Player.SendSuccessMessage("Hardmode is now on.");
+				args.Player.SendSuccessMessage("强制肉后开启");
 			}
 			else
 			{
-				args.Player.SendErrorMessage("Hardmode is disabled via config.");
+				args.Player.SendErrorMessage("肉山状态已被配置文件锁定");
 			}
 		}
 
@@ -2027,14 +2028,17 @@ namespace TShockAPI
 		{
 			if (args.Parameters.Count < 1 || args.Parameters.Count > 2)
 			{
-				args.Player.SendErrorMessage("格式错误。 格式: {0}spawnboss <boss type> [amount]", Specifier);
-				return;
+				args.Player.SendErrorMessage("指令错误 使用{0}spawnboss BOSS名 数量 来召唤BOSS", Specifier);
+                args.Player.SendErrorMessage("例如{0}spawnboss 克鲁苏之脑 1 表示召唤了1只克鲁苏之脑", Specifier);
+                args.Player.SendErrorMessage("BOSS名如下 克鲁苏之脑 机械毁灭者 猪鲨公爵 世界吞噬者 克鲁苏之眼 石头人 史莱姆国王", Specifier);
+                args.Player.SendErrorMessage("世纪之花 机械骷髅王 蜂后 骷髅王 魔眼双子 肉山大魔墙 月之领主", Specifier);
+                return;
 			}
 
 			int amount = 1;
 			if (args.Parameters.Count == 2 && (!int.TryParse(args.Parameters[1], out amount) || amount <= 0))
 			{
-				args.Player.SendErrorMessage("Invalid boss amount!");
+				args.Player.SendErrorMessage("错误的BOSS数量");
 				return;
 			}
 
@@ -2043,6 +2047,7 @@ namespace TShockAPI
 			{
 				case "*":
 				case "all":
+                case "所有":
 					int[] npcIds = { 4, 13, 35, 50, 125, 126, 127, 134, 222, 245, 262, 266, 370, 398 };
 					TSPlayer.Server.SetTime(false, 0.0);
 					foreach (int i in npcIds)
@@ -2050,106 +2055,124 @@ namespace TShockAPI
 						npc.SetDefaults(i);
 						TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
 					}
-					TSPlayer.All.SendSuccessMessage("{0} has spawned all bosses {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了所有BOSS{1}次", args.Player.Name, amount);
 					return;
 				case "brain":
 				case "brain of cthulhu":
+                case "克鲁苏之脑":
 					npc.SetDefaults(266);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned the Brain of Cthulhu {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只克鲁苏之脑", args.Player.Name, amount);
 					return;
 				case "destroyer":
+                case "机械毁灭者":
 					npc.SetDefaults(134);
 					TSPlayer.Server.SetTime(false, 0.0);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned the Destroyer {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只机械毁灭者", args.Player.Name, amount);
 					return;
 				case "duke":
 				case "duke fishron":
 				case "fishron":
+                case "猪鲨公爵":
+                case "猪鲨":
 					npc.SetDefaults(370);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned Duke Fishron {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只猪鲨公爵", args.Player.Name, amount);
 					return;
 				case "eater":
 				case "eater of worlds":
+                case "世界吞噬者":
 					npc.SetDefaults(13);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned the Eater of Worlds {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只世界吞噬者", args.Player.Name, amount);
 					return;
 				case "eye":
 				case "eye of cthulhu":
-					npc.SetDefaults(4);
+                case "克鲁苏之眼":
+                    npc.SetDefaults(4);
 					TSPlayer.Server.SetTime(false, 0.0);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned the Eye of Cthulhu {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只克鲁苏之眼", args.Player.Name, amount);
 					return;
 				case "golem":
+                case "石头人":
 					npc.SetDefaults(245);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned Golem {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只石头人", args.Player.Name, amount);
 					return;
 				case "king":
 				case "king slime":
+                case "史莱姆国王":
+                case "史莱姆王":
 					npc.SetDefaults(50);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned King Slime {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只史莱姆国王", args.Player.Name, amount);
 					return;
 				case "plantera":
+                case "世纪之花":
 					npc.SetDefaults(262);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned Plantera {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只世纪之花", args.Player.Name, amount);
 					return;
 				case "prime":
 				case "skeletron prime":
+                case "机械骷髅王":
 					npc.SetDefaults(127);
 					TSPlayer.Server.SetTime(false, 0.0);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned Skeletron Prime {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只机械骷髅王", args.Player.Name, amount);
 					return;
 				case "queen":
 				case "queen bee":
+                case "蜂后":
 					npc.SetDefaults(222);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned Queen Bee {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只蜂后", args.Player.Name, amount);
 					return;
 				case "skeletron":
+                case "骷髅王":
 					npc.SetDefaults(35);
 					TSPlayer.Server.SetTime(false, 0.0);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned Skeletron {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只骷髅王", args.Player.Name, amount);
 					return;
 				case "twins":
+                case "魔眼双子":
 					TSPlayer.Server.SetTime(false, 0.0);
 					npc.SetDefaults(125);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
 					npc.SetDefaults(126);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned the Twins {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只魔眼双子", args.Player.Name, amount);
 					return;
 				case "wof":
 				case "wall of flesh":
+                case "肉山大魔墙":
+                case "肉山":
 					if (Main.wof >= 0)
 					{
-						args.Player.SendErrorMessage("There is already a Wall of Flesh!");
+						args.Player.SendErrorMessage("肉山大魔墙已存在");
 						return;
 					}
 					if (args.Player.Y / 16f < Main.maxTilesY - 205)
 					{
-						args.Player.SendErrorMessage("You must spawn the Wall of Flesh in hell!");
+						args.Player.SendErrorMessage("你必须在地狱召唤肉山大魔墙");
 						return;
 					}
 					NPC.SpawnWOF(new Vector2(args.Player.X, args.Player.Y));
-					TSPlayer.All.SendSuccessMessage("{0} has spawned the Wall of Flesh.", args.Player.Name);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了肉山大魔墙", args.Player.Name);
 					return;
 				case "moon":
 				case "moon lord":
-					npc.SetDefaults(398);
+                case "月之领主":
+                case "月总":
+                    npc.SetDefaults(398);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} has spawned the Moon Lord {1} time(s).", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只月之领主", args.Player.Name, amount);
 					return;
 				default:
-					args.Player.SendErrorMessage("Invalid boss type!");
+					args.Player.SendErrorMessage("错误的BOSS名");
 					return;
 			}
 		}
@@ -2193,28 +2216,40 @@ namespace TShockAPI
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY, 50, 20);
 					if (args.Silent)
 					{
-						args.Player.SendSuccessMessage("Spawned {0} {1} time(s).", npc.name, amount);
+						args.Player.SendSuccessMessage("召唤了{0}{1}次", npc.name, amount);
 					}
 					else
 					{
-						TSPlayer.All.SendSuccessMessage("{0} has spawned {1} {2} time(s).", args.Player.Name, npc.name, amount);
+						TSPlayer.All.SendSuccessMessage("{0}召唤了{1} {2}次", args.Player.Name, npc.name, amount);
 					}
 				}
-				else if (npc.type == 113)
+                else if (npc.type >= 1 && npc.type < Main.maxNPCTypes && npc.type != 113)//中文NPC名召唤
+                {
+                    TSPlayer.Server.SpawnNPC(npc.type, npc.cname, amount, args.Player.TileX, args.Player.TileY, 50, 20);
+                    if (args.Silent)
+                    {
+                        args.Player.SendSuccessMessage("召唤了{0}{1}次", npc.cname, amount);
+                    }
+                    else
+                    {
+                        TSPlayer.All.SendSuccessMessage("{0}召唤了{1} {2}次", args.Player.Name, npc.cname, amount);
+                    }
+                }
+                else if (npc.type == 113)
 				{
 					if (Main.wof >= 0 || (args.Player.Y / 16f < (Main.maxTilesY - 205)))
 					{
-						args.Player.SendErrorMessage("Can't spawn Wall of Flesh!");
+						args.Player.SendErrorMessage("无法召唤肉山大魔墙");
 						return;
 					}
 					NPC.SpawnWOF(new Vector2(args.Player.X, args.Player.Y));
 					if (args.Silent)
 					{
-						args.Player.SendSuccessMessage("Spawned Wall of Flesh!");
+						args.Player.SendSuccessMessage("肉山大魔墙已苏醒");
 					}
 					else
 					{
-						TSPlayer.All.SendSuccessMessage("{0} has spawned a Wall of Flesh!", args.Player.Name);
+						TSPlayer.All.SendSuccessMessage("{0}召唤了肉山大魔墙", args.Player.Name);
 					}
 				}
 				else
@@ -2231,13 +2266,13 @@ namespace TShockAPI
 		private static void Home(CommandArgs args)
 		{
 			args.Player.Spawn();
-			args.Player.SendSuccessMessage("Teleported to your spawnpoint.");
+			args.Player.SendSuccessMessage("即将传送您到家里");
 		}
 
 		private static void Spawn(CommandArgs args)
 		{
 			if (args.Player.Teleport(Main.spawnTileX*16, (Main.spawnTileY*16) -48))
-				args.Player.SendSuccessMessage("Teleported to the map's spawnpoint.");
+				args.Player.SendSuccessMessage("即将传送您到地图出生点");
 		}
 
 		private static void TP(CommandArgs args)
@@ -2430,9 +2465,16 @@ namespace TShockAPI
 					matches = new List<NPC> { npc };
 					break;
 				}
-				if (npc.name.ToLower().StartsWith(npcStr.ToLower()))
+                else if (string.Equals(npc.cname, npcStr, StringComparison.CurrentCultureIgnoreCase))//中文NPC名传送
+                {
+                    matches = new List<NPC> { npc };
+                    break;
+                }
+                if (npc.name.ToLower().StartsWith(npcStr.ToLower()))
 					matches.Add(npc);
-			}
+                else if (npc.cname.ToLower().StartsWith(npcStr.ToLower()))//中文NPC名传送
+                    matches.Add(npc);
+            }
 
 			if (matches.Count > 1)
 			{
@@ -2441,13 +2483,13 @@ namespace TShockAPI
 			}
 			if (matches.Count == 0)
 			{
-				args.Player.SendErrorMessage("Invalid NPC!");
+				args.Player.SendErrorMessage("错误的NPC名");
 				return;
 			}
 
 			var target = matches[0];
 			args.Player.Teleport(target.position.X, target.position.Y);
-			args.Player.SendSuccessMessage("Teleported to the '{0}'.", target.name);
+			args.Player.SendSuccessMessage("传送到'{0}'.", target.name);
 		}
 
 		private static void GetPos(CommandArgs args)
