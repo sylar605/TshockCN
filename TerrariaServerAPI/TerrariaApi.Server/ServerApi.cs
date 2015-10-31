@@ -263,7 +263,7 @@ namespace TerrariaApi.Server
 				if (ignoredFiles.Contains(fileNameWithoutExtension))
 				{
 					LogWriter.ServerWriteLine(
-						string.Format("{0} was ignored from being loaded.", fileNameWithoutExtension), TraceLevel.Verbose);
+						string.Format("{0}加载时被忽视", fileNameWithoutExtension), TraceLevel.Verbose);
 
 					continue;
 				}
@@ -304,7 +304,7 @@ namespace TerrariaApi.Server
 							if (apiVersion.Major != ApiVersion.Major || apiVersion.Minor != ApiVersion.Minor)
 							{
 								LogWriter.ServerWriteLine(
-									string.Format("Plugin \"{0}\" is designed for a different Server API version ({1}) and was ignored.",
+									string.Format("插件\"{0}\"使用的API版本({1})不正确",
 									type.FullName, apiVersion.ToString(2)), TraceLevel.Warning);
 
 								continue;

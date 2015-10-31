@@ -3645,7 +3645,8 @@ namespace Terraria
 				this.townNPC = true;
 				this.friendly = true;
 				this.name = "Merchant";
-				this.width = 18;
+                this.cname = "商人";
+                this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
 				this.damage = 10;
@@ -3660,7 +3661,8 @@ namespace Terraria
 				this.townNPC = true;
 				this.friendly = true;
 				this.name = "Nurse";
-				this.width = 18;
+                this.cname = "护士";
+                this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
 				this.damage = 10;
@@ -3720,8 +3722,9 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-				this.name = "Guide";
-				this.width = 18;
+				this.name = "向导";
+                this.name = "Guide";
+                this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
 				this.damage = 10;
@@ -3733,7 +3736,8 @@ namespace Terraria
 			}
 			else if (this.type == 23)
 			{
-				this.name = "Meteor Head";
+                this.name = "Meteor Head";
+                this.name = "Meteor Head";
 				this.width = 22;
 				this.height = 22;
 				this.aiStyle = 5;
@@ -9053,7 +9057,8 @@ namespace Terraria
 				this.townNPC = true;
 				this.friendly = true;
 				this.name = "Travelling Merchant";
-				this.width = 18;
+                this.cname = "游商";
+                this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
 				this.damage = 10;
@@ -9850,7 +9855,8 @@ namespace Terraria
 			{
 				this.friendly = true;
 				this.name = "Skeleton Merchant";
-				this.width = 18;
+                this.cname = "骷髅商人";
+                this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
 				this.damage = 10;
