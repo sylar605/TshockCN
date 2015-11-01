@@ -54,7 +54,11 @@ namespace TShockAPI
 				// These can be caused by an unexpected error such as a bad or out of date plugin
 				try
 				{
+<<<<<<< HEAD
 					TShock.Utils.Broadcast("Saving world. Momentary lag might result from this.", Color.Red);
+=======
+					TShock.Utils.Broadcast("地图保存中。", Color.Red);
+>>>>>>> e2683b6... 手动加入RYH修改的文件
 				}
 				catch (Exception ex)
 				{
@@ -129,12 +133,20 @@ namespace TShockAPI
 								}
 								else
 									WorldFile.saveWorld(task.resetTime);
+<<<<<<< HEAD
 									TShock.Utils.Broadcast("World saved.", Color.Yellow);
+=======
+									TShock.Utils.Broadcast("地图保存完毕。", Color.Yellow);
+>>>>>>> e2683b6... 手动加入RYH修改的文件
 									TShock.Log.Info(string.Format("World saved at ({0})", Main.worldPathName));
 							}
 							catch (Exception e)
 							{
+<<<<<<< HEAD
 								TShock.Log.Error("World saved failed");
+=======
+								TShock.Log.Error("地图保存失败。");
+>>>>>>> e2683b6... 手动加入RYH修改的文件
 								TShock.Log.Error(e.ToString());
 							}
 						}

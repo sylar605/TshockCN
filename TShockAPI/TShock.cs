@@ -267,7 +267,11 @@ namespace TShockAPI
 				if (File.Exists(Path.Combine(SavePath, "tshock.pid")))
 				{
 					Log.ConsoleInfo(
+<<<<<<< HEAD
 						"TShock was improperly shut down. Please use the exit command in the future to prevent this.");
+=======
+						"TShock±»Òì³£¹Ø±Õ¡£ÇëÊ¹ÓÃ{0}exit Õý³£ÍË³ö¡£", Commands.Specifier);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					File.Delete(Path.Combine(SavePath, "tshock.pid"));
 				}
 				File.WriteAllText(Path.Combine(SavePath, "tshock.pid"),
@@ -296,7 +300,11 @@ namespace TShockAPI
 				if (Config.EnableGeoIP && File.Exists(geoippath))
 					Geo = new GeoIPCountry(geoippath);
 
+<<<<<<< HEAD
 				Log.ConsoleInfo("TShock {0} ({1}) now running.", Version, VersionCodename);
+=======
+				Log.ConsoleInfo("TShock {0} ({1}) ºº»¯°æ Beta 1 ÕýÔÚÔËÐÐ.", Version, VersionCodename);ConfigFile.DumpDescriptions();
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 
 				ServerApi.Hooks.GamePostInitialize.Register(this, OnPostInit);
 				ServerApi.Hooks.GameUpdate.Register(this, OnUpdate);
@@ -328,17 +336,33 @@ namespace TShockAPI
 				if (Config.RestApiEnabled)
 					RestApi.Start();
 
+<<<<<<< HEAD
 				Log.ConsoleInfo("AutoSave " + (Config.AutoSave ? "Enabled" : "Disabled"));
 				Log.ConsoleInfo("Backups " + (Backups.Interval > 0 ? "Enabled" : "Disabled"));
+=======
+				if (Config.BufferPackets)
+					PacketBuffer = new PacketBufferer(this);
+
+				Log.ConsoleInfo("×Ô¶¯±£´æ " + (Config.AutoSave ? "ÒÑ¿ªÆô" : "ÒÑ¹Ø±Õ"));
+				Log.ConsoleInfo("×Ô¶¯±¸·Ý " + (Backups.Interval > 0 ? "ÒÑ¿ªÆô" : "ÒÑ¹Ø±Õ"));
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 
 				if (Initialized != null)
 					Initialized();
 
+<<<<<<< HEAD
 				Log.ConsoleInfo("Welcome to TShock for Terraria. Initialization complete.");
 			}
 			catch (Exception ex)
 			{
 				Log.Error("Fatal Startup Exception");
+=======
+				Log.ConsoleInfo("»¶Ó­Ê¹ÓÃTShock ³õÊ¼»¯Íê±Ï");
+			}
+			catch (Exception ex)
+			{
+				Log.Error("³õÊ¼»¯´íÎó");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 				Log.Error(ex.ToString());
 				Environment.Exit(1);
 			}
@@ -754,8 +778,13 @@ namespace TShockAPI
 				var r = new Random((int)DateTime.Now.ToBinary());
 				AuthToken = r.Next(100000, 10000000);
 				Console.ForegroundColor = ConsoleColor.Yellow;
+<<<<<<< HEAD
 				Console.WriteLine("TShock Notice: To become SuperAdmin, join the game and type {0}auth {1}", Commands.Specifier, AuthToken);
 				Console.WriteLine("This token will display until disabled by verification. ({0}auth-verify)", Commands.Specifier);
+=======
+				Console.WriteLine("TShockÌáÊ¾£º½øÈëÓÎÏ· ÊäÈë{0}auth {1}ÈÏÖ¤³É¹ÜÀíÔ±", Commands.Specifier, AuthToken);
+				Console.WriteLine("±¾ÌõÌáÊ¾½«Ò»Ö±ÏÔÊ¾£¬Ö±µ½ÊäÈë{0}auth-verify ¹Ø±ÕÈÏÖ¤ÏµÍ³", Commands.Specifier);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 				Console.ForegroundColor = ConsoleColor.Gray;
 				FileTools.CreateFile(Path.Combine(SavePath, "authcode.txt"));
 				using (var tw = new StreamWriter(Path.Combine(SavePath, "authcode.txt")))
@@ -771,9 +800,15 @@ namespace TShockAPI
 				}
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.WriteLine(
+<<<<<<< HEAD
 					"TShock Notice: authcode.txt is still present, and the AuthToken located in that file will be used.");
 				Console.WriteLine("To become superadmin, join the game and type {0}auth {1}", Commands.Specifier, AuthToken);
 				Console.WriteLine("This token will display until disabled by verification. ({0}auth-verify)", Commands.Specifier);
+=======
+					"TShockÌáÊ¾£ºÈÏÖ¤ÂëÒÑ±£´æµ½authcode.txtÖÐ¡£Çë¸ü¸Ä»òÕßÍ¨¹ýÒÔÏÂ·½·¨ÈÏÖ¤Îª³¬¼¶¹ÜÀíÔ±¡£");
+				Console.WriteLine("½øÈëÓÎÏ·ÊäÈë{0}auth {1}ÈÏÖ¤³É¹ÜÀíÔ±", Commands.Specifier, AuthToken);
+				Console.WriteLine("±¾ÌõÌáÊ¾½«Ò»Ö±ÏÔÊ¾£¬Ö±µ½ÊäÈë{0}auth-verify ¹Ø±ÕÈÏÖ¤ÏµÍ³", Commands.Specifier);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 			else
@@ -895,7 +930,11 @@ namespace TShockAPI
 					{
 						if (player.TileKillThreshold >= Config.TileKillThreshold)
 						{
+<<<<<<< HEAD
 							player.Disable("Reached TileKill threshold.", flags);
+=======
+							player.Disable("µ½´ï ×©¿éÆÆ»µ ÉÏÏÞ¡£", flags);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 							TSPlayer.Server.RevertTiles(player.TilesDestroyed);
 							player.TilesDestroyed.Clear();
 						}
@@ -912,11 +951,17 @@ namespace TShockAPI
 					{
 						if (player.TilePlaceThreshold >= Config.TilePlaceThreshold)
 						{
+<<<<<<< HEAD
 							player.Disable("Reached TilePlace threshold", flags);
 							lock (player.TilesCreated) {
 								TSPlayer.Server.RevertTiles(player.TilesCreated);
 								player.TilesCreated.Clear();
 							}
+=======
+							player.Disable("µ½´ï ×©¿é·ÅÖÃ ÉÏÏÞ¡£", flags);
+							TSPlayer.Server.RevertTiles(player.TilesCreated);
+							player.TilesCreated.Clear();
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 						}
 					}
 					if (player.TilePlaceThreshold > 0)
@@ -955,7 +1000,11 @@ namespace TShockAPI
 
 					if (player.TileLiquidThreshold >= Config.TileLiquidThreshold)
 					{
+<<<<<<< HEAD
 						player.Disable("Reached TileLiquid threshold", flags);
+=======
+						player.Disable("µ½´ï ÒºÌå·ÅÖÃ ÉÏÏÞ¡£", flags);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					}
 					if (player.TileLiquidThreshold > 0)
 					{
@@ -964,7 +1013,11 @@ namespace TShockAPI
 
 					if (player.ProjectileThreshold >= Config.ProjectileThreshold)
 					{
+<<<<<<< HEAD
 						player.Disable("Reached projectile threshold", flags);
+=======
+						player.Disable("µ½´ï µ¯Ä»·¢Éä ÉÏÏÞ¡£", flags);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					}
 					if (player.ProjectileThreshold > 0)
 					{
@@ -973,7 +1026,11 @@ namespace TShockAPI
 
 					if (player.PaintThreshold >= Config.TilePaintThreshold)
 					{
+<<<<<<< HEAD
 						player.Disable("Reached paint threshold", flags);
+=======
+						player.Disable("µ½´ï Í¿Æá ÉÏÏÞ¡£", flags);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					}
 					if (player.PaintThreshold > 0)
 					{
@@ -989,12 +1046,21 @@ namespace TShockAPI
 					{
 						if (CheckIgnores(player))
 						{
+<<<<<<< HEAD
 							player.Disable(flags: flags);
 						}
 						else if (Itembans.ItemIsBanned(player.TPlayer.inventory[player.TPlayer.selectedItem].name, player))
 						{
 							player.Disable($"holding banned item: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}", flags);
 							player.SendErrorMessage($"You are holding a banned item: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}");
+=======
+							player.Disable("±¾·þÎñÆ÷Ç¿ÖÆ¿ª»Ä¡£Çë{0}×¢²á »ò {0}µÇÈë ½øÐÐÓÎÏ·¡£", flags);
+						}
+						else if (Itembans.ItemIsBanned(player.TPlayer.inventory[player.TPlayer.selectedItem].name, player))
+						{
+							player.Disable("Ð¯´øÎ¥½ûÆ·: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name, flags);
+							player.SendErrorMessage("Ð¯´øÎ¥½ûÆ·: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 						}
 					}
 					else if (!Main.ServerSideCharacter || (Main.ServerSideCharacter && player.IsLoggedIn))
@@ -1005,7 +1071,7 @@ namespace TShockAPI
 							if (!player.HasPermission(Permissions.ignorestackhackdetection) && (item.stack > item.maxStack || item.stack < 0) &&
 								item.type != 0)
 							{
-								check = "Remove item " + item.name + " (" + item.stack + ") exceeds max stack of " + item.maxStack;
+								check = "ÒÆ³ý³¬¹ýÉÏÏÞµÄÎïÆ· " + item.name + " (" + item.stack + "¸ö)  ÉÏÏÞ£º" + item.maxStack;
 								player.SendErrorMessage(check);
 								break;
 							}
@@ -1020,9 +1086,13 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "Remove armor/accessory " + item.name;
+								check = "ÒÆ³ý ×°±¸/ÊÎÆ· " + item.name;
 
+<<<<<<< HEAD
 								player.SendErrorMessage("You are wearing banned equipment. {0}", check);
+=======
+								player.SendErrorMessage("Äã´©×Å±»·â½ûµÄ×°±¸ {0}¡£", check);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								break;
 							}
 						}
@@ -1033,9 +1103,13 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "Remove dye " + item.name;
+								check = "ÒÆ³ý È¾ÁÏ " + item.name;
 
+<<<<<<< HEAD
 								player.SendErrorMessage("You are wearing banned equipment. {0}", check);
+=======
+								player.SendErrorMessage("Äã´©×Å±»·â½ûµÄ×°±¸ {0}¡£", check);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								break;
 							}
 						}
@@ -1046,9 +1120,13 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "Remove misc equip " + item.name;
+								check = "ÒÆ³ý ÌØÊâ×°±¸ " + item.name;
 
+<<<<<<< HEAD
 								player.SendErrorMessage("You are wearing banned equipment. {0}", check);
+=======
+								player.SendErrorMessage("Äã´©×Å±»·â½ûµÄ×°±¸ {0}¡£", check);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								break;
 							}
 						}
@@ -1059,9 +1137,13 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "Remove misc dye " + item.name;
+								check = "ÒÆ³ý ÌØÊâÈ¾ÁÏ " + item.name;
 
+<<<<<<< HEAD
 								player.SendErrorMessage("You are wearing banned equipment. {0}", check);
+=======
+								player.SendErrorMessage("Äã´©×Å±»·â½ûµÄ×°±¸ {0}¡£", check);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								break;
 							}
 						}
@@ -1073,8 +1155,13 @@ namespace TShockAPI
 						}
 						else if (Itembans.ItemIsBanned(player.TPlayer.inventory[player.TPlayer.selectedItem].name, player))
 						{
+<<<<<<< HEAD
 							player.Disable($"holding banned item: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}", flags);
 							player.SendErrorMessage($"You are holding a banned item: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}");
+=======
+							player.Disable("Ð¯´øÎ¥½ûÆ·: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name, flags);
+							player.SendErrorMessage("Ð¯´øÎ¥½ûÆ·: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 						}
 					}
 
@@ -1102,7 +1189,11 @@ namespace TShockAPI
 		/// <param name="empty">empty - True/false if the server is empty; determines if we should use Utils.ActivePlayers() for player count or 0.</param>
 		private void SetConsoleTitle(bool empty)
 		{
+<<<<<<< HEAD
 			Console.Title = string.Format("{0}{1}/{2} @ {3}:{4} (TShock for Terraria v{5})",
+=======
+			Console.Title = string.Format("{0}{1}/{2} @ {3}:{4} (TShockºº»¯°æ Terraria v{5}) Beta 1 - Touhouºº»¯×é",
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					!string.IsNullOrWhiteSpace(Config.ServerName) ? Config.ServerName + " - " : "",
 					empty ? 0 : Utils.ActivePlayers(),
 					Config.MaxSlots, Netplay.ServerIP.ToString(), Netplay.ListenPort, Version);
@@ -1177,7 +1268,7 @@ namespace TShockAPI
 				{
 					if (Config.KickProxyUsers)
 					{
-						Utils.ForceKick(player, "Proxies are not allowed.", true, false);
+						Utils.ForceKick(player, "½ûÖ¹Ê¹ÓÃ´úÀí¡£", true, false);
 						args.Handled = true;
 						return;
 					}
@@ -1199,7 +1290,11 @@ namespace TShockAPI
 
 			if (Config.KickEmptyUUID && String.IsNullOrWhiteSpace(player.UUID))
 			{
+<<<<<<< HEAD
 				Utils.ForceKick(player, "Your client did not send a UUID, this server is not configured to accept such a client.", true);
+=======
+				Utils.ForceKick(player, "¿Í»§¶ËÒì³££¬ÇëÖØÐÂÁ¬½Ó¡£", true);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 				args.Handled = true;
 				return;
 			}
@@ -1229,7 +1324,11 @@ namespace TShockAPI
 					DateTime exp;
 					if (!DateTime.TryParse(ban.Expiration, out exp))
 					{
+<<<<<<< HEAD
 						player.Disconnect("You are banned forever: " + ban.Reason);
+=======
+						player.Disconnect("Äã±»ÓÀ¾Ã·â½û " + ban.Reason);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					}
 					else
 					{
@@ -1237,27 +1336,47 @@ namespace TShockAPI
 						int months = ts.Days / 30;
 						if (months > 0)
 						{
+<<<<<<< HEAD
 							player.Disconnect(String.Format("You are banned for {0} month{1} and {2} day{3}: {4}",
+=======
+							player.Disconnect(String.Format("Äã±»·â½û {0} ÔÂ {2} ÈÕ: {4}",
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								months, months == 1 ? "" : "s", ts.Days, ts.Days == 1 ? "" : "s", ban.Reason));
 						}
 						else if (ts.Days > 0)
 						{
+<<<<<<< HEAD
 							player.Disconnect(String.Format("You are banned for {0} day{1} and {2} hour{3}: {4}",
+=======
+							player.Disconnect(String.Format("Äã±»·â½û {0} ÈÕ {2} Ê±: {4}",
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								ts.Days, ts.Days == 1 ? "" : "s", ts.Hours, ts.Hours == 1 ? "" : "s", ban.Reason));
 						}
 						else if (ts.Hours > 0)
 						{
+<<<<<<< HEAD
 							player.Disconnect(String.Format("You are banned for {0} hour{1} and {2} minute{3}: {4}",
+=======
+							player.Disconnect(String.Format("Äã±»·â½û {0} Ê± {2} ·Ö: {4}",
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								ts.Hours, ts.Hours == 1 ? "" : "s", ts.Minutes, ts.Minutes == 1 ? "" : "s", ban.Reason));
 						}
 						else if (ts.Minutes > 0)
 						{
+<<<<<<< HEAD
 							player.Disconnect(String.Format("You are banned for {0} minute{1} and {2} second{3}: {4}",
+=======
+							player.Disconnect(String.Format("Äã±»·â½û {0} ·Ö {2} Ãë: {4}",
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								ts.Minutes, ts.Minutes == 1 ? "" : "s", ts.Seconds, ts.Seconds == 1 ? "" : "s", ban.Reason));
 						}
 						else
 						{
+<<<<<<< HEAD
 							player.Disconnect(String.Format("You are banned for {0} second{1}: {2}",
+=======
+							player.Disconnect(String.Format("Äã±»·â½û {0} Ãë: {2}",
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								ts.Seconds, ts.Seconds == 1 ? "" : "s", ban.Reason));
 						}
 					}
@@ -1276,8 +1395,13 @@ namespace TShockAPI
 			if (tsplr != null && tsplr.ReceivedInfo)
 			{
 				if (!tsplr.SilentKickInProgress && tsplr.State >= 3)
+<<<<<<< HEAD
 					Utils.Broadcast(tsplr.Name + " has left.", Color.Yellow);
 				Log.Info("{0} disconnected.", tsplr.Name);
+=======
+					Utils.Broadcast(tsplr.Name + " Àë¿ªÓÎÏ·¡£", Color.Yellow);
+				Log.Info("{0} ¶Ï¿ªÁ¬½Ó¡£", tsplr.Name);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 
 				if (tsplr.IsLoggedIn && !tsplr.IgnoreActionsForClearingTrashCan && Main.ServerSideCharacter && (!tsplr.Dead || tsplr.TPlayer.difficulty != 2))
 				{
@@ -1327,7 +1451,11 @@ namespace TShockAPI
 
 			if (args.Text.Length > 500)
 			{
+<<<<<<< HEAD
 				Utils.Kick(tsplr, "Crash attempt via long chat packet.", true);
+=======
+				Utils.Kick(tsplr, "½ûÖ¹³¬³¤ÎÄ±¾¡£", true);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 				args.Handled = true;
 				return;
 			}
@@ -1341,7 +1469,7 @@ namespace TShockAPI
 				}
 				catch (Exception ex)
 				{
-					Log.ConsoleError("An exeption occurred executing a command.");
+					Log.ConsoleError("Ö´ÐÐÃüÁîÊ±·¢Éú´íÎó¡£");
 					Log.Error(ex.ToString());
 				}
 			}
@@ -1353,7 +1481,11 @@ namespace TShockAPI
 				}
 				else if (tsplr.mute)
 				{
+<<<<<<< HEAD
 					tsplr.SendErrorMessage("You are muted!");
+=======
+					tsplr.SendErrorMessage("Äã±»½ûÑÔÁË¡£");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					args.Handled = true;
 				}
 				else if (!TShock.Config.EnableChatAboveHeads)
@@ -1411,7 +1543,11 @@ namespace TShockAPI
 			if (args.Command == "autosave")
 			{
 				Main.autoSave = Config.AutoSave = !Config.AutoSave;
+<<<<<<< HEAD
 				Log.ConsoleInfo("AutoSave " + (Config.AutoSave ? "Enabled" : "Disabled"));
+=======
+				Log.ConsoleInfo("×Ô¶¯±£´æ " + (Config.AutoSave ? "ÒÑ¿ªÆô" : "ÒÑ¹Ø±Õ"));
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 			}
 			else if (args.Command.StartsWith(Commands.Specifier) || args.Command.StartsWith(Commands.SilentSpecifier))
 			{
@@ -1486,6 +1622,7 @@ namespace TShockAPI
 									   player.Group.Name, player.Country, TShock.Utils.ActivePlayers(),
 									   TShock.Config.MaxSlots);
 				if (!player.SilentJoinInProgress)
+<<<<<<< HEAD
 					Utils.Broadcast(string.Format("{0} ({1}) has joined.", player.Name, player.Country), Color.Yellow);
 			}
 			else
@@ -1498,6 +1635,20 @@ namespace TShockAPI
 
 			if (Config.DisplayIPToAdmins)
 				Utils.SendLogs(string.Format("{0} has joined. IP: {1}", player.Name, player.IP), Color.Blue);
+=======
+					Utils.Broadcast(string.Format("{0} ({1}) ½øÈëÓÎÏ·¡£", player.Name, player.Country), Color.Yellow);
+			}
+			else
+			{
+				Log.Info("{0} ({1})  ÓÃ»§×é'{2}' ½øÈëÓÎÏ·¡£({3}/{4})", player.Name, player.IP,
+									   player.Group.Name, TShock.Utils.ActivePlayers(), TShock.Config.MaxSlots);
+				if (!player.SilentJoinInProgress)
+					Utils.Broadcast(player.Name + " ½øÈëÓÎÏ·¡£", Color.Yellow);
+			}
+
+			if (Config.DisplayIPToAdmins)
+				Utils.SendLogs(string.Format("{0} ½øÈëÓÎÏ·¡£IP: {1}", player.Name, player.IP), Color.Blue);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 
 			Utils.ShowFileToUser(player, "motd.txt");
 
@@ -1514,12 +1665,20 @@ namespace TShockAPI
 				if (Main.ServerSideCharacter)
 				{
 					player.SendErrorMessage(
+<<<<<<< HEAD
 						player.IgnoreActionsForInventory = String.Format("Server side characters is enabled! Please {0}register or {0}login to play!", Commands.Specifier));
+=======
+						player.IgnoreActionsForInventory = String.Format("±¾·þÎñÆ÷Ç¿ÖÆ¿ª»Ä¡£Çë{0}×¢²á »ò {0}µÇÈë ½øÐÐÓÎÏ·¡£", Commands.Specifier));
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					player.LoginHarassed = true;
 				}
 				else if (Config.RequireLogin)
 				{
+<<<<<<< HEAD
 					player.SendErrorMessage("Please {0}register or {0}login to play!", Commands.Specifier);
+=======
+					player.SendErrorMessage("Çë{0}×¢²á »ò {0}µÇÈë ½øÐÐÓÎÏ·¡£", Commands.Specifier);
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					player.LoginHarassed = true;
 				}
 			}
@@ -1529,7 +1688,11 @@ namespace TShockAPI
 			if (Config.RememberLeavePos && (RememberedPos.GetLeavePos(player.Name, player.IP) != Vector2.Zero) && !player.LoginHarassed)
 			{
 				player.RPPending = 3;
+<<<<<<< HEAD
 				player.SendInfoMessage("You will be teleported to your last known location...");
+=======
+				player.SendInfoMessage("Äã½«±»´«ËÍµ½×îºóËùÔÚÎ»ÖÃ¡£");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 			}
 
 			args.Handled = true;
@@ -1680,7 +1843,11 @@ namespace TShockAPI
 
 					if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.BPm) > 2000)
 					{
+<<<<<<< HEAD
 						player.SendErrorMessage("You do not have permission to build!");
+=======
+						player.SendErrorMessage("ÄãÃ»ÓÐ½¨ÖþÈ¨ÏÞ¡£");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 						player.BPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 					}
 					return true;
@@ -1694,7 +1861,11 @@ namespace TShockAPI
 
 				if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.BPm) > 2000)
 				{
+<<<<<<< HEAD
 					player.SendErrorMessage("You do not have permission to build!");
+=======
+					player.SendErrorMessage("ÄãÃ»ÓÐ½¨ÖþÈ¨ÏÞ¡£");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					player.BPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
 				return true;
@@ -1705,7 +1876,11 @@ namespace TShockAPI
 			{
 				if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.RPm) > 2000)
 				{
+<<<<<<< HEAD
 					player.SendErrorMessage("This region is protected from changes.");
+=======
+					player.SendErrorMessage("Õâ¸öÁìµØ±»±£»¤ÁË¡£");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					player.RPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
 				return true;
@@ -1717,7 +1892,11 @@ namespace TShockAPI
 				{
 					if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.WPm) > 2000)
 					{
+<<<<<<< HEAD
 						player.SendErrorMessage("The world is protected from changes.");
+=======
+						player.SendErrorMessage("È«Í¼±»±£»¤ÁË¡£");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 						player.WPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 					}
 					return true;
@@ -1732,7 +1911,11 @@ namespace TShockAPI
 					{
 						if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.SPm) > 2000)
 						{
+<<<<<<< HEAD
 							player.SendErrorMessage("Spawn is protected from changes.");
+=======
+							player.SendErrorMessage("¸´»îµã±»±£»¤ÁË¡£");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 							player.SPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 						}
 						return true;
@@ -1757,11 +1940,19 @@ namespace TShockAPI
 				{
 					if (paint)
 					{
+<<<<<<< HEAD
 						player.SendErrorMessage("You do not have permission to paint!");
 					}
 					else
 					{
 						player.SendErrorMessage("You do not have permission to build!");
+=======
+						player.SendErrorMessage("ÄãÃ»ÓÐÍ¿ÆáÈ¨ÏÞ¡£");
+					}
+					else
+					{
+						player.SendErrorMessage("ÄãÃ»ÓÐ½¨ÖþÈ¨ÏÞ¡£");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					}
 					player.BPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
@@ -1773,7 +1964,11 @@ namespace TShockAPI
 			{
 				if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.RPm) > 2000)
 				{
+<<<<<<< HEAD
 					player.SendErrorMessage("This region is protected from changes.");
+=======
+					player.SendErrorMessage("Õâ¸öÁìµØ±»±£»¤ÁË¡£");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 					player.RPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
 				return true;
@@ -1785,7 +1980,11 @@ namespace TShockAPI
 				{
 					if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.WPm) > 2000)
 					{
+<<<<<<< HEAD
 						player.SendErrorMessage("The world is protected from changes.");
+=======
+						player.SendErrorMessage("È«Í¼±»±£»¤ÁË¡£");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 						player.WPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 					}
 					return true;
@@ -1800,7 +1999,11 @@ namespace TShockAPI
 					{
 						if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.SPm) > 1000)
 						{
+<<<<<<< HEAD
 							player.SendErrorMessage("Spawn is protected from changes.");
+=======
+							player.SendErrorMessage("¸´»îµã±»±£»¤ÁË¡£");
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 							player.SPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 						}
 						return true;
@@ -1864,7 +2067,11 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
+<<<<<<< HEAD
 								String.Format("Stack cheat detected. Remove item {0} ({1}) and then rejoin", item.name, inventory[i].stack),
+=======
+								String.Format("·¢ÏÖÎïÆ·ÊýÁ¿×÷±×¡£ ÒÆ³ý ÎïÆ· {0} ({1}) ²¢ÖØÐÂ¼ÓÈë¡£", item.name, inventory[i].stack),
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								Color.Cyan);
 						}
 					}
@@ -1883,7 +2090,11 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
+<<<<<<< HEAD
 								String.Format("Stack cheat detected. Remove armor {0} ({1}) and then rejoin", item.name, armor[index].stack),
+=======
+								String.Format("·¢ÏÖÎïÆ·ÊýÁ¿×÷±×¡£ ÒÆ³ý ×°±¸ {0} ({1}) ²¢ÖØÐÂ¼ÓÈë¡£", item.name, armor[index].stack),
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								Color.Cyan);
 						}
 					}
@@ -1902,7 +2113,11 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
+<<<<<<< HEAD
 								String.Format("Stack cheat detected. Remove dye {0} ({1}) and then rejoin", item.name, dye[index].stack),
+=======
+								String.Format("·¢ÏÖÎïÆ·ÊýÁ¿×÷±×¡£ ÒÆ³ý È¾ÁÏ {0} ({1}) ²¢ÖØÐÂ¼ÓÈë¡£", item.name, dye[index].stack),
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								Color.Cyan);
 						}
 					}
@@ -1922,7 +2137,11 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
+<<<<<<< HEAD
 								String.Format("Stack cheat detected. Remove item {0} ({1}) and then rejoin", item.name, miscEquips[index].stack),
+=======
+								String.Format("·¢ÏÖÎïÆ·ÊýÁ¿×÷±×¡£ ÒÆ³ý ÎïÆ· {0} ({1}) ²¢ÖØÐÂ¼ÓÈë¡£", item.name, miscEquips[index].stack),
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								Color.Cyan);
 						}
 					}
@@ -1944,7 +2163,11 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
+<<<<<<< HEAD
 								String.Format("Stack cheat detected. Remove item dye {0} ({1}) and then rejoin", item.name, miscDyes[index].stack),
+=======
+								String.Format("·¢ÏÖÎïÆ·ÊýÁ¿×÷±×¡£ ÒÆ³ý ÎïÆ·È¾ÁÏ {0} ({1}) ²¢ÖØÐÂ¼ÓÈë¡£", item.name, miscDyes[index].stack),
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								Color.Cyan);
 						}
 					}
@@ -1967,7 +2190,11 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
+<<<<<<< HEAD
 								String.Format("Stack cheat detected. Remove Piggy-bank item {0} ({1}) and then rejoin", item.name, piggy[index].stack),
+=======
+								String.Format("·¢ÏÖÎïÆ·ÊýÁ¿×÷±×¡£ ÒÆ³ý ÖíÖí¹ÞÎïÆ· {0} ({1}) ²¢ÖØÐÂ¼ÓÈë¡£", item.name, piggy[index].stack),
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								Color.Cyan);
 						}
 					}
@@ -1990,7 +2217,11 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
+<<<<<<< HEAD
 								String.Format("Stack cheat detected. Remove Safe item {0} ({1}) and then rejoin", item.name, safe[index].stack),
+=======
+								String.Format("·¢ÏÖÎïÆ·ÊýÁ¿×÷±×¡£ ÒÆ³ý ±£ÏÕÏäÎïÆ· {0} ({1}) ²¢ÖØÐÂ¼ÓÈë¡£", item.name, safe[index].stack),
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								Color.Cyan);
 						}
 					}
@@ -2008,7 +2239,11 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
+<<<<<<< HEAD
 								String.Format("Stack cheat detected. Remove trash item {0} ({1}) and then rejoin", item.name, trash.stack),
+=======
+								String.Format("·¢ÏÖÎïÆ·ÊýÁ¿×÷±×¡£ ÒÆ³ý À¬»øÍ°ÎïÆ· {0} ({1}) ²¢ÖØÐÂ¼ÓÈë¡£", item.name, trash.stack),
+>>>>>>> e2683b6... æ‰‹åŠ¨åŠ å…¥RYHä¿®æ”¹çš„æ–‡ä»¶
 								Color.Cyan);
 						}
 					}
