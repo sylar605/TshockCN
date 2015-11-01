@@ -3608,19 +3608,19 @@ namespace TShockAPI
 			switch (Type)
 			{
 				case -5:
-					boss = "霜月";
+					boss = "a frost moon";
 					break;
 				case -4:
-					boss = "南瓜月";
+					boss = "a pumpkin moon";
 					break;
 				case -3:
-					boss = "海盗入侵";
+					boss = "the Pirates";
 					break;
 				case -2:
-					boss = "雪人军团";
+					boss = "the Snow Legion";
 					break;
 				case -1:
-					boss = "哥布林入侵";
+					boss = "a Goblin Invasion";
 					break;
 				default:
 					boss = String.Format("the {0}", npc.name);
@@ -3629,7 +3629,7 @@ namespace TShockAPI
 			if (TShock.Config.AnonymousBossInvasions)
 				TShock.Utils.SendLogs(string.Format("{0} summoned {1}!", args.Player.Name, boss), Color.PaleVioletRed, args.Player);
 			else
-				TShock.Utils.Broadcast(String.Format("{0}召唤了{1}!本次召唤已被系统记录", args.Player.Name, boss), 175, 75, 255);
+				TShock.Utils.Broadcast(String.Format("{0} summoned {1}!", args.Player.Name, boss), 175, 75, 255);
 			return false;
 		}
 
