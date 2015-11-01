@@ -1,4 +1,4 @@
-ï»¿/*
+/*
 TShock, a server mod for Terraria
 Copyright (C) 2011-2015 Nyx Studios (fka. The TShock Team)
 
@@ -261,7 +261,7 @@ namespace TShockAPI
 				if (File.Exists(Path.Combine(SavePath, "tshock.pid")))
 				{
 					Log.ConsoleInfo(
-						"ä¸Šä¸€æ¬¡æœªæ­£å¸¸å…³é—­Tshockæˆ–å´©æºƒ ä»¥åè¯·ä½¿ç”¨/exit æ­£å¸¸é€€å‡º");
+						"TShock±»Òì³£¹Ø±Õ¡£ÇëÊ¹ÓÃ{0}exit Õı³£ÍË³ö¡£", Commands.Specifier);
 					File.Delete(Path.Combine(SavePath, "tshock.pid"));
 				}
 				File.WriteAllText(Path.Combine(SavePath, "tshock.pid"),
@@ -290,7 +290,7 @@ namespace TShockAPI
 				if (Config.EnableGeoIP && File.Exists(geoippath))
 					Geo = new GeoIPCountry(geoippath);
 
-				Log.ConsoleInfo("TShock {0} ({1}) æ­£åœ¨è¿è¡Œ.", Version, VersionCodename);
+				Log.ConsoleInfo("TShock {0} ({1}) ºº»¯°æ Beta 1 ÕıÔÚÔËĞĞ.", Version, VersionCodename);ConfigFile.DumpDescriptions();
 
 				ServerApi.Hooks.GamePostInitialize.Register(this, OnPostInit);
 				ServerApi.Hooks.GameUpdate.Register(this, OnUpdate);
@@ -325,17 +325,17 @@ namespace TShockAPI
 				if (Config.BufferPackets)
 					PacketBuffer = new PacketBufferer(this);
 
-				Log.ConsoleInfo("è‡ªåŠ¨ä¿å­˜ " + (Config.AutoSave ? "å·²å¼€å¯" : "å·²å…³é—­"));
-				Log.ConsoleInfo("è‡ªåŠ¨å¤‡ä»½ " + (Backups.Interval > 0 ? "å·²å¼€å¯" : "å·²å…³é—­"));
+				Log.ConsoleInfo("×Ô¶¯±£´æ " + (Config.AutoSave ? "ÒÑ¿ªÆô" : "ÒÑ¹Ø±Õ"));
+				Log.ConsoleInfo("×Ô¶¯±¸·İ " + (Backups.Interval > 0 ? "ÒÑ¿ªÆô" : "ÒÑ¹Ø±Õ"));
 
 				if (Initialized != null)
 					Initialized();
 
-				Log.ConsoleInfo("æ¬¢è¿ä½¿ç”¨Tshock åˆå§‹åŒ–å®Œæ¯•");
+				Log.ConsoleInfo("»¶Ó­Ê¹ÓÃTShock ³õÊ¼»¯Íê±Ï");
 			}
 			catch (Exception ex)
 			{
-				Log.Error("åˆå§‹åŒ–é”™è¯¯");
+				Log.Error("³õÊ¼»¯´íÎó");
 				Log.Error(ex.ToString());
 				Environment.Exit(1);
 			}
@@ -736,8 +736,8 @@ namespace TShockAPI
 				var r = new Random((int)DateTime.Now.ToBinary());
 				AuthToken = r.Next(100000, 10000000);
 				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.WriteLine("TShockæç¤º:è¿›å…¥æ¸¸æˆè¾“å…¥{0}auth {1}è®¤è¯æˆç®¡ç†å‘˜", Commands.Specifier, AuthToken);
-				Console.WriteLine("è¾“å…¥{0}auth-verify å…³é—­è®¤è¯ç³»ç»Ÿ", Commands.Specifier);
+				Console.WriteLine("TShockÌáÊ¾£º½øÈëÓÎÏ· ÊäÈë{0}auth {1}ÈÏÖ¤³É¹ÜÀíÔ±", Commands.Specifier, AuthToken);
+				Console.WriteLine("±¾ÌõÌáÊ¾½«Ò»Ö±ÏÔÊ¾£¬Ö±µ½ÊäÈë{0}auth-verify ¹Ø±ÕÈÏÖ¤ÏµÍ³", Commands.Specifier);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				FileTools.CreateFile(Path.Combine(SavePath, "authcode.txt"));
 				using (var tw = new StreamWriter(Path.Combine(SavePath, "authcode.txt")))
@@ -753,9 +753,9 @@ namespace TShockAPI
 				}
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.WriteLine(
-                    "TShockæç¤º:è®¤è¯ä»£ç å·²ç”Ÿæˆåˆ°authcode.txtå†… è¯·æ›´æ”¹æˆ–è€…é€šè¿‡ä»¥ä¸‹æ–¹æ³•è®¤è¯æˆç®¡ç†å‘˜åå…³é—­è®¤è¯ç³»ç»Ÿ");
-				Console.WriteLine("è¿›å…¥æ¸¸æˆè¾“å…¥{0}auth {1}è®¤è¯æˆç®¡ç†å‘˜", Commands.Specifier, AuthToken);
-				Console.WriteLine("è¾“å…¥{0}auth-verify å…³é—­è®¤è¯ç³»ç»Ÿ)", Commands.Specifier);
+					"TShockÌáÊ¾£ºÈÏÖ¤ÂëÒÑ±£´æµ½authcode.txtÖĞ¡£Çë¸ü¸Ä»òÕßÍ¨¹ıÒÔÏÂ·½·¨ÈÏÖ¤Îª³¬¼¶¹ÜÀíÔ±¡£");
+				Console.WriteLine("½øÈëÓÎÏ·ÊäÈë{0}auth {1}ÈÏÖ¤³É¹ÜÀíÔ±", Commands.Specifier, AuthToken);
+				Console.WriteLine("±¾ÌõÌáÊ¾½«Ò»Ö±ÏÔÊ¾£¬Ö±µ½ÊäÈë{0}auth-verify ¹Ø±ÕÈÏÖ¤ÏµÍ³", Commands.Specifier);
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 			else
@@ -877,7 +877,7 @@ namespace TShockAPI
 					{
 						if (player.TileKillThreshold >= Config.TileKillThreshold)
 						{
-							player.Disable("è¶…è¿‡æ¯ç§’åˆ é™¤æ–¹å—ä¸Šé™", flags);
+							player.Disable("µ½´ï ×©¿éÆÆ»µ ÉÏÏŞ¡£", flags);
 							TSPlayer.Server.RevertTiles(player.TilesDestroyed);
 							player.TilesDestroyed.Clear();
 						}
@@ -893,7 +893,7 @@ namespace TShockAPI
 					{
 						if (player.TilePlaceThreshold >= Config.TilePlaceThreshold)
 						{
-							player.Disable("è¶…è¿‡æ¯ç§’æ‘†æ”¾æ–¹å—ä¸Šé™", flags);
+							player.Disable("µ½´ï ×©¿é·ÅÖÃ ÉÏÏŞ¡£", flags);
 							TSPlayer.Server.RevertTiles(player.TilesCreated);
 							player.TilesCreated.Clear();
 						}
@@ -934,7 +934,7 @@ namespace TShockAPI
 
 					if (player.TileLiquidThreshold >= Config.TileLiquidThreshold)
 					{
-						player.Disable("è¶…è¿‡æ¯ç§’æ‘†æ”¾æ¶²ä½“ä¸Šé™", flags);
+						player.Disable("µ½´ï ÒºÌå·ÅÖÃ ÉÏÏŞ¡£", flags);
 					}
 					if (player.TileLiquidThreshold > 0)
 					{
@@ -943,7 +943,7 @@ namespace TShockAPI
 
 					if (player.ProjectileThreshold >= Config.ProjectileThreshold)
 					{
-						player.Disable("è¶…è¿‡æ¯ç§’å¼¹å¹•ä¸Šé™", flags);
+						player.Disable("µ½´ï µ¯Ä»·¢Éä ÉÏÏŞ¡£", flags);
 					}
 					if (player.ProjectileThreshold > 0)
 					{
@@ -952,7 +952,7 @@ namespace TShockAPI
 
 					if (player.PaintThreshold >= Config.TilePaintThreshold)
 					{
-						player.Disable("è¶…è¿‡æ¯ç§’æ‘†æ”¾æ²¹æ¼†ä¸Šé™", flags);
+						player.Disable("µ½´ï Í¿Æá ÉÏÏŞ¡£", flags);
 					}
 					if (player.PaintThreshold > 0)
 					{
@@ -968,12 +968,12 @@ namespace TShockAPI
 					{
 						if (CheckIgnores(player))
 						{
-							player.Disable("åœ¨å¼ºåˆ¶å¼€è’å¼€å¯æ—¶æœªç™»å½•", flags);
+							player.Disable("±¾·şÎñÆ÷Ç¿ÖÆ¿ª»Ä¡£Çë{0}×¢²á »ò {0}µÇÈë ½øĞĞÓÎÏ·¡£", flags);
 						}
 						else if (Itembans.ItemIsBanned(player.TPlayer.inventory[player.TPlayer.selectedItem].name, player))
 						{
-							player.Disable($"æºå¸¦è¿ç¦å“: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}", flags);
-							player.SendErrorMessage($"æºå¸¦è¿ç¦å“: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}");
+							player.Disable("Ğ¯´øÎ¥½ûÆ·: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name, flags);
+							player.SendErrorMessage("Ğ¯´øÎ¥½ûÆ·: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name);
 						}
 					}
 					else if (!Main.ServerSideCharacter || (Main.ServerSideCharacter && player.IsLoggedIn))
@@ -984,7 +984,7 @@ namespace TShockAPI
 							if (!player.Group.HasPermission(Permissions.ignorestackhackdetection) && (item.stack > item.maxStack || item.stack < 0) &&
 								item.type != 0)
 							{
-								check = "Remove item " + item.name + " (" + item.stack + ") exceeds max stack of " + item.maxStack;
+								check = "ÒÆ³ı³¬¹ıÉÏÏŞµÄÎïÆ· " + item.name + " (" + item.stack + "¸ö)  ÉÏÏŞ£º" + item.maxStack;
 								player.SendErrorMessage(check);
 								break;
 							}
@@ -999,9 +999,9 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "Remove armor/accessory " + item.name;
+								check = "ÒÆ³ı ×°±¸/ÊÎÆ· " + item.name;
 
-								player.SendErrorMessage("æ‚¨æ­£åœ¨è£…å¤‡ç€è¿ç¦å“ {0}", check);
+								player.SendErrorMessage("Äã´©×Å±»·â½ûµÄ×°±¸ {0}¡£", check);
 								break;
 							}
 						}
@@ -1012,9 +1012,9 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "Remove dye " + item.name;
+								check = "ÒÆ³ı È¾ÁÏ " + item.name;
 
-								player.SendErrorMessage("æ‚¨æ­£åœ¨è£…å¤‡ç€è¿ç¦å“ {0}", check);
+								player.SendErrorMessage("Äã´©×Å±»·â½ûµÄ×°±¸ {0}¡£", check);
 								break;
 							}
 						}
@@ -1025,9 +1025,9 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "Remove misc equip " + item.name;
+								check = "ÒÆ³ı ÌØÊâ×°±¸ " + item.name;
 
-								player.SendErrorMessage("æ‚¨æ­£åœ¨è£…å¤‡ç€è¿ç¦å“ {0}", check);
+								player.SendErrorMessage("Äã´©×Å±»·â½ûµÄ×°±¸ {0}¡£", check);
 								break;
 							}
 						}
@@ -1038,9 +1038,9 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "Remove misc dye " + item.name;
+								check = "ÒÆ³ı ÌØÊâÈ¾ÁÏ " + item.name;
 
-								player.SendErrorMessage("æ‚¨æ­£åœ¨è£…å¤‡ç€è¿ç¦å“ {0}", check);
+								player.SendErrorMessage("Äã´©×Å±»·â½ûµÄ×°±¸ {0}¡£", check);
 								break;
 							}
 						}
@@ -1052,8 +1052,8 @@ namespace TShockAPI
 						}
 						else if (Itembans.ItemIsBanned(player.TPlayer.inventory[player.TPlayer.selectedItem].name, player))
 						{
-							player.Disable($"æºå¸¦è¿ç¦å“: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}", flags);
-							player.SendErrorMessage($"æºå¸¦è¿ç¦å“: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}");
+							player.Disable("Ğ¯´øÎ¥½ûÆ·: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name, flags);
+							player.SendErrorMessage("Ğ¯´øÎ¥½ûÆ·: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name);
 						}
 					}
 
@@ -1081,7 +1081,7 @@ namespace TShockAPI
 		/// <param name="empty">empty - True/false if the server is empty; determines if we should use Utils.ActivePlayers() for player count or 0.</param>
 		private void SetConsoleTitle(bool empty)
 		{
-			Console.Title = string.Format("{0}{1}/{2} @ {3}:{4} (TShockCN for Terraria v{5})",
+			Console.Title = string.Format("{0}{1}/{2} @ {3}:{4} (TShockºº»¯°æ Terraria v{5}) Beta 1 - Touhouºº»¯×é",
 					!string.IsNullOrWhiteSpace(Config.ServerName) ? Config.ServerName + " - " : "",
 					empty ? 0 : Utils.ActivePlayers(),
 					Config.MaxSlots, Netplay.ServerIP.ToString(), Netplay.ListenPort, Version);
@@ -1156,7 +1156,7 @@ namespace TShockAPI
 				{
 					if (Config.KickProxyUsers)
 					{
-						Utils.ForceKick(player, "Proxies are not allowed.", true, false);
+						Utils.ForceKick(player, "½ûÖ¹Ê¹ÓÃ´úÀí¡£", true, false);
 						args.Handled = true;
 						return;
 					}
@@ -1178,7 +1178,7 @@ namespace TShockAPI
 
 			if (Config.KickEmptyUUID && String.IsNullOrWhiteSpace(player.UUID))
 			{
-				Utils.ForceKick(player, "å®¢æˆ·ç«¯æ²¡æœ‰å‘é€UUID", true);
+				Utils.ForceKick(player, "¿Í»§¶ËÒì³££¬ÇëÖØĞÂÁ¬½Ó¡£", true);
 				args.Handled = true;
 				return;
 			}
@@ -1208,7 +1208,7 @@ namespace TShockAPI
 					DateTime exp;
 					if (!DateTime.TryParse(ban.Expiration, out exp))
 					{
-						player.Disconnect("ä½ è¢«æ°¸ä¹…å°ç¦ ç†ç”±:" + ban.Reason);
+						player.Disconnect("Äã±»ÓÀ¾Ã·â½û " + ban.Reason);
 					}
 					else
 					{
@@ -1216,27 +1216,27 @@ namespace TShockAPI
 						int months = ts.Days / 30;
 						if (months > 0)
 						{
-							player.Disconnect(String.Format("ä½ è¢«å°ç¦{0}æœˆ{2}å¤© ç†ç”±:{4}",
+							player.Disconnect(String.Format("Äã±»·â½û {0} ÔÂ {2} ÈÕ: {4}",
 								months, months == 1 ? "" : "s", ts.Days, ts.Days == 1 ? "" : "s", ban.Reason));
 						}
 						else if (ts.Days > 0)
 						{
-							player.Disconnect(String.Format("ä½ è¢«å°ç¦{0}å¤©{2}å°æ—¶ ç†ç”±:{4}",
+							player.Disconnect(String.Format("Äã±»·â½û {0} ÈÕ {2} Ê±: {4}",
 								ts.Days, ts.Days == 1 ? "" : "s", ts.Hours, ts.Hours == 1 ? "" : "s", ban.Reason));
 						}
 						else if (ts.Hours > 0)
 						{
-							player.Disconnect(String.Format("ä½ è¢«å°ç¦{0}å°æ—¶{2}åˆ†é’Ÿ ç†ç”±:{4}",
+							player.Disconnect(String.Format("Äã±»·â½û {0} Ê± {2} ·Ö: {4}",
 								ts.Hours, ts.Hours == 1 ? "" : "s", ts.Minutes, ts.Minutes == 1 ? "" : "s", ban.Reason));
 						}
 						else if (ts.Minutes > 0)
 						{
-							player.Disconnect(String.Format("ä½ è¢«å°ç¦{0}åˆ†é’Ÿ{2}ç§’ ç†ç”±:{4}",
+							player.Disconnect(String.Format("Äã±»·â½û {0} ·Ö {2} Ãë: {4}",
 								ts.Minutes, ts.Minutes == 1 ? "" : "s", ts.Seconds, ts.Seconds == 1 ? "" : "s", ban.Reason));
 						}
 						else
 						{
-							player.Disconnect(String.Format("ä½ è¢«å°ç¦{0}ç§’ ç†ç”±:{2}",
+							player.Disconnect(String.Format("Äã±»·â½û {0} Ãë: {2}",
 								ts.Seconds, ts.Seconds == 1 ? "" : "s", ban.Reason));
 						}
 					}
@@ -1255,8 +1255,8 @@ namespace TShockAPI
 			if (tsplr != null && tsplr.ReceivedInfo)
 			{
 				if (!tsplr.SilentKickInProgress && tsplr.State >= 3)
-					Utils.Broadcast(tsplr.Name + " å·²é€€å‡º", Color.Yellow);
-				Log.Info("{0} æ–­å¼€è¿æ¥.", tsplr.Name);
+					Utils.Broadcast(tsplr.Name + " Àë¿ªÓÎÏ·¡£", Color.Yellow);
+				Log.Info("{0} ¶Ï¿ªÁ¬½Ó¡£", tsplr.Name);
 
 				if (tsplr.IsLoggedIn && !tsplr.IgnoreActionsForClearingTrashCan && Main.ServerSideCharacter && (!tsplr.Dead || tsplr.TPlayer.difficulty != 2))
 				{
@@ -1306,7 +1306,7 @@ namespace TShockAPI
 
 			if (args.Text.Length > 500)
 			{
-				Utils.Kick(tsplr, "ç¦æ­¢å‘é€é•¿æ–‡æœ¬", true);
+				Utils.Kick(tsplr, "½ûÖ¹³¬³¤ÎÄ±¾¡£", true);
 				args.Handled = true;
 				return;
 			}
@@ -1320,7 +1320,7 @@ namespace TShockAPI
 				}
 				catch (Exception ex)
 				{
-					Log.ConsoleError("An exeption occurred executing a command.");
+					Log.ConsoleError("Ö´ĞĞÃüÁîÊ±·¢Éú´íÎó¡£");
 					Log.Error(ex.ToString());
 				}
 			}
@@ -1332,7 +1332,7 @@ namespace TShockAPI
 				}
 				else if (tsplr.mute)
 				{
-					tsplr.SendErrorMessage("ä½ è¢«ç¦è¨€äº†");
+					tsplr.SendErrorMessage("Äã±»½ûÑÔÁË¡£");
 					args.Handled = true;
 				}
 				else if (!TShock.Config.EnableChatAboveHeads)
@@ -1362,7 +1362,7 @@ namespace TShockAPI
 					tsplr.SendMessage(msg, tsplr.Group.R, tsplr.Group.G, tsplr.Group.B);
 
 					TSPlayer.Server.SendMessage(msg, tsplr.Group.R, tsplr.Group.G, tsplr.Group.B);
-					Log.Info("ç³»ç»Ÿ: {0}", msg);
+					Log.Info("Broadcast: {0}", msg);
 					args.Handled = true;
 				}
 			}
@@ -1390,7 +1390,7 @@ namespace TShockAPI
 			if (args.Command == "autosave")
 			{
 				Main.autoSave = Config.AutoSave = !Config.AutoSave;
-				Log.ConsoleInfo("è‡ªåŠ¨ä¿å­˜ " + (Config.AutoSave ? "å¼€å¯" : "å…³é—­"));
+				Log.ConsoleInfo("×Ô¶¯±£´æ " + (Config.AutoSave ? "ÒÑ¿ªÆô" : "ÒÑ¹Ø±Õ"));
 			}
 			else if (args.Command.StartsWith(Commands.Specifier) || args.Command.StartsWith(Commands.SilentSpecifier))
 			{
@@ -1461,22 +1461,22 @@ namespace TShockAPI
 
 			if (Config.EnableGeoIP && TShock.Geo != null)
 			{
-				Log.Info("{0} ({1}) ä» '{2}' ç»„ æ¥è‡ª '{3}' è¿›å…¥æ¸¸æˆ ({4}/{5})", player.Name, player.IP,
+				Log.Info("{0} ({1}) from '{2}' group from '{3}' joined. ({4}/{5})", player.Name, player.IP,
 									   player.Group.Name, player.Country, TShock.Utils.ActivePlayers(),
 									   TShock.Config.MaxSlots);
 				if (!player.SilentJoinInProgress)
-					Utils.Broadcast(string.Format("{0} ({1}) å·²åŠ å…¥", player.Name, player.Country), Color.Yellow);
+					Utils.Broadcast(string.Format("{0} ({1}) ½øÈëÓÎÏ·¡£", player.Name, player.Country), Color.Yellow);
 			}
 			else
 			{
-				Log.Info("{0} ({1}) ä» '{2}' ç»„ åŠ å…¥ ({3}/{4})", player.Name, player.IP,
+				Log.Info("{0} ({1})  ÓÃ»§×é'{2}' ½øÈëÓÎÏ·¡£({3}/{4})", player.Name, player.IP,
 									   player.Group.Name, TShock.Utils.ActivePlayers(), TShock.Config.MaxSlots);
 				if (!player.SilentJoinInProgress)
-					Utils.Broadcast(player.Name + "å·²åŠ å…¥", Color.Yellow);
+					Utils.Broadcast(player.Name + " ½øÈëÓÎÏ·¡£", Color.Yellow);
 			}
 
 			if (Config.DisplayIPToAdmins)
-				Utils.SendLogs(string.Format("{0} å·²åŠ å…¥ IPåœ°å€: {1}", player.Name, player.IP), Color.Blue);
+				Utils.SendLogs(string.Format("{0} ½øÈëÓÎÏ·¡£IP: {1}", player.Name, player.IP), Color.Blue);
 
 			Utils.ShowFileToUser(player, "motd.txt");
 
@@ -1493,12 +1493,12 @@ namespace TShockAPI
 				if (Main.ServerSideCharacter)
 				{
 					player.SendErrorMessage(
-						player.IgnoreActionsForInventory = String.Format("å¼ºåˆ¶å¼€è’å·²å¼€å¯ è¯·è¾“å…¥{0}æ³¨å†Œ è¿›è¡Œæ³¨å†Œ æˆ–è€…è¾“å…¥{0}ç™»å½• è¿›è¡Œç™»å½•", Commands.Specifier));//å¤‡æ³¨ä¸‹æˆ‘è‡ªå·±è¦ç”¨åˆ° By Sylar
+						player.IgnoreActionsForInventory = String.Format("±¾·şÎñÆ÷Ç¿ÖÆ¿ª»Ä¡£Çë{0}×¢²á »ò {0}µÇÈë ½øĞĞÓÎÏ·¡£", Commands.Specifier));
 					player.LoginHarassed = true;
 				}
 				else if (Config.RequireLogin)
 				{
-					player.SendErrorMessage("å¼ºåˆ¶å¼€è’å·²å¼€å¯ è¯·è¾“å…¥{0}æ³¨å†Œ è¿›è¡Œæ³¨å†Œ æˆ–è€…è¾“å…¥{0}ç™»å½• è¿›è¡Œç™»å½•", Commands.Specifier);
+					player.SendErrorMessage("Çë{0}×¢²á »ò {0}µÇÈë ½øĞĞÓÎÏ·¡£", Commands.Specifier);
 					player.LoginHarassed = true;
 				}
 			}
@@ -1508,7 +1508,7 @@ namespace TShockAPI
 			if (Config.RememberLeavePos && (RememberedPos.GetLeavePos(player.Name, player.IP) != Vector2.Zero) && !player.LoginHarassed)
 			{
 				player.RPPending = 3;
-				player.SendInfoMessage("æ‚¨å°†ä¼šè¢«ä¼ é€åˆ°ä¸Šä¸€æ¬¡é€€å‡ºæ—¶çš„åœ°ç‚¹");
+				player.SendInfoMessage("Äã½«±»´«ËÍµ½×îºóËùÔÚÎ»ÖÃ¡£");
 			}
 
 			args.Handled = true;
@@ -1659,7 +1659,7 @@ namespace TShockAPI
 
 					if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.BPm) > 2000)
 					{
-						player.SendErrorMessage("ä½ æ²¡æœ‰æƒé™åœ¨æ­¤å»ºé€ ");
+						player.SendErrorMessage("ÄãÃ»ÓĞ½¨ÖşÈ¨ÏŞ¡£");
 						player.BPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 					}
 					return true;
@@ -1673,7 +1673,7 @@ namespace TShockAPI
 
 				if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.BPm) > 2000)
 				{
-					player.SendErrorMessage("ä½ æ²¡æœ‰æƒé™åœ¨æ­¤å»ºé€ ");
+					player.SendErrorMessage("ÄãÃ»ÓĞ½¨ÖşÈ¨ÏŞ¡£");
 					player.BPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
 				return true;
@@ -1684,7 +1684,7 @@ namespace TShockAPI
 			{
 				if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.RPm) > 2000)
 				{
-					player.SendErrorMessage("è¯¥é¢†åœ°å·²è¢«ä¿æŠ¤");
+					player.SendErrorMessage("Õâ¸öÁìµØ±»±£»¤ÁË¡£");
 					player.RPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
 				return true;
@@ -1696,7 +1696,7 @@ namespace TShockAPI
 				{
 					if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.WPm) > 2000)
 					{
-						player.SendErrorMessage("åœ°å›¾å·²è¢«ä¿æŠ¤");
+						player.SendErrorMessage("È«Í¼±»±£»¤ÁË¡£");
 						player.WPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 					}
 					return true;
@@ -1711,7 +1711,7 @@ namespace TShockAPI
 					{
 						if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.SPm) > 2000)
 						{
-							player.SendErrorMessage("å‡ºç”Ÿç‚¹å·²è¢«ä¿æŠ¤");
+							player.SendErrorMessage("¸´»îµã±»±£»¤ÁË¡£");
 							player.SPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 						}
 						return true;
@@ -1736,11 +1736,11 @@ namespace TShockAPI
 				{
 					if (paint)
 					{
-						player.SendErrorMessage("ä½ æ²¡æœ‰æƒé™åœ¨æ­¤æ¶‚æ²¹æ¼†");
+						player.SendErrorMessage("ÄãÃ»ÓĞÍ¿ÆáÈ¨ÏŞ¡£");
 					}
 					else
 					{
-						player.SendErrorMessage("ä½ æ²¡æœ‰æƒé™å»ºé€ ");
+						player.SendErrorMessage("ÄãÃ»ÓĞ½¨ÖşÈ¨ÏŞ¡£");
 					}
 					player.BPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
@@ -1752,7 +1752,7 @@ namespace TShockAPI
 			{
 				if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.RPm) > 2000)
 				{
-					player.SendErrorMessage("è¯¥é¢†åœ°å·²è¢«ä¿æŠ¤");
+					player.SendErrorMessage("Õâ¸öÁìµØ±»±£»¤ÁË¡£");
 					player.RPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
 				return true;
@@ -1764,7 +1764,7 @@ namespace TShockAPI
 				{
 					if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.WPm) > 2000)
 					{
-						player.SendErrorMessage("åœ°å›¾å·²è¢«ä¿æŠ¤");
+						player.SendErrorMessage("È«Í¼±»±£»¤ÁË¡£");
 						player.WPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 					}
 					return true;
@@ -1779,7 +1779,7 @@ namespace TShockAPI
 					{
 						if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.SPm) > 1000)
 						{
-							player.SendErrorMessage("å‡ºç”Ÿç‚¹å·²è¢«ä¿æŠ¤");
+							player.SendErrorMessage("¸´»îµã±»±£»¤ÁË¡£");
 							player.SPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 						}
 						return true;
@@ -1843,7 +1843,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("æ£€æµ‹åˆ°ä½œå¼Šè¡Œä¸º è¯·ç§»é™¤ç‰©å“{0} ({1})ç„¶åé‡æ–°è¿›å…¥æœåŠ¡å™¨", item.name, inventory[i].stack),
+								String.Format("·¢ÏÖÎïÆ·ÊıÁ¿×÷±×¡£ ÒÆ³ı ÎïÆ· {0} ({1}) ²¢ÖØĞÂ¼ÓÈë¡£", item.name, inventory[i].stack),
 								Color.Cyan);
 						}
 					}
@@ -1862,7 +1862,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("æ£€æµ‹åˆ°ä½œå¼Šè¡Œä¸º è¯·ç§»é™¤ç‰©å“{0} ({1})ç„¶åé‡æ–°è¿›å…¥æœåŠ¡å™¨", item.name, armor[index].stack),
+								String.Format("·¢ÏÖÎïÆ·ÊıÁ¿×÷±×¡£ ÒÆ³ı ×°±¸ {0} ({1}) ²¢ÖØĞÂ¼ÓÈë¡£", item.name, armor[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1881,7 +1881,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("æ£€æµ‹åˆ°ä½œå¼Šè¡Œä¸º è¯·ç§»é™¤ç‰©å“{0} ({1})ç„¶åé‡æ–°è¿›å…¥æœåŠ¡å™¨", item.name, dye[index].stack),
+								String.Format("·¢ÏÖÎïÆ·ÊıÁ¿×÷±×¡£ ÒÆ³ı È¾ÁÏ {0} ({1}) ²¢ÖØĞÂ¼ÓÈë¡£", item.name, dye[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1901,7 +1901,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("æ£€æµ‹åˆ°ä½œå¼Šè¡Œä¸º è¯·ç§»é™¤ç‰©å“{0} ({1})ç„¶åé‡æ–°è¿›å…¥æœåŠ¡å™¨", item.name, miscEquips[index].stack),
+								String.Format("·¢ÏÖÎïÆ·ÊıÁ¿×÷±×¡£ ÒÆ³ı ÎïÆ· {0} ({1}) ²¢ÖØĞÂ¼ÓÈë¡£", item.name, miscEquips[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1923,7 +1923,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("æ£€æµ‹åˆ°ä½œå¼Šè¡Œä¸º è¯·ç§»é™¤ç‰©å“{0} ({1})ç„¶åé‡æ–°è¿›å…¥æœåŠ¡å™¨", item.name, miscDyes[index].stack),
+								String.Format("·¢ÏÖÎïÆ·ÊıÁ¿×÷±×¡£ ÒÆ³ı ÎïÆ·È¾ÁÏ {0} ({1}) ²¢ÖØĞÂ¼ÓÈë¡£", item.name, miscDyes[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1946,7 +1946,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("æ£€æµ‹åˆ°ä½œå¼Šè¡Œä¸º è¯·ç§»é™¤ç‰©å“{0} ({1})ç„¶åé‡æ–°è¿›å…¥æœåŠ¡å™¨", item.name, piggy[index].stack),
+								String.Format("·¢ÏÖÎïÆ·ÊıÁ¿×÷±×¡£ ÒÆ³ı ÖíÖí¹ŞÎïÆ· {0} ({1}) ²¢ÖØĞÂ¼ÓÈë¡£", item.name, piggy[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1969,7 +1969,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("æ£€æµ‹åˆ°ä½œå¼Šè¡Œä¸º è¯·ç§»é™¤ç‰©å“{0} ({1})ç„¶åé‡æ–°è¿›å…¥æœåŠ¡å™¨", item.name, safe[index].stack),
+								String.Format("·¢ÏÖÎïÆ·ÊıÁ¿×÷±×¡£ ÒÆ³ı ±£ÏÕÏäÎïÆ· {0} ({1}) ²¢ÖØĞÂ¼ÓÈë¡£", item.name, safe[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1987,7 +1987,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("æ£€æµ‹åˆ°ä½œå¼Šè¡Œä¸º è¯·ç§»é™¤ç‰©å“{0} ({1})ç„¶åé‡æ–°è¿›å…¥æœåŠ¡å™¨", item.name, trash.stack),
+								String.Format("·¢ÏÖÎïÆ·ÊıÁ¿×÷±×¡£ ÒÆ³ı À¬»øÍ°ÎïÆ· {0} ({1}) ²¢ÖØĞÂ¼ÓÈë¡£", item.name, trash.stack),
 								Color.Cyan);
 						}
 					}
