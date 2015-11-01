@@ -2193,7 +2193,19 @@ namespace TShockAPI
 						TSPlayer.All.SendSuccessMessage("{0} 召唤了{2}个{1}。", args.Player.Name, npc.name, amount);
 					}
 				}
-				else if (npc.type == 113)
+                else if (npc.type >= 1 && npc.type < Main.maxNPCTypes && npc.type != 113)
+                {
+                    TSPlayer.Server.SpawnNPC(npc.type, npc.cname, amount, args.Player.TileX, args.Player.TileY, 50, 20);
+                    if (args.Silent)
+                    {
+                        args.Player.SendSuccessMessage("召唤 {1} 个 {0} 。", npc.cname, amount);
+                    }
+                    else
+                    {
+                        TSPlayer.All.SendSuccessMessage("{0} 召唤了{2}个{1}。", args.Player.Name, npc.cname, amount);
+                    }
+                }
+                else if (npc.type == 113)
 				{
 					if (Main.wof >= 0 || (args.Player.Y / 16f < (Main.maxTilesY - 205)))
 					{
@@ -2416,18 +2428,25 @@ namespace TShockAPI
 
 			var npcStr = string.Join(" ", args.Parameters);
 			var matches = new List<NPC>();
-			foreach (var npc in Main.npc.Where(npc => npc.active))
-			{
-				if (string.Equals(npc.name, npcStr, StringComparison.CurrentCultureIgnoreCase))
-				{
-					matches = new List<NPC> { npc };
-					break;
-				}
-				if (npc.name.ToLower().StartsWith(npcStr.ToLower()))
-					matches.Add(npc);
-			}
+            foreach (var npc in Main.npc.Where(npc => npc.active))
+            {
+                if (string.Equals(npc.name, npcStr, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    matches = new List<NPC> { npc };
+                    break;
+                }
+                else if (string.Equals(npc.cname, npcStr, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    matches = new List<NPC> { npc };
+                    break;
+                }
+                if (npc.name.ToLower().StartsWith(npcStr.ToLower()))
+                    matches.Add(npc);
+                else if (npc.cname.ToLower().StartsWith(npcStr.ToLower()))
+                    matches.Add(npc);
+            }
 
-			if (matches.Count > 1)
+            if (matches.Count > 1)
 			{
 				TShock.Utils.SendMultipleMatchError(args.Player, matches.Select(n => n.name));
 				return;
