@@ -3620,7 +3620,7 @@ namespace TShockAPI
 					boss = "雪人军团";
 					break;
 				case -1:
-					boss = "哥布林入侵"";
+					boss = "哥布林入侵";
 					break;
 				default:
 					boss = String.Format("{0}", npc.name);
