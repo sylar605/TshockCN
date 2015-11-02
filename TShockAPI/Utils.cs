@@ -345,11 +345,17 @@ namespace TShockAPI
 				item.netDefaults(i);
 				if (String.IsNullOrWhiteSpace(item.name))
 					continue;
-				if (item.name.ToLower() == nameLower)
+                if (String.IsNullOrWhiteSpace(item.cname))
+                    continue;
+                if (item.name.ToLower() == nameLower)
 					return new List<Item> { item };
-				if (item.name.ToLower().StartsWith(nameLower))
+                if (item.cname.ToLower() == nameLower)
+                    return new List<Item> { item };
+                if (item.name.ToLower().StartsWith(nameLower))
 					found.Add(item.Clone());
-			}
+                if (item.cname.ToLower().StartsWith(nameLower))
+                    found.Add(item.Clone());
+            }
 			return found;
 		}
 

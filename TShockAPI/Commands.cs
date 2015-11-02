@@ -5172,7 +5172,12 @@ namespace TShockAPI
 					item.prefix = (byte)prefixId;
 					args.Player.SendSuccessMessage("给了{0}个{1}。", itemAmount, item.AffixName());
 				}
-				else
+                else if (args.Player.GiveItemCheck(item.type, item.cname, item.width, item.height, itemAmount, prefixId))
+                {
+                    item.prefix = (byte)prefixId;
+                    args.Player.SendSuccessMessage("给了{0}个{1}。", itemAmount, item.AffixName());
+                }
+                else
 				{
 					args.Player.SendErrorMessage("你不能刷被封禁的物品。");
 				}
@@ -5310,7 +5315,12 @@ namespace TShockAPI
 								args.Player.SendSuccessMessage(string.Format("给了{0} {1}个{2}。", plr.Name, itemAmount, item.name));
 								plr.SendSuccessMessage(string.Format("{0} 给了你 {1}个{2}。", args.Player.Name, itemAmount, item.name));
 							}
-							else
+                            else if (plr.GiveItemCheck(item.type, item.cname, item.width, item.height, itemAmount, prefix))
+                            {
+                                args.Player.SendSuccessMessage(string.Format("给了{0} {1}个{2}。", plr.Name, itemAmount, item.cname));
+                                plr.SendSuccessMessage(string.Format("{0} 给了你 {1}个{2}。", args.Player.Name, itemAmount, item.cname));
+                            }
+                            else
 							{
 								args.Player.SendErrorMessage("你不能刷被封禁的物品。");
 							}
