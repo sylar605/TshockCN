@@ -1890,7 +1890,9 @@ namespace TShockAPI
 				if (args.Parameters.Count < 1)
 				{
 					args.Player.SendErrorMessage("格式错误。 格式: {0}入侵 <名称> [波数]", Specifier);
-					return;
+                    args.Player.SendErrorMessage("例如 {0}invade 霜月 1 代表从第一波开始召唤霜月", Specifier);
+                    args.Player.SendErrorMessage("入侵名如下 海盗 哥布林 雪人 南瓜月 霜月 火星人", Specifier);
+                    return;
 				}
 
 				int wave = 1;
@@ -1898,24 +1900,28 @@ namespace TShockAPI
 				{
 					case "goblin":
 					case "goblins":
-						TSPlayer.All.SendInfoMessage("{0} 引来了哥布林军队入侵。", args.Player.Name);
+                    case "哥布林":
+						TSPlayer.All.SendInfoMessage("{0}召唤了哥布林入侵", args.Player.Name);
 						TShock.StartInvasion(1);
 						break;
 
 					case "snowman":
 					case "snowmen":
-						TSPlayer.All.SendInfoMessage("{0} 引来了雪人军团入侵。", args.Player.Name);
+                    case "雪人":
+						TSPlayer.All.SendInfoMessage("{0}召唤了雪人军团入侵", args.Player.Name);
 						TShock.StartInvasion(2);
 						break;
 
 					case "pirate":
 					case "pirates":
-						TSPlayer.All.SendInfoMessage("{0} 引来了海盗入侵。", args.Player.Name);
+                    case "海盗":
+						TSPlayer.All.SendInfoMessage("{0}召唤了海盗入侵", args.Player.Name);
 						TShock.StartInvasion(3);
 						break;
 
 					case "pumpkin":
 					case "pumpkinmoon":
+                    case "南瓜月":
 						if (args.Parameters.Count > 1)
 						{
 							if (!int.TryParse(args.Parameters[1], out wave) || wave <= 0)
@@ -1929,11 +1935,12 @@ namespace TShockAPI
 						Main.bloodMoon = false;
 						NPC.waveKills = 0f;
 						NPC.waveCount = wave;
-						TSPlayer.All.SendInfoMessage("{0} 召来了南瓜月第 {1} 波。", args.Player.Name, wave);
+						TSPlayer.All.SendInfoMessage("{0}从第{1}波开始召唤了南瓜月!", args.Player.Name, wave);
 						break;
 
 					case "frost":
 					case "frostmoon":
+                    case "霜月":
 						if (args.Parameters.Count > 1)
 						{
 							if (!int.TryParse(args.Parameters[1], out wave) || wave <= 0)
@@ -1947,12 +1954,13 @@ namespace TShockAPI
 						Main.bloodMoon = false;
 						NPC.waveKills = 0f;
 						NPC.waveCount = wave;
-						TSPlayer.All.SendInfoMessage("{0} 召来了霜月第 {1} 波。", args.Player.Name, wave);
+						TSPlayer.All.SendInfoMessage("{0}从第{1}波开始召唤了霜月!", args.Player.Name, wave);
 						break;
 
 					case "martian":
 					case "martians":
-						TSPlayer.All.SendInfoMessage("{0} 引来了火星入侵。", args.Player.Name);
+                    case "火星人":
+						TSPlayer.All.SendInfoMessage("{0}召唤了火星人入侵!", args.Player.Name);
 						TShock.StartInvasion(4);
 						break;
 				}
@@ -2020,8 +2028,11 @@ namespace TShockAPI
 		{
 			if (args.Parameters.Count < 1 || args.Parameters.Count > 2)
 			{
-				args.Player.SendErrorMessage("格式错误。 格式: {0}刷Boss <boss type> [amount]", Specifier);
-				return;
+				args.Player.SendErrorMessage("指令错误 使用{0}spawnboss BOSS名 数量 来召唤BOSS", Specifier);
+                args.Player.SendErrorMessage("例如{0}spawnboss 克鲁苏之脑 1 表示召唤了1只克鲁苏之脑", Specifier);
+                args.Player.SendErrorMessage("BOSS名如下 克鲁苏之脑 机械毁灭者 猪鲨公爵 世界吞噬者 克鲁苏之眼 石头人 史莱姆国王", Specifier);
+                args.Player.SendErrorMessage("世纪之花 机械骷髅王 蜂后 骷髅王 魔眼双子 肉山大魔墙 月之领主", Specifier);
+                return;
 			}
 
 			int amount = 1;
@@ -2036,6 +2047,7 @@ namespace TShockAPI
 			{
 				case "*":
 				case "all":
+                case "所有":
 					int[] npcIds = { 4, 13, 35, 50, 125, 126, 127, 134, 222, 245, 262, 266, 370, 398 };
 					TSPlayer.Server.SetTime(false, 0.0);
 					foreach (int i in npcIds)
@@ -2047,81 +2059,97 @@ namespace TShockAPI
 					return;
 				case "brain":
 				case "brain of cthulhu":
+                case "克鲁苏之脑":
 					npc.SetDefaults(266);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个克苏鲁之脑。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只克鲁苏之脑", args.Player.Name, amount);
 					return;
 				case "destroyer":
+                case "机械毁灭者":
 					npc.SetDefaults(134);
 					TSPlayer.Server.SetTime(false, 0.0);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个钢铁毁灭者。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只机械毁灭者", args.Player.Name, amount);
 					return;
 				case "duke":
 				case "duke fishron":
 				case "fishron":
+                case "猪鲨公爵":
+                case "猪鲨":
 					npc.SetDefaults(370);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个猪鲨公爵。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只猪鲨公爵", args.Player.Name, amount);
 					return;
 				case "eater":
 				case "eater of worlds":
+                case "世界吞噬者":
 					npc.SetDefaults(13);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个世界吞噬者。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只世界吞噬者", args.Player.Name, amount);
 					return;
 				case "eye":
 				case "eye of cthulhu":
-					npc.SetDefaults(4);
+                case "克鲁苏之眼":
+                    npc.SetDefaults(4);
 					TSPlayer.Server.SetTime(false, 0.0);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
 					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个克苏鲁之眼。", args.Player.Name, amount);
 					return;
 				case "golem":
+                case "石头人":
 					npc.SetDefaults(245);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个石巨人。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只石头人", args.Player.Name, amount);
 					return;
 				case "king":
 				case "king slime":
+                case "史莱姆国王":
+                case "史莱姆王":
 					npc.SetDefaults(50);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个史莱姆王。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只史莱姆国王", args.Player.Name, amount);
 					return;
 				case "plantera":
+                case "世纪之花":
 					npc.SetDefaults(262);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个世纪之花。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只世纪之花", args.Player.Name, amount);
 					return;
 				case "prime":
 				case "skeletron prime":
+                case "机械骷髅王":
 					npc.SetDefaults(127);
 					TSPlayer.Server.SetTime(false, 0.0);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个骷髅总理。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只机械骷髅王", args.Player.Name, amount);
 					return;
 				case "queen":
 				case "queen bee":
+                case "蜂后":
 					npc.SetDefaults(222);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个蜂后。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只蜂后", args.Player.Name, amount);
 					return;
 				case "skeletron":
+                case "骷髅王":
 					npc.SetDefaults(35);
 					TSPlayer.Server.SetTime(false, 0.0);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个地牢守卫。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只骷髅王", args.Player.Name, amount);
 					return;
 				case "twins":
+                case "魔眼双子":
 					TSPlayer.Server.SetTime(false, 0.0);
 					npc.SetDefaults(125);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
 					npc.SetDefaults(126);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个双子魔眼。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只魔眼双子", args.Player.Name, amount);
 					return;
 				case "wof":
 				case "wall of flesh":
+                case "肉山大魔墙":
+                case "肉山":
 					if (Main.wof >= 0)
 					{
 						args.Player.SendErrorMessage("不能同时大两个血肉之墙。");
@@ -2133,16 +2161,18 @@ namespace TShockAPI
 						return;
 					}
 					NPC.SpawnWOF(new Vector2(args.Player.X, args.Player.Y));
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了血肉之墙。", args.Player.Name);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了肉山大魔墙", args.Player.Name);
 					return;
 				case "moon":
 				case "moon lord":
-					npc.SetDefaults(398);
+                case "月之领主":
+                case "月总":
+                    npc.SetDefaults(398);
 					TSPlayer.Server.SpawnNPC(npc.type, npc.name, amount, args.Player.TileX, args.Player.TileY);
-					TSPlayer.All.SendSuccessMessage("{0} 召唤了{1}个月神。", args.Player.Name, amount);
+					TSPlayer.All.SendSuccessMessage("{0}召唤了{1}只月之领主", args.Player.Name, amount);
 					return;
 				default:
-					args.Player.SendErrorMessage("类型错误。");
+					args.Player.SendErrorMessage("错误的BOSS名");
 					return;
 			}
 		}
