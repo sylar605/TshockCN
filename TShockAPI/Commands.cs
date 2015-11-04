@@ -5077,8 +5077,8 @@ namespace TShockAPI
 			{
 				if (Main.npc[i].active && ((npcId == 0 && !Main.npc[i].townNPC && Main.npc[i].netID != NPCID.TargetDummy) || Main.npc[i].netID == npcId))
 				{
-					TSPlayer.Server.StrikeNPC(i, 99999, 0, 0);
-					kills++;
+                    TSPlayer.Server.StrikeNPC(i, (int)(Main.npc[i].life + (Main.npc[i].defense * 0.5)), 0, 0);
+                    kills++;
 				}
 			}
 			TSPlayer.All.SendInfoMessage("{0} 秒杀了 {1} 个怪物", args.Player.Name, kills);
