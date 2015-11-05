@@ -380,7 +380,7 @@ namespace TShockAPI
 			{
 				HelpText = "Kills hostile NPCs or NPCs of a certain type。"
 			});
-			add(new Command(Permissions.renamenpc, RenameNPC, "重命名NPC", "renamenpc")
+			add(new Command(Permissions.renamenpc, RenameNPC, "重命名npc", "renamenpc")
 			{
 				HelpText = "Renames an NPC。"
 			});
@@ -392,7 +392,7 @@ namespace TShockAPI
 			{
 				HelpText = "Sets the maximum number of NPCs。"
 			});
-			add(new Command(Permissions.spawnboss, SpawnBoss, "刷Boss", "spawnboss", "sb")
+			add(new Command(Permissions.spawnboss, SpawnBoss, "刷boss", "spawnboss", "sb")
 			{
 				AllowServer = false,
 				HelpText = "Spawns a number of bosses around you。"
@@ -432,7 +432,7 @@ namespace TShockAPI
 				AllowServer = false,
 				HelpText = "Teleports a player to yourself。"
 			});
-			add(new Command(Permissions.tpnpc, TPNpc, "去NPC", "tpnpc")
+			add(new Command(Permissions.tpnpc, TPNpc, "去npc", "tpnpc")
 			{
 				AllowServer = false,
 				HelpText = "Teleports you to an npc。"
@@ -1890,7 +1890,7 @@ namespace TShockAPI
 				if (args.Parameters.Count < 1)
 				{
 					args.Player.SendErrorMessage("格式错误。 格式: {0}入侵 <名称> [波数]", Specifier);
-                    args.Player.SendErrorMessage("例如 {0}invade 霜月 1 代表从第一波开始召唤霜月", Specifier);
+                    args.Player.SendErrorMessage("例如 {0}入侵 霜月 1 代表从第一波开始召唤霜月", Specifier);
                     args.Player.SendErrorMessage("入侵名如下 海盗 哥布林 雪人 南瓜月 霜月 火星人", Specifier);
                     return;
 				}
@@ -2028,8 +2028,8 @@ namespace TShockAPI
 		{
 			if (args.Parameters.Count < 1 || args.Parameters.Count > 2)
 			{
-				args.Player.SendErrorMessage("指令错误 使用{0}spawnboss BOSS名 数量 来召唤BOSS", Specifier);
-                args.Player.SendErrorMessage("例如{0}spawnboss 克鲁苏之脑 1 表示召唤了1只克鲁苏之脑", Specifier);
+				args.Player.SendErrorMessage("指令错误 使用{0}刷Boss BOSS名 数量 来召唤BOSS", Specifier);
+                args.Player.SendErrorMessage("例如{0}刷Boss 克鲁苏之脑 1 表示召唤了1只克鲁苏之脑", Specifier);
                 args.Player.SendErrorMessage("BOSS名如下 克鲁苏之脑 机械毁灭者 猪鲨公爵 世界吞噬者 克鲁苏之眼 石头人 史莱姆国王", Specifier);
                 args.Player.SendErrorMessage("世纪之花 机械骷髅王 蜂后 骷髅王 魔眼双子 肉山大魔墙 月之领主", Specifier);
                 return;
@@ -4544,7 +4544,7 @@ namespace TShockAPI
 
 		private static void GetVersion(CommandArgs args)
 		{
-			args.Player.SendInfoMessage("TShock: {0} ({1}) 汉化版 Beta 1", TShock.VersionNum, TShock.VersionCodename);
+			args.Player.SendInfoMessage("TShock: {0} ({1}) 汉化版 Beta 2", TShock.VersionNum, TShock.VersionCodename);
 		}
 
 		private static void ListConnectedPlayers(CommandArgs args)

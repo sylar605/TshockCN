@@ -290,7 +290,7 @@ namespace TShockAPI
 				if (Config.EnableGeoIP && File.Exists(geoippath))
 					Geo = new GeoIPCountry(geoippath);
 
-				Log.ConsoleInfo("TShock {0} ({1}) 汉化版 Beta 1 正在运行.", Version, VersionCodename);ConfigFile.DumpDescriptions();
+				Log.ConsoleInfo("TShock {0} ({1}) 汉化版 Beta 2 正在运行.", Version, VersionCodename);ConfigFile.DumpDescriptions();
 
 				ServerApi.Hooks.GamePostInitialize.Register(this, OnPostInit);
 				ServerApi.Hooks.GameUpdate.Register(this, OnUpdate);
@@ -1081,7 +1081,7 @@ namespace TShockAPI
 		/// <param name="empty">empty - True/false if the server is empty; determines if we should use Utils.ActivePlayers() for player count or 0.</param>
 		private void SetConsoleTitle(bool empty)
 		{
-			Console.Title = string.Format("{0}{1}/{2} @ {3}:{4} (TShock汉化版 Terraria v{5}) Beta 1 - Touhou汉化组",
+			Console.Title = string.Format("{0}{1}/{2} @ {3}:{4} (TShock汉化版 Terraria v{5}) Beta 2 - Touhou汉化组",
 					!string.IsNullOrWhiteSpace(Config.ServerName) ? Config.ServerName + " - " : "",
 					empty ? 0 : Utils.ActivePlayers(),
 					Config.MaxSlots, Netplay.ServerIP.ToString(), Netplay.ListenPort, Version);
