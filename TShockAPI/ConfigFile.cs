@@ -186,7 +186,9 @@ namespace TShockAPI
 		[Description("密码加密算法 \"sha512\", \"sha256\", \"md5\"。")]
 		public string HashAlgorithm = "sha512";
 
-		[Description("缓冲包。")]
+        [Obsolete("PacketBuffered is no longer used")]
+
+        [Description("缓冲包。")]
 		public bool BufferPackets = true;
 
 		[Description("服务器满时提示信息。")]

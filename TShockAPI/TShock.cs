@@ -99,8 +99,9 @@ namespace TShockAPI
 		public static IDbConnection DB;
 		/// <summary>OverridePort - Determines if TShock should override the server port.</summary>
 		public static bool OverridePort;
-		/// <summary>PacketBuffer - Static reference to the packet bufferer system, which buffers packets to clients for better performance.</summary>
-		public static PacketBufferer PacketBuffer;
+        /// <summary>PacketBuffer - Static reference to the packet bufferer system, which buffers packets to clients for better performance.</summary>
+        [Obsolete("PacketBufferer is no longer used", true)]
+        public static PacketBufferer PacketBuffer;
 		/// <summary>Geo - Static reference to the GeoIP system which determines the location of an IP address.</summary>
 		public static GeoIPCountry Geo;
 		/// <summary>RestApi - Static reference to the Rest API authentication manager.</summary>
@@ -290,7 +291,7 @@ namespace TShockAPI
 				if (Config.EnableGeoIP && File.Exists(geoippath))
 					Geo = new GeoIPCountry(geoippath);
 
-				Log.ConsoleInfo("TShock {0} ({1}) 汉化版 Beta 2 正在运行.", Version, VersionCodename);ConfigFile.DumpDescriptions();
+				Log.ConsoleInfo("TShock {0} ({1}) 汉化版 Beta 4 正在运行.", Version, VersionCodename);ConfigFile.DumpDescriptions();
 
 				ServerApi.Hooks.GamePostInitialize.Register(this, OnPostInit);
 				ServerApi.Hooks.GameUpdate.Register(this, OnUpdate);
@@ -322,9 +323,7 @@ namespace TShockAPI
 				if (Config.RestApiEnabled)
 					RestApi.Start();
 
-				if (Config.BufferPackets)
-					PacketBuffer = new PacketBufferer(this);
-
+				
 				Log.ConsoleInfo("自动保存 " + (Config.AutoSave ? "已开启" : "已关闭"));
 				Log.ConsoleInfo("自动备份 " + (Backups.Interval > 0 ? "已开启" : "已关闭"));
 
@@ -968,8 +967,8 @@ namespace TShockAPI
 					{
 						if (CheckIgnores(player))
 						{
-							player.Disable("本服务器强制开荒。请{0}注册 或 {0}登入 进行游戏。", flags);
-						}
+                            player.Disable(flags: flags);
+                        }
 						else if (Itembans.ItemIsBanned(player.TPlayer.inventory[player.TPlayer.selectedItem].name, player))
 						{
 							player.Disable("携带违禁品: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name, flags);
@@ -1048,8 +1047,8 @@ namespace TShockAPI
 
 						if (CheckIgnores(player))
 						{
-							player.Disable("check ignores failed in OnSecondUpdate()", flags);
-						}
+                            player.Disable(flags: flags);
+                        }
 						else if (Itembans.ItemIsBanned(player.TPlayer.inventory[player.TPlayer.selectedItem].name, player))
 						{
 							player.Disable("携带违禁品: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name, flags);
@@ -1081,7 +1080,7 @@ namespace TShockAPI
 		/// <param name="empty">empty - True/false if the server is empty; determines if we should use Utils.ActivePlayers() for player count or 0.</param>
 		private void SetConsoleTitle(bool empty)
 		{
-			Console.Title = string.Format("{0}{1}/{2} @ {3}:{4} (TShock汉化版 Terraria v{5}) Beta 2 - Touhou汉化组",
+			Console.Title = string.Format("{0}{1}/{2} @ {3}:{4} (TShock汉化版 Terraria v{5}) Beta 4 - Touhou汉化组",
 					!string.IsNullOrWhiteSpace(Config.ServerName) ? Config.ServerName + " - " : "",
 					empty ? 0 : Utils.ActivePlayers(),
 					Config.MaxSlots, Netplay.ServerIP.ToString(), Netplay.ListenPort, Version);

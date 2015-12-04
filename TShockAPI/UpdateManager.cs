@@ -27,7 +27,7 @@ namespace TShockAPI
 {
 	public class UpdateManager
 	{
-		private string updateUrl = "http://update.tshock.co/latest/";
+		private string updateUrl = "http://tshockcn.com/latest/";
 
 		/// <summary>
 		/// Check once every X minutes.
@@ -116,7 +116,7 @@ namespace TShockAPI
 
 		private void NotifyAdministrator(TSPlayer player, string[] changes)
 		{
-			player.SendMessage("The server is out of date. Latest version: ", Color.Red);
+			player.SendMessage("正在检测服务器版本是否有更新，请稍后！\r\n loding...\r\n检测成功，请注意版本信息！： ", Color.Red);
 			for (int j = 0; j < changes.Length; j++)
 			{
 				player.SendMessage(changes[j], Color.Red);
