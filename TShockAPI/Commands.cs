@@ -4544,7 +4544,7 @@ namespace TShockAPI
 
 		private static void GetVersion(CommandArgs args)
 		{
-			args.Player.SendInfoMessage("TShock: {0} ({1}) 汉化版 Beta 4", TShock.VersionNum, TShock.VersionCodename);
+			args.Player.SendInfoMessage("TShock: {0} ({1}) 汉化版 Beta 5", TShock.VersionNum, TShock.VersionCodename);
 		}
 
 		private static void ListConnectedPlayers(CommandArgs args)
