@@ -981,7 +981,7 @@ namespace TShockAPI
 
                 if (TShock.Users.GetUserByName(user.Name) == null && user.Name != TSServerPlayer.AccountName) // Cheap way of checking for existance of a user
 				{
-					args.Player.SendSuccessMessage("用户 \"{0}\" 已被注册。请直接登录或换玩家名进行游戏。", user.Name);
+					args.Player.SendSuccessMessage("注册成功 请登录。", user.Name);
 					args.Player.SendSuccessMessage("你的密码是{0}。", echoPassword);
 					TShock.Users.AddUser(user);
 					TShock.Log.ConsoleInfo("{0} 注册了 \"{1}\"。", args.Player.Name, user.Name);
