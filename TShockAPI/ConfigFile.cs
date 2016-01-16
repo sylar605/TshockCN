@@ -30,8 +30,13 @@ namespace TShockAPI
 	/// <summary>ConfigFile - The config file class, which contains the configuration for a server that is serialized into JSON and deserialized on load.</summary>
 	public class ConfigFile
 	{
-		/// <summary>InvasionMultiplier - The equation for calculating invasion size = 100 + (multiplier * (number of active players > 200 hp)).</summary>
-		[Description(
+        /// <summary>Map File in root flood</summary>
+        [Description("地图文件是否存放在根目录")]
+        public bool WorldsInRoot = false;
+
+
+        /// <summary>InvasionMultiplier - The equation for calculating invasion size = 100 + (multiplier * (number of active players > 200 hp)).</summary>
+        [Description(
 			"入侵怪物数量=这个数字*200血以上玩家数量 + 100"
 			)]
 		public int InvasionMultiplier = 1;
@@ -514,10 +519,11 @@ namespace TShockAPI
 		/// </summary>
 		public static Action<ConfigFile> ConfigRead;
 
-		/// <summary>
-		/// Dumps all configuration options to a text file in Markdown format
-		/// </summary>
-		public static void DumpDescriptions()
+
+        /// <summary>
+        /// Dumps all configuration options to a text file in Markdown format
+        /// </summary>
+        public static void DumpDescriptions()
 		{
 			var sb = new StringBuilder();
 			var defaults = new ConfigFile();

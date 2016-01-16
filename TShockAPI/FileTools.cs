@@ -131,6 +131,29 @@ namespace TShockAPI
 			TShock.ServerSideCharacterConfig.Write(ServerSideCharacterConfigPath);
 		}
 
+        public static void SetupConfigTmp()
+        {
+            if (!Directory.Exists(TShock.SavePath))
+            {
+                Directory.CreateDirectory(TShock.SavePath);
+            }
+
+            CreateIfNot(RulesPath, "Respect the admins!\nDon't use TNT!");
+            CreateIfNot(MotdPath, MotdFormat);
+
+            CreateIfNot(WhitelistPath);
+            if (File.Exists(ConfigPath))
+            {
+                TShock.Config = ConfigFile.Read(ConfigPath);
+                // Add all the missing config properties in the json file
+            }
+        }
+
+        public static void UnloadConfigTmp()
+        {
+            TShock.Config = null;
+        }
+
 		/// <summary>
 		/// Tells if a user is on the whitelist
 		/// </summary>
