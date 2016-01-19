@@ -2229,7 +2229,7 @@ namespace Terraria
 			Main.PendingPlayer = null;
 			Main.WorldList = new List<WorldFileData>();
 			Main.ActiveWorldFileData = new WorldFileData();
-			object[] objArray = new object[] { Environment.GetFolderPath(Environment.SpecialFolder.Personal), Path.DirectorySeparatorChar, "My Games", Path.DirectorySeparatorChar, "Terraria" };
+			object[] objArray = new object[] { "./" };
 			Main.SavePath = string.Concat(objArray);
 			Main.WorldPath = string.Concat(Main.SavePath, Path.DirectorySeparatorChar, "Worlds");
 			Main.CloudWorldPath = "worlds";
