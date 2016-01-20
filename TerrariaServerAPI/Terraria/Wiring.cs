@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.ID;
+using System.Threading;
 
 namespace Terraria
 {
@@ -58,8 +59,9 @@ namespace Terraria
 			Wiring._mechX[Wiring._numMechs] = i;
 			Wiring._mechY[Wiring._numMechs] = j;
 			Wiring._mechTime[Wiring._numMechs] = time;
-			Wiring._numMechs = Wiring._numMechs + 1;
+			Interlocked.Increment(ref _numMechs);
 			return true;
+
 		}
 
 		public static void DeActive(int i, int j)
@@ -197,6 +199,7 @@ namespace Terraria
 
 		private static void HitWire(DoubleStack<Point16> next, int wireType)
 		{
+			
 			int num;
 			int num1;
 			bool flag;
@@ -312,7 +315,7 @@ namespace Terraria
 
 		private static void HitWireSingle(int i, int j)
 		{
-			int num;
+            int num;
 			int num1;
 			short num2;
 			Tile tile = Main.tile[i, j];
@@ -339,7 +342,9 @@ namespace Terraria
 				}
 				else
 				{
-					Wiring.ReActive(i, j);
+                    {
+                        Wiring.ReActive(i, j);
+                    }
 				}
 			}
 			if (tile.active())
@@ -1092,11 +1097,10 @@ namespace Terraria
 												single = (float)(12 * num67);
 												num66 = 20;
 												num65 = 98;
-												zero = new Vector2((float)(i * 16 + 8), (float)(j * 16 + 7))
-												{
-													X = zero.X + (float)(10 * num67),
-													Y = zero.Y + 2f
-												};
+                                                    zero = new Vector2((float)(i * 16 + 8), (float)(j * 16 + 7));
+
+                                                    zero.X += (float)(10 * num67);
+                                                    zero.Y += 2f;
 												break;
 											}
 											case 1:
@@ -1113,11 +1117,14 @@ namespace Terraria
 												single = (float)(12 * num68);
 												num66 = 40;
 												num65 = 184;
-												zero = new Vector2((float)(i * 16 + 8), (float)(j * 16 + 7))
-												{
-													X = zero.X + (float)(10 * num68),
-													Y = zero.Y + 2f
-												};
+                                                    zero = new Vector2((float)(i * 16 + 8), (float)(j * 16 + 7));
+
+                                                    zero.X += (float)(10 * num68);
+                                                    zero.Y += 2f;
+												//{
+												//	X = zero.X + (float)(10 * num68),
+												//	Y = zero.Y + 2f
+												//};
 												break;
 											}
 											case 2:
@@ -1134,11 +1141,9 @@ namespace Terraria
 												single = (float)(5 * num69);
 												num66 = 40;
 												num65 = 187;
-												zero = new Vector2((float)(i * 16 + 8), (float)(j * 16 + 7))
-												{
-													X = zero.X + (float)(10 * num69),
-													Y = zero.Y + 2f
-												};
+                                                    zero = new Vector2((float)(i * 16 + 8), (float)(j * 16 + 7));
+                                                    zero.X += (float)(10 * num69);
+													zero.Y += 2f;
 												break;
 											}
 											case 3:
@@ -1200,10 +1205,9 @@ namespace Terraria
 												single = (float)Main.rand.Next(-20, 21) * 0.05f;
 												single1 = 4f + (float)Main.rand.Next(0, 21) * 0.05f;
 												num66 = 40;
-												zero = new Vector2((float)(i * 16 + 8), (float)(j * 16 + 16))
-												{
-													Y = zero.Y + 6f
-												};
+                                                    zero = new Vector2((float)(i * 16 + 8), (float)(j * 16 + 16));
+
+                                                    zero.Y += 6f;
 												Projectile.NewProjectile((float)((int)zero.X), (float)((int)zero.Y), single, single1, num65, num66, 2f, Main.myPlayer, 0f, 0f);
 												break;
 											}
@@ -1575,7 +1579,8 @@ namespace Terraria
 						Wiring._mechY[l] = Wiring._mechY[l + 1];
 						Wiring._mechTime[l] = Wiring._mechTime[l + 1];
 					}
-					Wiring._numMechs = Wiring._numMechs - 1;
+					Interlocked.Decrement(ref _numMechs);
+
 				}
 			}
 		}

@@ -1199,7 +1199,7 @@ namespace Terraria
 				return this.name;
 			}
 		}
-		public string AffixName_Old()
+        public string AffixName_Old()
 		{
 			string text = "";
 			if (Lang.lang <= 1)
@@ -4591,7 +4591,8 @@ namespace Terraria
 			else if (type == 9)
 			{
 				this.name = "Wood";
-				this.useStyle = 1;
+                this.cname = "木头";
+                this.useStyle = 1;
 				this.useTurn = true;
 				this.useAnimation = 15;
 				this.useTime = 10;

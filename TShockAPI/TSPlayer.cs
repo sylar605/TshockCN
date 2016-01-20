@@ -565,7 +565,7 @@ namespace TShockAPI
 			if (client == null)
 				return;
 
-			TShock.PacketBuffer.Flush(client);
+			//TShock.PacketBuffer.Flush(client);
 		}
 
 
@@ -811,8 +811,9 @@ namespace TShockAPI
 		public virtual void SetTeam(int team)
 		{
 			Main.player[Index].team = team;
-			SendData(PacketTypes.PlayerTeam, "", Index);
-		}
+            NetMessage.SendData((int)PacketTypes.PlayerTeam, -1, -1, "", Index);
+            NetMessage.SendData((int)PacketTypes.PlayerTeam, -1, Index, "", Index);
+        }
 
 		private DateTime LastDisableNotification = DateTime.UtcNow;
 		public int ActiveChest = -1;
@@ -836,52 +837,64 @@ namespace TShockAPI
 			}
 		}
 
-		/// <summary>
-		/// Disables the player for the given <paramref name="reason"/>
-		/// </summary>
-		/// <param name="reason">The reason why the player was disabled.</param>
-		/// <param name="flags">Flags to dictate where this event is logged to.</param>
-		public virtual void Disable(string reason = "", DisableFlags flags = DisableFlags.WriteToLog)
-		{
-			LastThreat = DateTime.UtcNow;
-			SetBuff(BuffID.Frozen, 330, true);
-			SetBuff(BuffID.Stoned, 330, true);
-			SetBuff(BuffID.Webbed, 330, true);
+        /// <summary>
+        /// Disables the player for the given <paramref name="reason"/>
+        /// </summary>
+        /// <param name="reason">The reason why the player was disabled.</param>
+        /// <param name="flags">Flags to dictate where this event is logged to.</param>
+        public virtual void Disable(string reason = "", DisableFlags flags = DisableFlags.WriteToLog)
+        {
+            LastThreat = DateTime.UtcNow;
+            SetBuff(BuffID.Frozen, 330, true);
+            SetBuff(BuffID.Stoned, 330, true);
+            SetBuff(BuffID.Webbed, 330, true);
 
-			if (ActiveChest != -1)
-			{
-				ActiveChest = -1;
-				SendData(PacketTypes.ChestOpen, "", -1);
-			}
+            if (ActiveChest != -1)
+            {
+                ActiveChest = -1;
+                SendData(PacketTypes.ChestOpen, "", -1);
+            }
 
-			if (!string.IsNullOrEmpty(reason))
-			{
-				if ((DateTime.UtcNow - LastDisableNotification).TotalMilliseconds > 5000)
-				{
-					if (flags.HasFlag(DisableFlags.WriteToConsole))
-					{
-						if (flags.HasFlag(DisableFlags.WriteToLog))
-						{
-							TShock.Log.ConsoleInfo("Player {0} has been disabled for {1}.", Name, reason);
-						}
-						else
-						{
-							Server.SendInfoMessage("Player {0} has been disabled for {1}.", Name, reason);
-						}
-					}
+            if (!string.IsNullOrEmpty(reason))
+            {
+                if ((DateTime.UtcNow - LastDisableNotification).TotalMilliseconds > 5000)
+                {
+                    if (flags.HasFlag(DisableFlags.WriteToConsole))
+                    {
+                        if (flags.HasFlag(DisableFlags.WriteToLog))
+                        {
+                            TShock.Log.ConsoleInfo("Player {0} has been disabled for {1}.", Name, reason);
+                        }
+                        else
+                        {
+                            Server.SendInfoMessage("Player {0} has been disabled for {1}.", Name, reason);
+                        }
+                    }
 
-					LastDisableNotification = DateTime.UtcNow;
-				}
-			}
+                    LastDisableNotification = DateTime.UtcNow;
+                }
+            }
 
-			var trace = new StackTrace();
-			StackFrame frame = null;
-			frame = trace.GetFrame(1);
-			if (frame != null && frame.GetMethod().DeclaringType != null)
-				TShock.Log.Debug(frame.GetMethod().DeclaringType.Name + " called Disable().");
-		}
+            /*
+             * Calling new StackTrace() is incredibly expensive, and must be disabled
+             * in release builds.  Use a conditional call instead.
+             */
+            LogStackFrame();
+            }
 
-		public virtual void Whoopie(object time)
+        [Conditional("DEBUG")]
+        private void LogStackFrame()
+        {
+            var trace = new StackTrace();
+            StackFrame frame = null;
+            frame = trace.GetFrame(1);
+            if (frame != null && frame.GetMethod().DeclaringType != null)
+            TShock.Log.Debug(frame.GetMethod().DeclaringType.Name + " called Disable().");
+        }
+
+
+
+        public virtual void Whoopie(object time)
 		{
 			var time2 = (int) time;
 			var launch = DateTime.UtcNow;
