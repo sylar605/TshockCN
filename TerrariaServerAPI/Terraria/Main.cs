@@ -29,10 +29,6 @@ namespace Terraria
 {
 	public class Main
 	{
-		public static object[] DefaultSavePath = new object[] { Environment.GetFolderPath(Environment.SpecialFolder.Personal), Path.DirectorySeparatorChar, "My Games", Path.DirectorySeparatorChar, "Terraria" };
-
-		public static object[] InFolderSavePath = new object[] { "./" };
-
 		public const int offLimitBorderTiles = 40;
 
 		public const int maxItemTypes = 3602;
@@ -2233,7 +2229,8 @@ namespace Terraria
 			Main.PendingPlayer = null;
 			Main.WorldList = new List<WorldFileData>();
 			Main.ActiveWorldFileData = new WorldFileData();
-			Main.SavePath = string.Concat(DefaultSavePath);
+			object[] objArray = new object[] { Environment.GetFolderPath(Environment.SpecialFolder.Personal), Path.DirectorySeparatorChar, "My Games", Path.DirectorySeparatorChar, "Terraria" };
+			Main.SavePath = string.Concat(objArray);
 			Main.WorldPath = string.Concat(Main.SavePath, Path.DirectorySeparatorChar, "Worlds");
 			Main.CloudWorldPath = "worlds";
 			Main.PlayerPath = string.Concat(Main.SavePath, Path.DirectorySeparatorChar, "Players");
@@ -5155,13 +5152,13 @@ namespace Terraria
 							'\t', Main.WorldList[j].Name
 						};
 						Console.WriteLine("{0,-4}{1,-22}{2} {3} {4,-6}{5}",
-						                  j + 1,
-						                  Main.WorldList[j].Name,
-						                  Main.WorldList[j].IsHardMode ? "肉后" : "肉前",
-						                  Main.WorldList[j].HasCrimson ? "血地" : "腐地",
-						                  Main.WorldList[j].IsExpertMode ? "专家" : "普通",
-						                  String.Format("最后使用时间: {0}",
-						                                File.GetLastWriteTime(Main.WorldList[j].Path).ToString("g")));
+							j + 1,
+							Main.WorldList[j].Name,
+							Main.WorldList[j].IsHardMode ? "肉后" : "肉前",
+							Main.WorldList[j].HasCrimson ? "血地" : "腐地",
+							Main.WorldList[j].IsExpertMode ? "专家" : "普通",
+							String.Format("最后使用时间: {0}",
+								File.GetLastWriteTime(Main.WorldList[j].Path).ToString("g")));
 					}
 					Console.WriteLine();
 					Console.WriteLine("n           \t创建新地图");
@@ -5175,11 +5172,11 @@ namespace Terraria
 					}
 					catch (Exception ex)
 					{
-						#if DEBUG
+#if DEBUG
 						Console.WriteLine(ex);
 						System.Diagnostics.Debugger.Break();
 
-						#endif
+#endif
 					}
 					if (str2.Length >= 2 && str2.Substring(0, 2).ToLower() == "d ")
 					{
@@ -5200,11 +5197,11 @@ namespace Terraria
 						}
 						catch (Exception ex)
 						{
-							#if DEBUG
+#if DEBUG
 							Console.WriteLine(ex);
 							System.Diagnostics.Debugger.Break();
 
-							#endif
+#endif
 						}
 						try
 						{
@@ -5212,11 +5209,11 @@ namespace Terraria
 						}
 						catch (Exception ex)
 						{
-							#if DEBUG
+#if DEBUG
 							Console.WriteLine(ex);
 							System.Diagnostics.Debugger.Break();
 
-							#endif
+#endif
 						}
 					}
 					else if (str2 == "n" || str2 == "N")
@@ -5256,11 +5253,11 @@ namespace Terraria
 							}
 							catch (Exception ex)
 							{
-								#if DEBUG
+#if DEBUG
 								Console.WriteLine(ex);
 								System.Diagnostics.Debugger.Break();
 
-								#endif
+#endif
 							}
 							try
 							{
@@ -5268,11 +5265,11 @@ namespace Terraria
 							}
 							catch (Exception ex)
 							{
-								#if DEBUG
+#if DEBUG
 								Console.WriteLine(ex);
 								System.Diagnostics.Debugger.Break();
 
-								#endif
+#endif
 							}
 						}
 						flag1 = true;
@@ -5301,11 +5298,11 @@ namespace Terraria
 							}
 							catch (Exception ex)
 							{
-								#if DEBUG
+#if DEBUG
 								Console.WriteLine(ex);
 								System.Diagnostics.Debugger.Break();
 
-								#endif
+#endif
 							}
 							try
 							{
@@ -5313,11 +5310,11 @@ namespace Terraria
 							}
 							catch (Exception ex)
 							{
-								#if DEBUG
+#if DEBUG
 								Console.WriteLine(ex);
 								System.Diagnostics.Debugger.Break();
 
-								#endif
+#endif
 							}
 						}
 						flag1 = true;
@@ -5341,11 +5338,11 @@ namespace Terraria
 							}
 							catch (Exception ex)
 							{
-								#if DEBUG
+#if DEBUG
 								Console.WriteLine(ex);
 								System.Diagnostics.Debugger.Break();
 
-								#endif
+#endif
 							}
 						}
 						Main.worldName = Main.newWorldName;
@@ -5370,27 +5367,27 @@ namespace Terraria
 						}
 						catch (Exception ex)
 						{
-							#if DEBUG
+#if DEBUG
 							Console.WriteLine(ex);
 							System.Diagnostics.Debugger.Break();
 
-							#endif
+#endif
 						}
 
-						int oldProgress = 0;
-						int oldValue = 0;
+                        int oldProgress = 0;
+                        int oldValue = 0;
 
 						while (Main.serverGenLock)
 						{
 
-							if ((int)(generationProgress.TotalProgress * 100) != oldProgress || (int)(generationProgress.Value * 100) != oldValue)
-							{
-								Main.statusText = string.Format(string.Concat("{0:0%} - ", generationProgress.Message, " - {1:0%}"), generationProgress.TotalProgress, generationProgress.Value);
-								Main.oldStatusText = Main.statusText;
-								oldProgress = (int)(generationProgress.TotalProgress * 100);
-								oldValue = (int)(generationProgress.Value * 100);
-								Console.WriteLine(Main.statusText);
-							}
+                            if ((int)(generationProgress.TotalProgress * 100) != oldProgress || (int)(generationProgress.Value * 100) != oldValue)
+                            {
+                                Main.statusText = string.Format(string.Concat("{0:0%} - ", generationProgress.Message, " - {1:0%}"), generationProgress.TotalProgress, generationProgress.Value);
+                                Main.oldStatusText = Main.statusText;
+                                oldProgress = (int)(generationProgress.TotalProgress * 100);
+                                oldValue = (int)(generationProgress.Value * 100);
+                                Console.WriteLine(Main.statusText);
+                            }
 						}
 					}
 					else
@@ -5424,11 +5421,11 @@ namespace Terraria
 									}
 									catch (Exception ex)
 									{
-										#if DEBUG
+#if DEBUG
 										Console.WriteLine(ex);
 										System.Diagnostics.Debugger.Break();
 
-										#endif
+#endif
 									}
 									try
 									{
@@ -5436,11 +5433,11 @@ namespace Terraria
 									}
 									catch (Exception ex)
 									{
-										#if DEBUG
+#if DEBUG
 										Console.WriteLine(ex);
 										System.Diagnostics.Debugger.Break();
 
-										#endif
+#endif
 									}
 								}
 								flag2 = true;
@@ -5470,11 +5467,11 @@ namespace Terraria
 									}
 									catch (Exception ex)
 									{
-										#if DEBUG
+#if DEBUG
 										Console.WriteLine(ex);
 										System.Diagnostics.Debugger.Break();
 
-										#endif
+#endif
 									}
 									try
 									{
@@ -5482,11 +5479,11 @@ namespace Terraria
 									}
 									catch (Exception ex)
 									{
-										#if DEBUG
+#if DEBUG
 										Console.WriteLine(ex);
 										System.Diagnostics.Debugger.Break();
 
-										#endif
+#endif
 									}
 								}
 								Main.ActiveWorldFileData = Main.WorldList[num3];
@@ -5497,21 +5494,21 @@ namespace Terraria
 								}
 								catch (Exception ex)
 								{
-									#if DEBUG
+#if DEBUG
 									Console.WriteLine(ex);
 									System.Diagnostics.Debugger.Break();
 
-									#endif
+#endif
 								}
 							}
 						}
 						catch (Exception ex)
 						{
-							#if DEBUG
+#if DEBUG
 							Console.WriteLine(ex);
 							System.Diagnostics.Debugger.Break();
 
-							#endif
+#endif
 						}
 					}
 				}

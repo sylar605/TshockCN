@@ -26,7 +26,7 @@ namespace TShockAPI
 	public class FileTools
 	{
 		private const string MotdFormat =
-			"这是个由TShock开启的Terraria服务器.\n 输入/帮助 查看可用的命令.\n%255,000,000%当前地图: %map%\n在线玩家: %players%";
+			"This server is running TShock for Terraria.\n Type /help for a list of commands.\n%255,000,000%Current map: %map%\nCurrent players: %players%";
 		/// <summary>
 		/// Path to the file containing the rules.
 		/// </summary>
@@ -99,7 +99,7 @@ namespace TShockAPI
 				Directory.CreateDirectory(TShock.SavePath);
 			}
 
-			CreateIfNot(RulesPath, "尊重管理员!\n不要使用TNT!");
+			CreateIfNot(RulesPath, "Respect the admins!\nDon't use TNT!");
 			CreateIfNot(MotdPath, MotdFormat);
 						
 			CreateIfNot(WhitelistPath);
@@ -109,15 +109,6 @@ namespace TShockAPI
 				// Add all the missing config properties in the json file
 			}
 			TShock.Config.Write(ConfigPath);
-			if (TShock.Config.保存于当前文件夹)
-			{
-				Terraria.Main.SavePath = string.Concat(Terraria.Main.InFolderSavePath);
-			}
-			else
-			{
-				Terraria.Main.SavePath = string.Concat(Terraria.Main.DefaultSavePath);
-			}
-			Terraria.Main.WorldPath = string.Concat(Terraria.Main.SavePath, Path.DirectorySeparatorChar, "Worlds");
 
 			if (File.Exists(ServerSideCharacterConfigPath))
 			{
