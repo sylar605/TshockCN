@@ -30,6 +30,11 @@ namespace TShockAPI
 	/// <summary>ConfigFile - The config file class, which contains the configuration for a server that is serialized into JSON and deserialized on load.</summary>
 	public class ConfigFile
 	{
+
+		/// <summary>保存于当前文件夹 - boolean if people wants to save world file in TShock folder</summary>
+		[Description("是否保存在TShock文件夹中。")]
+		public bool 保存于当前文件夹 = true;
+
 		/// <summary>InvasionMultiplier - The equation for calculating invasion size = 100 + (multiplier * (number of active players > 200 hp)).</summary>
 		[Description(
 			"入侵怪物数量=这个数字*200血以上玩家数量 + 100"
@@ -461,7 +466,10 @@ namespace TShockAPI
 		public static ConfigFile Read(string path)
 		{
 			if (!File.Exists(path))
-				{DumpDescriptions();{DumpDescriptions();{DumpDescriptions();{DumpDescriptions();{DumpDescriptions();return new ConfigFile();}}}}}
+			{
+				DumpDescriptions();
+				return new ConfigFile();
+			}
 			using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
 			{
 				return Read(fs);
