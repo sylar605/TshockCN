@@ -1,7 +1,13 @@
+using System;
+
 namespace Terraria.ID
 {
 	public class AchievementHelperID
 	{
+		public AchievementHelperID()
+		{
+		}
+
 		public class Events
 		{
 			public const int NightStart = 0;
@@ -47,6 +53,10 @@ namespace Terraria.ID
 			public const int UnlockedBiomeChest = 20;
 
 			public const int DefeatedMechaMayhem = 21;
+
+			public Events()
+			{
+			}
 		}
 
 		public class Special
@@ -84,6 +94,10 @@ namespace Terraria.ID
 			public const int FoundGlowshroomOverworld = 15;
 
 			public const int PeekInGoldenChest = 16;
+
+			public Special()
+			{
+			}
 		}
 	}
 }

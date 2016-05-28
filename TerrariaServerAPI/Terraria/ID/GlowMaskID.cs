@@ -1,3 +1,5 @@
+using System;
+
 namespace Terraria.ID
 {
 	public static class GlowMaskID
@@ -432,10 +434,6 @@ namespace Terraria.ID
 
 		public const short LokisWings = 213;
 
-		public const short WireBulb = 214;
-
-		public const short CannonTile = 215;
-
-		public const short Count = 216;
+		public const short Count = 214;
 	}
 }

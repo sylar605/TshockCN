@@ -29,94 +29,94 @@ namespace TShockAPI
 	{
 		// tshock.account nodes
 
-		[Description("User can register account in game")]
+		[Description("玩家可以在游戏里注册 ")]
 		public static readonly string canregister = "tshock.account.register";
 
-		[Description("User can login in game")]
+		[Description("玩家可以登录")]
 		public static readonly string canlogin = "tshock.account.login";
 
-		[Description("User can logout in game")]
+		[Description("玩家可以注销")]
 		public static readonly string canlogout = "tshock.account.logout";
 
-		[Description("User can change password in game")]
+		[Description("玩家可以在游戏里改密码")]
 		public static readonly string canchangepassword = "tshock.account.changepassword";
 
 		// tshock.admin nodes
 
-		[Description("User can set build protection status.")]
+		[Description("用户可以设置建筑物保护状态")]
 		public static readonly string antibuild = "tshock.admin.antibuild";
 
-		[Description("Prevents you from being kicked.")]
+		[Description("防止被踢。")]
 		public static readonly string immunetokick = "tshock.admin.nokick";
 
-		[Description("Prevents you from being banned.")]
+		[Description("防止被禁。")]
 		public static readonly string immunetoban = "tshock.admin.noban";
 
-		[Description("Specific log messages are sent to users with this permission.")]
+		[Description("如果拥有此权限，特定日志消息可以被发送给用户。")]
 		public static readonly string logs = "tshock.admin.viewlogs";
 
-		[Description("User can kick others.")]
+		[Description("用户可以踢人。")]
 		public static readonly string kick = "tshock.admin.kick";
 
-		[Description("User can ban others.")]
+		[Description("用户可以禁别人")]
 		public static readonly string ban = "tshock.admin.ban";
 
-		[Description("User can manage warps.")]
+		[Description("用户可以 管理 warps.")]
 		public static readonly string managewarp = "tshock.admin.warp";
 
-		[Description("User can manage item bans.")]
+		[Description("用户可以管理被禁止的物品")]
 		public static readonly string manageitem = "tshock.admin.itemban";
 
-		[Description("User can manage projectile bans.")]
+		[Description("用户可以管理被禁止的投掷物（炸弹一类）")]
 		public static readonly string manageprojectile = "tshock.admin.projectileban";
 
-		[Description("User can manage tile bans.")]
+		[Description("用户可以管理被禁的砖块")]
 		public static readonly string managetile = "tshock.admin.tileban";
 
-		[Description("User can manage groups.")]
+		[Description("用户可以管理组")]
 		public static readonly string managegroup = "tshock.admin.group";
 
-		[Description("User can manage regions.")]
+		[Description("用户可以管理区域（regions）.")]
 		public static readonly string manageregion = "tshock.admin.region";
 
-		[Description("User can mute and unmute users")]
+		[Description("用户可以禁言和解除禁言")]
 		public static readonly string mute = "tshock.admin.mute";
 
-		[Description("User can see the id of players with /who")]
+		[Description("用户可以用 /who -i 命令查看用户ID")]
 		public static readonly string seeids = "tshock.admin.seeplayerids";
 
-		[Description("User can save all the players SSI state.")]
+		[Description("用户可以保存所有玩家的背包")]
 		public static readonly string savessc = "tshock.admin.savessi";
 
-		[Description("User can elevate other users' groups temporarily.")]
+		[Description("用户可以暂时提高其他用户的组。")]
 		public static readonly string settempgroup = "tshock.admin.tempgroup";
 
-		[Description("User can broadcast messages.")]
+		[Description("用户可以广播信息")]
 		public static readonly string broadcast = "tshock.admin.broadcast";
 
-		[Description("User can get other users' info.")]
+		[Description("用户可以得到其他用户的信息")]
 		public static readonly string userinfo = "tshock.admin.userinfo";
 
 		// tshock.buff nodes
 
-		[Description("User can buff self.")]
+		[Description("用户可以给自己加BUFF")]
 		public static readonly string buff = "tshock.buff.self";
 
-		[Description("User can buff other players.")]
+		[Description("用户可以给其它用户加BUFF")]
 		public static readonly string buffplayer = "tshock.buff.others";
 
 		// tshock.cfg nodes
 
-		[Description("User is notified when an update is available, user can turn off / restart the server.")]
+		[Description("当有更新可用时，用户被通知。用户可以关闭/重新启动服务器。")]
 		public static readonly string maintenance = "tshock.cfg.maintenance";
 
-		[Description("User can modify the whitelist.")]
+		[Description("用户可以修改白名单")]
 		public static readonly string whitelist = "tshock.cfg.whitelist";
 
-		[Description("User can edit the server password.")]
+		[Description("用户可以编辑服务器密码")]
 		public static readonly string cfgpassword = "tshock.cfg.password";
 
-		[Description("User can reload the configurations file.")]
+		[Description("用户可以重载配置文件")]
 		public static readonly string cfgreload = "tshock.cfg.reload";
 
 		[Description("User can download updates to plugins that are currently running.")]

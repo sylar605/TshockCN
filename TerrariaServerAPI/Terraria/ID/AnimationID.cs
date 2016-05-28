@@ -1,3 +1,5 @@
+using System;
+
 namespace Terraria.ID
 {
 	public class AnimationID
@@ -6,6 +8,8 @@ namespace Terraria.ID
 
 		public const short MushroomStatueTurningOff = 1;
 
-		public const short FakeChestOpening = 2;
+		public AnimationID()
+		{
+		}
 	}
 }
