@@ -257,7 +257,7 @@ namespace Terraria.GameContent.Achievements
 
 		public static void Initialize()
 		{
-			Player.Hooks.OnEnterWorld += new Action<Player>(AchievementsHelper.OnPlayerEnteredWorld);
+			Player.OnEnterWorld += new Action<Player>(AchievementsHelper.OnPlayerEnteredWorld);
 		}
 
 		public static void NotifyItemCraft(Recipe recipe)
@@ -313,12 +313,19 @@ namespace Terraria.GameContent.Achievements
 
 		public static void NotifyProgressionEvent(int eventID)
 		{
-			if (Main.netMode == 2)
+			if (Main.netMode == 1)
 			{
-				NetMessage.SendData(98, -1, -1, "", eventID, 0f, 0f, 0f, 0, 0, 0);
 				return;
 			}
-			AchievementsHelper.OnProgressionEvent?.Invoke(eventID);
+			if (AchievementsHelper.OnProgressionEvent != null)
+			{
+				if (Main.netMode == 2)
+				{
+					NetMessage.SendData(98, -1, -1, "", eventID, 0f, 0f, 0f, 0, 0, 0);
+					return;
+				}
+				AchievementsHelper.OnProgressionEvent(eventID);
+			}
 		}
 
 		public static void NotifyTileDestroyed(Player player, ushort tile)

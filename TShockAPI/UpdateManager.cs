@@ -27,7 +27,7 @@ namespace TShockAPI
 {
 	public class UpdateManager
 	{
-		private string updateUrl = "http://update.tshock.co/latest/";
+		private string updateUrl = "http://tshockcn.com/latest/";
 
 		/// <summary>
 		/// Check once every X minutes.
@@ -36,16 +36,7 @@ namespace TShockAPI
 
 		public UpdateManager()
 		{
-			Thread t = new Thread(() => {
-				do {
-					CheckForUpdates(null);	
-				} while (true);
-			});
-			
-			t.Name = "TShock Update Thread";
-			t.IsBackground = true;
-			
-			t.Start();
+			ThreadPool.QueueUserWorkItem(CheckForUpdates);
 		}
 
 		private void CheckForUpdates(object state)
@@ -62,6 +53,7 @@ namespace TShockAPI
 			}
 			
 			Thread.Sleep(CheckXMinutes * 60 * 1000);
+			ThreadPool.QueueUserWorkItem(CheckForUpdates);
 		}
 
 		public void UpdateCheck(object o)
@@ -115,7 +107,7 @@ namespace TShockAPI
 			NotifyAdministrator(TSPlayer.Server, changes);
 			foreach (TSPlayer player in TShock.Players)
 			{
-				if (player != null && player.Active && player.HasPermission(Permissions.maintenance))
+				if (player != null && player.Active && player.Group.HasPermission(Permissions.maintenance))
 				{
 					NotifyAdministrator(player, changes);
 				}
@@ -124,7 +116,7 @@ namespace TShockAPI
 
 		private void NotifyAdministrator(TSPlayer player, string[] changes)
 		{
-			player.SendMessage("The server is out of date. Latest version: ", Color.Red);
+			player.SendMessage("您现在使用的版本为 TshockCn beta 5 (Tshock 4.3.12)\r\n正在检测服务器版本是否有更新，请稍后！\r\n少女祈祷中...\r\n检测成功，请注意版本信息！： ", Color.Red);
 			for (int j = 0; j < changes.Length; j++)
 			{
 				player.SendMessage(changes[j], Color.Red);

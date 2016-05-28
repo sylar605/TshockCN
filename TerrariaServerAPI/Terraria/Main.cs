@@ -7,7 +7,6 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using Terraria.Achievements;
 using Terraria.DataStructures;
@@ -32,19 +31,19 @@ namespace Terraria
 	{
 		public const int offLimitBorderTiles = 40;
 
-		public const int maxItemTypes = 3730;
+		public const int maxItemTypes = 3602;
 
-		public const int maxProjectileTypes = 656;
+		public const int maxProjectileTypes = 651;
 
 		public const int maxNPCTypes = 540;
 
-		public const int maxTileSets = 446;
+		public const int maxTileSets = 419;
 
 		public const int maxWallTypes = 225;
 
-		public const int maxBuffTypes = 192;
+		public const int maxBuffTypes = 191;
 
-		public const int maxGlowMasks = 216;
+		public const int maxGlowMasks = 214;
 
 		public const int maxExtras = 69;
 
@@ -56,7 +55,7 @@ namespace Terraria
 
 		public const int numArmorBody = 195;
 
-		public const int numArmorLegs = 138;
+		public const int numArmorLegs = 135;
 
 		public const int numAccHandsOn = 19;
 
@@ -64,7 +63,7 @@ namespace Terraria
 
 		public const int numAccNeck = 9;
 
-		public const int numAccBack = 11;
+		public const int numAccBack = 10;
 
 		public const int numAccFront = 5;
 
@@ -160,10 +159,6 @@ namespace Terraria
 
 		public static string versionNumber2;
 
-		public static bool AnnouncementBoxDisabled = false;
-
-		public static int AnnouncementBoxRange = -1;
-
 		public static Vector2 destroyerHB;
 
 		public static FileMetadata WorldFileMetadata;
@@ -200,7 +195,7 @@ namespace Terraria
 
 		public static bool ContentLoaded;
 
-		public static int maxMsg = 112;
+		public static int maxMsg;
 
 		public static float GlobalTime;
 
@@ -435,14 +430,6 @@ namespace Terraria
 		public static long txMsg;
 
 		public static long rxMsg;
-
-		public static int[] rxMsgType = new int[Main.maxMsg];
-
-		public static int[] rxDataType = new int[Main.maxMsg];
-
-		public static int[] txMsgType = new int[Main.maxMsg];
-
-		public static int[] txDataType = new int[Main.maxMsg];
 
 		public static float uCarry;
 
@@ -1712,9 +1699,9 @@ namespace Terraria
 
 		static Main()
 		{
-			Main.curRelease = 168;
-			Main.versionNumber = "v1.3.1";
-			Main.versionNumber2 = "v1.3.1";
+			Main.curRelease = 156;
+			Main.versionNumber = "v1.3.0.8";
+			Main.versionNumber2 = "v1.3.0.8";
 			Main.destroyerHB = new Vector2(0f, 0f);
 			Main.drawBackGore = false;
 			Main.expertLife = 2f;
@@ -1726,7 +1713,7 @@ namespace Terraria
 			Main.damageMultiplier = 1f;
 			Main.ServerSideCharacter = false;
 			Main.ContentLoaded = false;
-			Main.maxMsg = 112;
+			Main.maxMsg = 106;
 			Main.GlobalTime = 0f;
 			Main.GlobalTimerPaused = false;
 			Main._tileFrameSeed = (ulong)Guid.NewGuid().GetHashCode();
@@ -1850,19 +1837,19 @@ namespace Terraria
 			Main.zoneX = 99;
 			Main.zoneY = 87;
 			Main.harpNote = 0f;
-			Main.projHostile = new bool[656];
-			Main.projHook = new bool[656];
-			Main.pvpBuff = new bool[192];
-			Main.persistentBuff = new bool[192];
-			Main.vanityPet = new bool[192];
-			Main.lightPet = new bool[192];
-			Main.meleeBuff = new bool[192];
-			Main.debuff = new bool[192];
-			Main.buffName = new string[192];
-			Main.buffTip = new string[192];
-			Main.buffNoSave = new bool[192];
-			Main.buffNoTimeDisplay = new bool[192];
-			Main.buffDoubleApply = new bool[192];
+			Main.projHostile = new bool[651];
+			Main.projHook = new bool[651];
+			Main.pvpBuff = new bool[191];
+			Main.persistentBuff = new bool[191];
+			Main.vanityPet = new bool[191];
+			Main.lightPet = new bool[191];
+			Main.meleeBuff = new bool[191];
+			Main.debuff = new bool[191];
+			Main.buffName = new string[191];
+			Main.buffTip = new string[191];
+			Main.buffNoSave = new bool[191];
+			Main.buffNoTimeDisplay = new bool[191];
+			Main.buffDoubleApply = new bool[191];
 			Main.maxMP = 10;
 			Main.recentWorld = new string[Main.maxMP];
 			Main.recentIP = new string[Main.maxMP];
@@ -1927,7 +1914,7 @@ namespace Terraria
 			Main.armorHide = false;
 			Main.craftingAlpha = 1f;
 			Main.armorAlpha = 1f;
-			Main.buffAlpha = new float[192];
+			Main.buffAlpha = new float[191];
 			Main.trashItem = new Item();
 			Main.hardMode = false;
 			Main.sceneWaterPos = Vector2.Zero;
@@ -2028,8 +2015,8 @@ namespace Terraria
 			Main.helpText = 0;
 			Main.autoGen = false;
 			Main.autoPause = false;
-			Main.projFrames = new int[656];
-			Main.projPet = new bool[656];
+			Main.projFrames = new int[651];
+			Main.projPet = new bool[651];
 			Main.demonTorch = 1f;
 			Main.demonTorchDir = 1;
 			Main.martianLight = 1f;
@@ -2064,45 +2051,45 @@ namespace Terraria
 			Main.ambientVolume = 0.75f;
 			Main.soundVolume = 1f;
 			Main.MenuServerMode = ServerSocialMode.None;
-			Main.tileLighted = new bool[446];
-			Main.tileMergeDirt = new bool[446];
-			Main.tileCut = new bool[446];
-			Main.tileAlch = new bool[446];
-			Main.tileShine = new int[446];
-			Main.tileShine2 = new bool[446];
+			Main.tileLighted = new bool[419];
+			Main.tileMergeDirt = new bool[419];
+			Main.tileCut = new bool[419];
+			Main.tileAlch = new bool[419];
+			Main.tileShine = new int[419];
+			Main.tileShine2 = new bool[419];
 			Main.wallHouse = new bool[225];
 			Main.wallDungeon = new bool[225];
 			Main.wallLight = new bool[225];
 			Main.wallBlend = new int[225];
-			Main.tileStone = new bool[446];
-			Main.tileAxe = new bool[446];
-			Main.tileHammer = new bool[446];
-			Main.tileWaterDeath = new bool[446];
-			Main.tileLavaDeath = new bool[446];
-			Main.tileTable = new bool[446];
-			Main.tileBlockLight = new bool[446];
-			Main.tileNoSunLight = new bool[446];
-			Main.tileDungeon = new bool[446];
-			Main.tileSpelunker = new bool[446];
-			Main.tileSolidTop = new bool[446];
-			Main.tileSolid = new bool[446];
-			Main.tileBouncy = new bool[446];
-			Main.tileValue = new short[446];
-			Main.tileLargeFrames = new byte[446];
+			Main.tileStone = new bool[419];
+			Main.tileAxe = new bool[419];
+			Main.tileHammer = new bool[419];
+			Main.tileWaterDeath = new bool[419];
+			Main.tileLavaDeath = new bool[419];
+			Main.tileTable = new bool[419];
+			Main.tileBlockLight = new bool[419];
+			Main.tileNoSunLight = new bool[419];
+			Main.tileDungeon = new bool[419];
+			Main.tileSpelunker = new bool[419];
+			Main.tileSolidTop = new bool[419];
+			Main.tileSolid = new bool[419];
+			Main.tileBouncy = new bool[419];
+			Main.tileValue = new short[419];
+			Main.tileLargeFrames = new byte[419];
 			Main.wallLargeFrames = new byte[225];
-			Main.tileRope = new bool[446];
-			Main.tileBrick = new bool[446];
-			Main.tileMoss = new bool[446];
-			Main.tileNoAttach = new bool[446];
-			Main.tileNoFail = new bool[446];
-			Main.tileObsidianKill = new bool[446];
-			Main.tileFrameImportant = new bool[446];
-			Main.tilePile = new bool[446];
-			Main.tileBlendAll = new bool[446];
-			Main.tileGlowMask = new short[446];
-			Main.tileContainer = new bool[446];
-			Main.tileSign = new bool[446];
-			Main.tileMerge = new bool[446][];
+			Main.tileRope = new bool[419];
+			Main.tileBrick = new bool[419];
+			Main.tileMoss = new bool[419];
+			Main.tileNoAttach = new bool[419];
+			Main.tileNoFail = new bool[419];
+			Main.tileObsidianKill = new bool[419];
+			Main.tileFrameImportant = new bool[419];
+			Main.tilePile = new bool[419];
+			Main.tileBlendAll = new bool[419];
+			Main.tileGlowMask = new short[419];
+			Main.tileContainer = new bool[419];
+			Main.tileSign = new bool[419];
+			Main.tileMerge = new bool[419][];
 			Main.cageFrames = 25;
 			Main.critterCage = false;
 			Main.bunnyCageFrame = new int[Main.cageFrames];
@@ -2148,19 +2135,19 @@ namespace Terraria
 			Main.slugCageFrameCounter = new int[3, Main.cageFrames];
 			Main.grasshopperCageFrame = new int[Main.cageFrames];
 			Main.grasshopperCageFrameCounter = new int[Main.cageFrames];
-			Main.tileSand = new bool[446];
-			Main.tileFlame = new bool[446];
+			Main.tileSand = new bool[419];
+			Main.tileFlame = new bool[419];
 			Main.npcCatchable = new bool[540];
-			Main.tileFrame = new int[446];
-			Main.tileFrameCounter = new int[446];
+			Main.tileFrame = new int[419];
+			Main.tileFrameCounter = new int[419];
 			Main.wallFrame = new byte[225];
 			Main.wallFrameCounter = new byte[225];
 			Main.backgroundWidth = new int[207];
 			Main.backgroundHeight = new int[207];
 			Main.tilesLoaded = false;
 			//Main.Map = new WorldMap(Main.maxTilesX, Main.maxTilesY);
-			//Main.tile = new Tile[Main.maxTilesX, Main.maxTilesY];
-			Main.tile = new TileProvider();
+            //Main.tile = new Tile[Main.maxTilesX, Main.maxTilesY];
+            Main.tile = new TileProvider();
 			Main.star = new Star[130];
 			Main.item = new Item[401];
 			Main.itemLockoutTime = new int[401];
@@ -2378,69 +2365,65 @@ namespace Terraria
 			}
 			Main.anglerWhoFinishedToday.Clear();
 			Main.anglerQuestFinished = false;
-			bool flag = NPC.downedBoss1 || NPC.downedBoss2 || NPC.downedBoss3 || Main.hardMode || NPC.downedSlimeKing || NPC.downedQueenBee;
-			bool flag2 = true;
-			while (flag2)
+			bool flag = true;
+			while (flag)
 			{
-				flag2 = false;
-				Main.anglerQuest = Main.rand.Next(Main.anglerQuestItemNetIDs.Length);
+				flag = false;
+				Main.anglerQuest = Main.rand.Next((int)Main.anglerQuestItemNetIDs.Length);
 				int num = Main.anglerQuestItemNetIDs[Main.anglerQuest];
 				if (num == 2454 && (!Main.hardMode || WorldGen.crimson))
 				{
-					flag2 = true;
+					flag = true;
 				}
 				if (num == 2457 && WorldGen.crimson)
 				{
-					flag2 = true;
+					flag = true;
 				}
 				if (num == 2462 && !Main.hardMode)
 				{
-					flag2 = true;
+					flag = true;
 				}
 				if (num == 2463 && (!Main.hardMode || !WorldGen.crimson))
 				{
-					flag2 = true;
+					flag = true;
 				}
 				if (num == 2465 && !Main.hardMode)
 				{
-					flag2 = true;
+					flag = true;
 				}
 				if (num == 2468 && !Main.hardMode)
 				{
-					flag2 = true;
+					flag = true;
 				}
 				if (num == 2471 && !Main.hardMode)
 				{
-					flag2 = true;
+					flag = true;
 				}
 				if (num == 2473 && !Main.hardMode)
 				{
-					flag2 = true;
+					flag = true;
 				}
 				if (num == 2477 && !WorldGen.crimson)
 				{
-					flag2 = true;
+					flag = true;
 				}
 				if (num == 2480 && !Main.hardMode)
 				{
-					flag2 = true;
+					flag = true;
 				}
 				if (num == 2483 && !Main.hardMode)
 				{
-					flag2 = true;
+					flag = true;
 				}
 				if (num == 2484 && !Main.hardMode)
 				{
-					flag2 = true;
+					flag = true;
 				}
-				if (num == 2485 && WorldGen.crimson)
+				if (num != 2485 || !WorldGen.crimson)
 				{
-					flag2 = true;
+					continue;
 				}
-				if ((num == 2476 || num == 2453 || num == 2473) && !flag)
-				{
-					flag2 = true;
-				}
+				flag = true;
 			}
 			NetMessage.SendAnglerQuest();
 		}
@@ -5168,20 +5151,20 @@ namespace Terraria
 							'\t',
 							'\t', Main.WorldList[j].Name
 						};
-						Console.WriteLine("{0,-4}{1,-22}{2}, {3}, {4,-6}{5}",
+						Console.WriteLine("{0,-4}{1,-22}{2} {3} {4,-6}{5}",
 							j + 1,
 							Main.WorldList[j].Name,
-							Main.WorldList[j].IsHardMode ? "hard" : "norm",
-							Main.WorldList[j].HasCrimson ? "crim" : "corr",
-							Main.WorldList[j].IsExpertMode ? "exp" : "norm",
-							String.Format("Last used: {0}",
+							Main.WorldList[j].IsHardMode ? "肉后" : "肉前",
+							Main.WorldList[j].HasCrimson ? "血地" : "腐地",
+							Main.WorldList[j].IsExpertMode ? "专家" : "普通",
+							String.Format("最后使用时间: {0}",
 								File.GetLastWriteTime(Main.WorldList[j].Path).ToString("g")));
 					}
 					Console.WriteLine();
-					Console.WriteLine("n           \tNew World");
-					Console.WriteLine("d   <number>\tDelete World");
+					Console.WriteLine("n           \t创建新地图");
+					Console.WriteLine("d   <序号>\t删除地图");
 					Console.WriteLine("");
-					Console.Write("Choose World: ");
+					Console.Write("选择地图: ");
 					string str2 = Console.ReadLine() ?? "";
 					try
 					{
@@ -5204,7 +5187,7 @@ namespace Terraria
 							{
 								Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 								Console.WriteLine("");
-								Console.WriteLine(string.Concat("Really delete ", Main.WorldList[num].Name, "?"));
+								Console.WriteLine(string.Concat("是否要删除 (y是 n否)", Main.WorldList[num].Name, "?"));
 								Console.Write("(y/n): ");
 								if (Console.ReadLine().ToLower() == "y")
 								{
@@ -5240,11 +5223,11 @@ namespace Terraria
 						{
 							Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 							Console.WriteLine("");
-							Console.WriteLine(string.Concat("1", '\t', "Small"));
-							Console.WriteLine(string.Concat("2", '\t', "Medium"));
-							Console.WriteLine(string.Concat("3", '\t', "Large"));
+							Console.WriteLine(string.Concat("1", '\t', "小型"));
+							Console.WriteLine(string.Concat("2", '\t', "中型"));
+							Console.WriteLine(string.Concat("3", '\t', "大型"));
 							Console.WriteLine("");
-							Console.Write("Choose size: ");
+							Console.Write("选择地图大小: ");
 							str = Console.ReadLine();
 							try
 							{
@@ -5294,10 +5277,10 @@ namespace Terraria
 						{
 							Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 							Console.WriteLine("");
-							Console.WriteLine(string.Concat("1", '\t', "Normal"));
-							Console.WriteLine(string.Concat("2", '\t', "Expert"));
+							Console.WriteLine(string.Concat("1", '\t', "普通"));
+							Console.WriteLine(string.Concat("2", '\t', "专家"));
 							Console.WriteLine("");
-							Console.Write("Choose difficulty: ");
+							Console.Write("选择困难度: ");
 							str = Console.ReadLine();
 							try
 							{
@@ -5339,7 +5322,7 @@ namespace Terraria
 						{
 							Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 							Console.WriteLine("");
-							Console.Write("Enter world name: ");
+							Console.Write("输入地图名(禁止中文): ");
 							Main.newWorldName = Console.ReadLine();
 							if (Main.newWorldName != "" && Main.newWorldName != " " && Main.newWorldName != null)
 							{
@@ -5391,39 +5374,27 @@ namespace Terraria
 #endif
 						}
 
-						int oldProgress = 0;
-						int oldValue = 0;
+                        int oldProgress = 0;
+                        int oldValue = 0;
 
-                        int barWidth = Console.WindowWidth / 3;
-
-                        Console.WriteLine("Generating World...");
-                        while (Main.serverGenLock)
+						while (Main.serverGenLock)
 						{
-							if ((int)(generationProgress.TotalProgress * 100) != oldProgress)
-							{
-								Main.statusText = string.Format(string.Concat("{0:0%} - ", generationProgress.Message, " - {1:0%}"), generationProgress.TotalProgress, generationProgress.Value);
-								Main.oldStatusText = Main.statusText;
-								oldProgress = (int)(generationProgress.TotalProgress * 100);
-								oldValue = (int)(generationProgress.Value * 100);
 
-
-								Console.Write($"\r{generationProgress.Message}");
-
-                                for (int i = Console.CursorLeft; i < Console.WindowWidth / 3; i++)
-                                {
-                                    Console.Write(" ");
-                                }
-
-                                Utils.WriteConsoleBar(barWidth, oldProgress);
-							}
+                            if ((int)(generationProgress.TotalProgress * 100) != oldProgress || (int)(generationProgress.Value * 100) != oldValue)
+                            {
+                                Main.statusText = string.Format(string.Concat("{0:0%} - ", generationProgress.Message, " - {1:0%}"), generationProgress.TotalProgress, generationProgress.Value);
+                                Main.oldStatusText = Main.statusText;
+                                oldProgress = (int)(generationProgress.TotalProgress * 100);
+                                oldValue = (int)(generationProgress.Value * 100);
+                                Console.WriteLine(Main.statusText);
+                            }
 						}
 					}
 					else
 					{
 						try
 						{
-							int num3;
-							int.TryParse(str2, out num3);
+							int num3 = Convert.ToInt32(str2);
 							num3--;
 							if (num3 >= 0 && num3 < Main.WorldList.Count)
 							{
@@ -5432,7 +5403,7 @@ namespace Terraria
 								{
 									Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 									Console.WriteLine("");
-									Console.Write("Max players (press enter for {0}): ", Main.maxNetPlayers);
+									Console.Write("最大玩家数量 (默认{0}): ", Main.maxNetPlayers);
 									string str3 = Console.ReadLine();
 									try
 									{
@@ -5479,7 +5450,7 @@ namespace Terraria
 									}
 									Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber2));
 									Console.WriteLine("");
-									Console.Write("Server port (press enter for 7777): ");
+									Console.Write("端口 (默认 7777): ");
 									string str4 = Console.ReadLine();
 									try
 									{
@@ -5557,9 +5528,6 @@ namespace Terraria
 			WorldGen.serverLoadWorld();
 			Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber));
 			Console.WriteLine("");
-
-            Regex completePercent = new Regex(@"(\d?\d?\d)%");
-
 			while (!Netplay.IsServerRunning)
 			{
 				if (Main.oldStatusText == Main.statusText)
@@ -5567,21 +5535,7 @@ namespace Terraria
 					continue;
 				}
 				Main.oldStatusText = Main.statusText;
-				if (Console.IsOutputRedirected == false && completePercent.IsMatch(Main.statusText))
-                {
-                    Match percentMatch = completePercent.Match(Main.statusText);
-                    int percent = int.Parse(percentMatch.Groups[1].Value);
-
-                    Console.Write($"\r{completePercent.Replace(Main.statusText, "")}");
-                    for (int i = Console.CursorLeft; i < Console.WindowWidth / 3; i++)
-                        Console.Write(" ");
-
-                    Utils.WriteConsoleBar(Console.WindowWidth / 3, percent);
-                }
-				else
-                {
-					Console.Write("\r" + Main.statusText);
-                }
+				Console.WriteLine(Main.statusText);
 			}
 			try
 			{
@@ -5595,10 +5549,10 @@ namespace Terraria
 
 #endif
 			}
-			Console.WriteLine(string.Concat("Terraria Server ", Main.versionNumber));
+			Console.WriteLine(string.Concat("Terraria服务器 ", Main.versionNumber));
 			Console.WriteLine("");
-			Console.WriteLine(string.Concat("Listening on port ", Netplay.ListenPort));
-			Console.WriteLine("Type 'help' for a list of commands.");
+			Console.WriteLine(string.Concat("正在监听端口:", Netplay.ListenPort));
+			Console.WriteLine("输入/help /帮助 查看更多指令和帮助");
 			Console.WriteLine("");
 			Console.Title = string.Concat("Terraria Server: ", Main.worldName);
 
@@ -6344,7 +6298,7 @@ namespace Terraria
 			Main.bgAlpha[0] = 1f;
 			Main.bgAlpha2[0] = 1f;
 			this.invBottom = 258;
-			for (int i = 0; i < 656; i++)
+			for (int i = 0; i < 651; i++)
 			{
 				Main.projFrames[i] = 1;
 			}
@@ -6371,7 +6325,6 @@ namespace Terraria
 			Main.projFrames[633] = 5;
 			Main.projFrames[645] = 7;
 			Main.projFrames[650] = 4;
-			Main.projFrames[652] = 6;
 			Main.projFrames[384] = 6;
 			Main.projFrames[385] = 3;
 			Main.projFrames[386] = 6;
@@ -6477,9 +6430,7 @@ namespace Terraria
 			Main.projFrames[602] = 4;
 			Main.projPet[492] = true;
 			Main.projPet[499] = true;
-			Main.projPet[653] = true;
 			Main.projPet[319] = true;
-			Main.projPet[653] = true;
 			Main.projPet[334] = true;
 			Main.projPet[324] = true;
 			Main.projPet[266] = true;
@@ -6777,7 +6728,6 @@ namespace Terraria
 			Main.vanityPet[92] = true;
 			Main.vanityPet[127] = true;
 			Main.vanityPet[136] = true;
-			Main.vanityPet[191] = true;
 			Main.lightPet[19] = true;
 			Main.lightPet[155] = true;
 			Main.lightPet[27] = true;
@@ -6875,7 +6825,6 @@ namespace Terraria
 			Main.tileSpelunker[37] = true;
 			Main.tileSpelunker[407] = true;
 			Main.tileSpelunker[227] = true;
-			Main.tileSpelunker[441] = true;
 			Main.SetupTileMerge();
 			Main.tileSolid[379] = true;
 			Main.tileSolid[371] = true;
@@ -6947,7 +6896,6 @@ namespace Terraria
 			Main.tileFrameImportant[394] = true;
 			Main.tileFrameImportant[356] = true;
 			Main.tileFrameImportant[334] = true;
-			Main.tileFrameImportant[440] = true;
 			Main.tileFrameImportant[300] = true;
 			Main.tileFrameImportant[301] = true;
 			Main.tileFrameImportant[302] = true;
@@ -6962,16 +6910,6 @@ namespace Terraria
 			Main.tileFrameImportant[324] = true;
 			Main.tileObsidianKill[324] = true;
 			Main.tileLavaDeath[324] = true;
-			Main.tileFrameImportant[419] = true;
-			Main.tileFrameImportant[442] = true;
-			Main.tileFrameImportant[443] = true;
-			Main.tileFrameImportant[444] = true;
-			Main.tileFrameImportant[420] = true;
-			Main.tileFrameImportant[423] = true;
-			Main.tileFrameImportant[424] = true;
-			Main.tileFrameImportant[428] = true;
-			Main.tileFrameImportant[429] = true;
-			Main.tileFrameImportant[445] = true;
 			Main.tileFrameImportant[283] = true;
 			Main.tileFrameImportant[288] = true;
 			Main.tileFrameImportant[289] = true;
@@ -7038,39 +6976,6 @@ namespace Terraria
 			Main.tileLighted[343] = true;
 			Main.tileLighted[344] = true;
 			Main.tileLighted[349] = true;
-			Main.tileSolid[421] = true;
-			Main.tileBlockLight[421] = true;
-			Main.tileSolid[422] = true;
-			Main.tileBlockLight[422] = true;
-			Main.tileSolid[426] = true;
-			Main.tileBlockLight[426] = true;
-			Main.tileSolid[430] = true;
-			Main.tileBlockLight[430] = true;
-			Main.tileSolid[431] = true;
-			Main.tileBlockLight[431] = true;
-			Main.tileSolid[432] = true;
-			Main.tileBlockLight[432] = true;
-			Main.tileSolid[433] = true;
-			Main.tileBlockLight[433] = true;
-			Main.tileSolid[434] = true;
-			Main.tileBlockLight[434] = true;
-			Main.tileFrameImportant[427] = true;
-			Main.tileSolidTop[427] = true;
-			Main.tileSolid[427] = true;
-			Main.tileNoAttach[427] = true;
-			Main.tileTable[427] = true;
-			Main.tileLavaDeath[427] = true;
-			Main.tileNoSunLight[427] = false;
-			for (int m = 435; m <= 439; m++)
-			{
-				Main.tileFrameImportant[m] = true;
-				Main.tileSolidTop[m] = true;
-				Main.tileSolid[m] = true;
-				Main.tileNoAttach[m] = true;
-				Main.tileTable[m] = true;
-				Main.tileLavaDeath[m] = true;
-				Main.tileNoSunLight[m] = false;
-			}
 			Main.tileSolid[284] = true;
 			Main.tileBlockLight[284] = true;
 			Main.tileSolid[346] = true;
@@ -7104,11 +7009,6 @@ namespace Terraria
 			Main.tileGlowMask[381] = 126;
 			Main.tileGlowMask[370] = 111;
 			Main.tileGlowMask[391] = 131;
-			Main.tileGlowMask[429] = 214;
-			Main.tileGlowMask[209] = 215;
-			Main.tileGlowMask[445] = 214;
-			Main.tileLighted[429] = true;
-			Main.tileLighted[209] = true;
 			Main.tileGlowMask[410] = 201;
 			Main.tileSolid[370] = true;
 			Main.tileBlockLight[370] = true;
@@ -7121,7 +7021,6 @@ namespace Terraria
 			Main.tileContainer[88] = true;
 			Main.tileSign[55] = true;
 			Main.tileSign[85] = true;
-			Main.tileSign[425] = true;
 			Main.tileSolid[383] = true;
 			Main.tileBrick[383] = true;
 			Main.tileBlockLight[383] = true;
@@ -7307,6 +7206,7 @@ namespace Terraria
 				}
 			}
 			Main.tileFrameImportant[269] = true;
+			Main.tileFrameImportant[334] = true;
 			Main.tileFrameImportant[390] = true;
 			Main.tileNoAttach[390] = true;
 			Main.tileLavaDeath[390] = true;
@@ -7855,8 +7755,6 @@ namespace Terraria
 			Main.tileFrameImportant[19] = true;
 			Main.tileFrameImportant[20] = true;
 			Main.tileFrameImportant[21] = true;
-			Main.tileFrameImportant[441] = true;
-			Main.tileFrameImportant[425] = true;
 			Main.tileFrameImportant[24] = true;
 			Main.tileFrameImportant[26] = true;
 			Main.tileFrameImportant[27] = true;
@@ -7953,7 +7851,6 @@ namespace Terraria
 			Main.tileCut[205] = true;
 			Main.tileCut[352] = true;
 			Main.tileCut[382] = true;
-			Main.tileCut[444] = true;
 			Main.tileAlch[82] = true;
 			Main.tileAlch[83] = true;
 			Main.tileAlch[84] = true;
@@ -8138,10 +8035,10 @@ namespace Terraria
 			Main.tileNoAttach[134] = true;
 			Main.tileNoAttach[17] = true;
 			Main.tileNoAttach[18] = true;
+			Main.tileNoAttach[19] = true;
 			Main.tileNoAttach[21] = true;
 			Main.tileNoAttach[27] = true;
 			Main.tileNoAttach[114] = true;
-			Main.tileNoAttach[441] = true;
 			Main.tileTable[14] = true;
 			Main.tileTable[18] = true;
 			Main.tileTable[19] = true;
@@ -8324,11 +8221,10 @@ namespace Terraria
 			Main.tileLavaDeath[339] = true;
 			Main.tileLavaDeath[352] = true;
 			Main.tileLavaDeath[382] = true;
-			Main.tileLavaDeath[425] = true;
 			Main.tileLighted[316] = true;
 			Main.tileLighted[317] = true;
 			Main.tileLighted[318] = true;
-			for (int r = 0; r < 446; r++)
+			for (int r = 0; r < 419; r++)
 			{
 				if (Main.tileLavaDeath[r])
 				{
@@ -8461,7 +8357,7 @@ namespace Terraria
 			Main.tileFrameImportant[389] = true;
 			Main.tileLavaDeath[389] = true;
 			Main.tileNoSunLight[389] = true;
-			for (int t = 0; t < 446; t++)
+			for (int t = 0; t < 419; t++)
 			{
 				if (Main.tileSolid[t])
 				{
@@ -9581,7 +9477,6 @@ namespace Terraria
 		{
 		}
 
-
 		public static float NPCAddHeight(int i)
 		{
 			float single = 0f;
@@ -9905,10 +9800,10 @@ namespace Terraria
 				return;
 			}
 			WorldGen.SaveAndQuit(() =>
-			{
-				Main.LoadPlayers();
-				Main.menuMode = 1;
-			});
+				{
+					Main.LoadPlayers();
+					Main.menuMode = 1;
+				});
 		}
 
 		protected void OpenRecent()
@@ -10373,7 +10268,7 @@ namespace Terraria
 
 		public static void SetupTileMerge()
 		{
-			int num = 446;
+			int num = 419;
 			Main.tileMerge = new bool[num][];
 			for (int i = 0; i < (int)Main.tileMerge.Length; i++)
 			{
@@ -10613,13 +10508,7 @@ namespace Terraria
 				Console.WriteLine("TerrariaServer is running in the background and input is disabled.");
 				return;
 			}
-
-			Thread t = new Thread(Main.startDedInputCallBack);
-			t.Name = "Console Input Thread";
-			t.IsBackground = true;
-			t.Start();
-
-			//ThreadPool.QueueUserWorkItem(new WaitCallback(Main.startDedInputCallBack), 1);
+			ThreadPool.QueueUserWorkItem(new WaitCallback(Main.startDedInputCallBack), 1);
 		}
 
 		public static void startDedInputCallBack(object threadContext)
@@ -10968,10 +10857,10 @@ namespace Terraria
 				{
 					Main.invasionType = type;
 
-					if (invasionSize.HasValue == true)
+					if (invasionSize.HasValue == true) 
 					{
 						Main.invasionSize = invasionSize.Value;
-					}
+					} 
 					else
 					{
 						Main.invasionSize = 80 + 40 * num;
@@ -12549,10 +12438,6 @@ namespace Terraria
 #endif
 					}
 				}
-				if (Main.netMode != 1)
-				{
-					PressurePlateHelper.Update();
-				}
 				for (int s = 0; s < 255; s++)
 				{
 					Main.player[s].activeNPCs = 0f;
@@ -12575,8 +12460,6 @@ namespace Terraria
 					NPC.crimsonBoss = -1;
 				}
 				NPC.taxCollector = false;
-				NPC.ClearFoundActiveNPCs();
-				NPC.UpdateFoundActiveNPCs();
 				for (int t = 0; t < 200; t++)
 				{
 					if (!Main.ignoreErrors)

@@ -1,3 +1,5 @@
+using System;
+
 namespace Terraria.ID
 {
 	public class ItemID
@@ -4326,9 +4328,9 @@ namespace Terraria.ID
 
 		public const short GoldenCandle = 2155;
 
-		public const short BlackScorpion = 2156;
+		public const short BlackScropion = 2156;
 
-		public const short Scorpion = 2157;
+		public const short Scropion = 2157;
 
 		public const short BubbleWallpaper = 2158;
 
@@ -5548,7 +5550,7 @@ namespace Terraria.ID
 
 		public const short LunarTabletFragment = 2766;
 
-		public const short SolarTablet = 2767;
+		public const short LunarTablet = 2767;
 
 		public const short DrillContainmentUnit = 2768;
 
@@ -5868,8 +5870,6 @@ namespace Terraria.ID
 
 		public const short GingerbreadManBanner = 2926;
 
-		public const short GoblinArcherBanner = 2927;
-
 		public const short GreenSlimeBanner = 2928;
 
 		public const short HeadlessHorsemanBanner = 2929;
@@ -6008,7 +6008,7 @@ namespace Terraria.ID
 
 		public const short VineRope = 2996;
 
-		public const short WormholePotion = 2997;
+		public const short UnityPotion = 2997;
 
 		public const short SummonerEmblem = 2998;
 
@@ -6768,7 +6768,7 @@ namespace Terraria.ID
 
 		public const short FossilPants = 3376;
 
-		public const short AmberStaff = 3377;
+		public const short EmberStaff = 3377;
 
 		public const short BoneJavelin = 3378;
 
@@ -7218,263 +7218,7 @@ namespace Terraria.ID
 
 		public const short CelestialSigil = 3601;
 
-		public const short LogicGateLamp_Off = 3602;
-
-		public const short LogicGate_AND = 3603;
-
-		public const short LogicGate_OR = 3604;
-
-		public const short LogicGate_NAND = 3605;
-
-		public const short LogicGate_NOR = 3606;
-
-		public const short LogicGate_XOR = 3607;
-
-		public const short LogicGate_NXOR = 3608;
-
-		public const short ConveyorBeltLeft = 3609;
-
-		public const short ConveyorBeltRight = 3610;
-
-		public const short WireKite = 3611;
-
-		public const short YellowWrench = 3612;
-
-		public const short LogicSensor_Sun = 3613;
-
-		public const short LogicSensor_Moon = 3614;
-
-		public const short LogicSensor_Above = 3615;
-
-		public const short WirePipe = 3616;
-
-		public const short AnnouncementBox = 3617;
-
-		public const short LogicGateLamp_On = 3618;
-
-		public const short MechanicalLens = 3619;
-
-		public const short ActuationRod = 3620;
-
-		public const short TeamBlockRed = 3621;
-
-		public const short TeamBlockRedPlatform = 3622;
-
-		public const short StaticHook = 3623;
-
-		public const short ActuationAccessory = 3624;
-
-		public const short MulticolorWrench = 3625;
-
-		public const short WeightedPressurePlatePink = 3626;
-
-		public const short EngineeringHelmet = 3627;
-
-		public const short CompanionCube = 3628;
-
-		public const short WireBulb = 3629;
-
-		public const short WeightedPressurePlateOrange = 3630;
-
-		public const short WeightedPressurePlatePurple = 3631;
-
-		public const short WeightedPressurePlateCyan = 3632;
-
-		public const short TeamBlockGreen = 3633;
-
-		public const short TeamBlockBlue = 3634;
-
-		public const short TeamBlockYellow = 3635;
-
-		public const short TeamBlockPink = 3636;
-
-		public const short TeamBlockWhite = 3637;
-
-		public const short TeamBlockGreenPlatform = 3638;
-
-		public const short TeamBlockBluePlatform = 3639;
-
-		public const short TeamBlockYellowPlatform = 3640;
-
-		public const short TeamBlockPinkPlatform = 3641;
-
-		public const short TeamBlockWhitePlatform = 3642;
-
-		public const short LargeAmber = 3643;
-
-		public const short GemLockRuby = 3644;
-
-		public const short GemLockSapphire = 3645;
-
-		public const short GemLockEmerald = 3646;
-
-		public const short GemLockTopaz = 3647;
-
-		public const short GemLockAmethyst = 3648;
-
-		public const short GemLockDiamond = 3649;
-
-		public const short GemLockAmber = 3650;
-
-		public const short SquirrelStatue = 3651;
-
-		public const short ButterflyStatue = 3652;
-
-		public const short WormStatue = 3653;
-
-		public const short FireflyStatue = 3654;
-
-		public const short ScorpionStatue = 3655;
-
-		public const short SnailStatue = 3656;
-
-		public const short GrasshopperStatue = 3657;
-
-		public const short MouseStatue = 3658;
-
-		public const short DuckStatue = 3659;
-
-		public const short PenguinStatue = 3660;
-
-		public const short FrogStatue = 3661;
-
-		public const short BuggyStatue = 3662;
-
-		public const short LogicGateLamp_Faulty = 3663;
-
-		public const short PortalGunStation = 3664;
-
-		public const short Fake_Chest = 3665;
-
-		public const short Fake_GoldChest = 3666;
-
-		public const short Fake_ShadowChest = 3667;
-
-		public const short Fake_EbonwoodChest = 3668;
-
-		public const short Fake_RichMahoganyChest = 3669;
-
-		public const short Fake_PearlwoodChest = 3670;
-
-		public const short Fake_IvyChest = 3671;
-
-		public const short Fake_IceChest = 3672;
-
-		public const short Fake_LivingWoodChest = 3673;
-
-		public const short Fake_SkywareChest = 3674;
-
-		public const short Fake_ShadewoodChest = 3675;
-
-		public const short Fake_WebCoveredChest = 3676;
-
-		public const short Fake_LihzahrdChest = 3677;
-
-		public const short Fake_WaterChest = 3678;
-
-		public const short Fake_JungleChest = 3679;
-
-		public const short Fake_CorruptionChest = 3680;
-
-		public const short Fake_CrimsonChest = 3681;
-
-		public const short Fake_HallowedChest = 3682;
-
-		public const short Fake_FrozenChest = 3683;
-
-		public const short Fake_DynastyChest = 3684;
-
-		public const short Fake_HoneyChest = 3685;
-
-		public const short Fake_SteampunkChest = 3686;
-
-		public const short Fake_PalmWoodChest = 3687;
-
-		public const short Fake_MushroomChest = 3688;
-
-		public const short Fake_BorealWoodChest = 3689;
-
-		public const short Fake_SlimeChest = 3690;
-
-		public const short Fake_GreenDungeonChest = 3691;
-
-		public const short Fake_PinkDungeonChest = 3692;
-
-		public const short Fake_BlueDungeonChest = 3693;
-
-		public const short Fake_BoneChest = 3694;
-
-		public const short Fake_CactusChest = 3695;
-
-		public const short Fake_FleshChest = 3696;
-
-		public const short Fake_ObsidianChest = 3697;
-
-		public const short Fake_PumpkinChest = 3698;
-
-		public const short Fake_SpookyChest = 3699;
-
-		public const short Fake_GlassChest = 3700;
-
-		public const short Fake_MartianChest = 3701;
-
-		public const short Fake_MeteoriteChest = 3702;
-
-		public const short Fake_GraniteChest = 3703;
-
-		public const short Fake_MarbleChest = 3704;
-
-		public const short Fake_newchest1 = 3705;
-
-		public const short Fake_newchest2 = 3706;
-
-		public const short ProjectilePressurePad = 3707;
-
-		public const short WallCreeperStatue = 3708;
-
-		public const short UnicornStatue = 3709;
-
-		public const short DripplerStatue = 3710;
-
-		public const short WraithStatue = 3711;
-
-		public const short BoneSkeletonStatue = 3712;
-
-		public const short UndeadVikingStatue = 3713;
-
-		public const short MedusaStatue = 3714;
-
-		public const short HarpyStatue = 3715;
-
-		public const short PigronStatue = 3716;
-
-		public const short HopliteStatue = 3717;
-
-		public const short GraniteGolemStatue = 3718;
-
-		public const short ZombieArmStatue = 3719;
-
-		public const short BloodZombieStatue = 3720;
-
-		public const short AnglerTackleBag = 3721;
-
-		public const short GeyserTrap = 3722;
-
-		public const short UltraBrightCampfire = 3723;
-
-		public const short BoneCampfire = 3724;
-
-		public const short PixelBox = 3725;
-
-		public const short LogicSensor_Water = 3726;
-
-		public const short LogicSensor_Lava = 3727;
-
-		public const short LogicSensor_Honey = 3728;
-
-		public const short LogicSensor_Liquid = 3729;
-
-		public const short Count = 3730;
+		public const short Count = 3602;
 
 		public static bool Any(int match)
 		{
@@ -7495,169 +7239,36 @@ namespace Terraria.ID
 
 		public class Sets
 		{
-			public static SetFactory Factory = new SetFactory(3730);
-
-			public static int[] TextureCopyLoad = ItemID.Sets.Factory.CreateIntSet(-1, new int[]
-			{
-				3665,
-				48,
-				3666,
-				306,
-				3667,
-				328,
-				3668,
-				625,
-				3669,
-				626,
-				3670,
-				627,
-				3671,
-				680,
-				3672,
-				681,
-				3673,
-				831,
-				3674,
-				838,
-				3675,
-				914,
-				3676,
-				952,
-				3677,
-				1142,
-				3678,
-				1298,
-				3679,
-				1528,
-				3680,
-				1529,
-				3681,
-				1530,
-				3682,
-				1531,
-				3683,
-				1532,
-				3684,
-				2230,
-				3685,
-				2249,
-				3686,
-				2250,
-				3687,
-				2526,
-				3688,
-				2544,
-				3689,
-				2559,
-				3690,
-				2574,
-				3691,
-				2612,
-				3692,
-				2613,
-				3693,
-				2614,
-				3694,
-				2615,
-				3695,
-				2616,
-				3696,
-				2617,
-				3697,
-				2618,
-				3698,
-				2619,
-				3699,
-				2620,
-				3700,
-				2748,
-				3701,
-				2814,
-				3703,
-				3125,
-				3702,
-				3180,
-				3704,
-				3181,
-				3705,
-				1111,
-				3706,
-				1112
-			});
-
-			public static bool[] TrapSigned = ItemID.Sets.Factory.CreateBoolSet(false, new int[]
-			{
-				3665,
-				3666,
-				3667,
-				3668,
-				3669,
-				3670,
-				3671,
-				3672,
-				3673,
-				3674,
-				3675,
-				3676,
-				3677,
-				3678,
-				3679,
-				3680,
-				3681,
-				3682,
-				3683,
-				3684,
-				3685,
-				3686,
-				3687,
-				3688,
-				3689,
-				3690,
-				3691,
-				3692,
-				3693,
-				3694,
-				3695,
-				3696,
-				3697,
-				3698,
-				3699,
-				3700,
-				3701,
-				3703,
-				3702,
-				3704,
-				3705,
-				3706
-			});
-
+			public static SetFactory Factory = new SetFactory(Count);
 			public static bool[] Deprecated = ItemID.Sets.Factory.CreateBoolSet(new int[]
 			{
-				2784,
-				2783,
-				2785,
-				2782,
-				2774,
-				2773,
-				2775,
-				2772,
-				2779,
-				2778,
-				2780,
-				2777,
-				3464,
-				3463,
-				3465,
-				3462,
-				3341,
-				3342,
-				3343,
-				3340,
-				3344,
-				3345,
-				3346,
-				3273,
-				2881
+				/* None of these items were actually deprecated and this was causing SetDefaults
+					to fail on these items. */
+				//SolarFlareDrill,
+				//SolarFlareChainsaw,
+				//SolarFlareHammer,
+				//SolarFlareAxe,
+				//VortexDrill,
+				//VortexChainsaw,
+				//VortexHammer,
+				//VortexAxe,
+				//NebulaDrill,
+				//NebulaChainsaw,
+				//NebulaHammer,
+				//NebulaAxe,
+				//StardustDrill,
+				//StardustChainsaw,
+				//StardustHammer,
+				//StardustAxe,
+				//CorruptHardenedSandWall,
+				//CrimsonHardenedSandWall,
+				//HallowHardenedSandWall,
+				//HardenedSandWall,
+				//CorruptSandstoneWall,
+				//CrimsonSandstoneWall,
+				//HallowSandstoneWall,
+				//SandstoneWall,
+				//PhasicWarpEjector
 			});
 			public static bool[] Explosives = ItemID.Sets.Factory.CreateBoolSet(new int[]
 			{
@@ -7676,654 +7287,82 @@ namespace Terraria.ID
 			});
 			public static bool[] NeverShiny = ItemID.Sets.Factory.CreateBoolSet(new int[]
 			{
-				71,
-				72,
-				73,
-				74
+				CopperCoin,
+				SilverCoin,
+				GoldCoin,
+				PlatinumCoin
 			});
-
 			public static bool[] ItemIconPulse = ItemID.Sets.Factory.CreateBoolSet(new int[]
 			{
-				520,
-				521,
-				575,
-				549,
-				548,
-				547,
-				3456,
-				3457,
-				3458,
-				3459,
-				3580,
-				3581
+				SoulofLight,
+				SoulofNight,
+				SoulofFlight,
+				SoulofSight,
+				SoulofMight,
+				SoulofFright,
+				FragmentVortex,
+				FragmentNebula,
+				FragmentSolar,
+				FragmentStardust,
+				Yoraiz0rWings,
+				Yoraiz0rDarkness
 			});
-
 			public static bool[] ItemNoGravity = ItemID.Sets.Factory.CreateBoolSet(new int[]
 			{
-				520,
-				521,
-				575,
-				549,
-				548,
-				547,
-				3453,
-				3454,
-				3455,
-				3456,
-				3457,
-				3458,
-				3459,
-				3580,
-				3581
+				SoulofLight,
+				SoulofNight,
+				SoulofFlight,
+				SoulofSight,
+				SoulofMight,
+				SoulofFright,
+				NebulaPickup1,
+				NebulaPickup2,
+				NebulaPickup3,
+				FragmentVortex,
+				FragmentNebula,
+				FragmentSolar,
+				FragmentStardust,
+				Yoraiz0rWings,
+				Yoraiz0rDarkness
 			});
-
 			public static int[] ExtractinatorMode = ItemID.Sets.Factory.CreateIntSet(-1, new int[]
 			{
-				424,
+				SiltBlock,
 				0,
-				1103,
+				SlushBlock,
 				0,
-				3347,
+				DesertFossil,
 				1
 			});
-
-			public static int[] StaffMinionSlotsRequired = ItemID.Sets.Factory.CreateIntSet(1, new int[0]);
-
+			public static int[] StaffMinionSlotsRequired = ItemID.Sets.Factory.CreateIntSet(1);
 			public static bool[] ExoticPlantsForDyeTrade = ItemID.Sets.Factory.CreateBoolSet(new int[]
 			{
-				3385,
-				3386,
-				3387,
-				3388
+				StrangePlant1,
+				StrangePlant2,
+				StrangePlant3,
+				StrangePlant4
 			});
-
 			public static bool[] NebulaPickup = ItemID.Sets.Factory.CreateBoolSet(new int[]
 			{
-				3453,
-				3454,
-				3455
+				NebulaPickup1,
+				NebulaPickup2,
+				NebulaPickup3
 			});
-
 			public static bool[] AnimatesAsSoul = ItemID.Sets.Factory.CreateBoolSet(new int[]
 			{
-				575,
-				547,
-				520,
-				548,
-				521,
-				549,
-				3580,
-				3581
+				SoulofFlight,
+				SoulofFright,
+				SoulofLight,
+				SoulofMight,
+				SoulofNight,
+				SoulofSight,
+				Yoraiz0rWings,
+				Yoraiz0rDarkness
 			});
-
 			public static bool[] gunProj = ItemID.Sets.Factory.CreateBoolSet(new int[]
 			{
-				3475,
-				3540
-			});
-
-			public static int[] SortingPriorityBossSpawns = ItemID.Sets.Factory.CreateIntSet(-1, new int[]
-			{
-				43,
-				1,
-				560,
-				2,
-				70,
-				3,
-				1331,
-				3,
-				361,
-				4,
-				1133,
-				5,
-				544,
-				6,
-				556,
-				7,
-				557,
-				8,
-				2495,
-				9,
-				2673,
-				10,
-				602,
-				11,
-				1844,
-				12,
-				1958,
-				13,
-				1293,
-				14,
-				2767,
-				15,
-				3601,
-				16,
-				1291,
-				17,
-				109,
-				18,
-				29,
-				19,
-				50,
-				20,
-				3199,
-				20,
-				3124,
-				21
-			});
-
-			public static int[] SortingPriorityWiring = ItemID.Sets.Factory.CreateIntSet(-1, new int[]
-			{
-				510,
-				101,
-				3625,
-				100,
-				509,
-				99,
-				851,
-				98,
-				850,
-				97,
-				3612,
-				96,
-				849,
-				95,
-				583,
-				94,
-				584,
-				93,
-				585,
-				92,
-				538,
-				91,
-				513,
-				90,
-				3545,
-				90,
-				853,
-				89,
-				541,
-				88,
-				529,
-				88,
-				1151,
-				87,
-				852,
-				87,
-				543,
-				87,
-				542,
-				87,
-				3707,
-				87,
-				2492,
-				86,
-				530,
-				85,
-				581,
-				84,
-				582,
-				84,
-				1263,
-				83
-			});
-
-			public static int[] SortingPriorityMaterials = ItemID.Sets.Factory.CreateIntSet(-1, new int[]
-			{
-				3467,
-				100,
-				3460,
-				99,
-				3458,
-				98,
-				3456,
-				97,
-				3457,
-				96,
-				3459,
-				95,
-				3261,
-				94,
-				1508,
-				93,
-				1552,
-				92,
-				1006,
-				91,
-				947,
-				90,
-				1225,
-				89,
-				1198,
-				88,
-				1106,
-				87,
-				391,
-				86,
-				366,
-				85,
-				1191,
-				84,
-				1105,
-				83,
-				382,
-				82,
-				365,
-				81,
-				1184,
-				80,
-				1104,
-				79,
-				381,
-				78,
-				364,
-				77,
-				548,
-				76,
-				547,
-				75,
-				549,
-				74,
-				575,
-				73,
-				521,
-				72,
-				520,
-				71,
-				175,
-				70,
-				174,
-				69,
-				3380,
-				68,
-				1329,
-				67,
-				1257,
-				66,
-				880,
-				65,
-				86,
-				64,
-				57,
-				63,
-				56,
-				62,
-				117,
-				61,
-				116,
-				60,
-				706,
-				59,
-				702,
-				58,
-				19,
-				57,
-				13,
-				56,
-				705,
-				55,
-				701,
-				54,
-				21,
-				53,
-				14,
-				52,
-				704,
-				51,
-				700,
-				50,
-				22,
-				49,
-				11,
-				48,
-				703,
-				47,
-				699,
-				46,
-				20,
-				45,
-				12,
-				44,
-				999,
-				43,
-				182,
-				42,
-				178,
-				41,
-				179,
-				40,
-				177,
-				39,
-				180,
-				38,
-				181,
-				37
-			});
-
-			public static int[] SortingPriorityExtractibles = ItemID.Sets.Factory.CreateIntSet(-1, new int[]
-			{
-				997,
-				4,
-				3347,
-				3,
-				1103,
-				2,
-				424,
-				1
-			});
-
-			public static int[] SortingPriorityRopes = ItemID.Sets.Factory.CreateIntSet(-1, new int[]
-			{
-				965,
-				1,
-				85,
-				1,
-				210,
-				1,
-				3077,
-				1,
-				3078,
-				1
-			});
-
-			public static int[] SortingPriorityPainting = ItemID.Sets.Factory.CreateIntSet(-1, new int[]
-			{
-				1543,
-				100,
-				1544,
-				99,
-				1545,
-				98,
-				1071,
-				97,
-				1072,
-				96,
-				1100,
-				95
-			});
-
-			public static int[] SortingPriorityTerraforming = ItemID.Sets.Factory.CreateIntSet(-1, new int[]
-			{
-				779,
-				100,
-				780,
-				99,
-				783,
-				98,
-				781,
-				97,
-				782,
-				96,
-				784,
-				95,
-				422,
-				94,
-				423,
-				93,
-				3477,
-				92,
-				66,
-				91,
-				67,
-				90,
-				2886,
-				89
-			});
-
-			public static int[] GamepadExtraRange = ItemID.Sets.Factory.CreateIntSet(0, new int[]
-			{
-				2797,
-				20,
-				3278,
-				4,
-				3285,
-				6,
-				3279,
-				8,
-				3280,
-				8,
-				3281,
-				9,
-				3262,
-				10,
-				3317,
-				10,
-				3282,
-				10,
-				3315,
-				10,
-				3316,
-				11,
-				3283,
-				12,
-				3290,
-				13,
-				3289,
-				11,
-				3284,
-				13,
-				3286,
-				13,
-				3287,
-				18,
-				3288,
-				18,
-				3291,
-				17,
-				3292,
-				18,
-				3389,
-				21
-			});
-
-			public static bool[] GamepadWholeScreenUseRange = ItemID.Sets.Factory.CreateBoolSet(new int[]
-			{
-				1326,
-				1256,
-				1244,
-				3014,
-				113,
-				218,
-				495,
-				114,
-				496,
-				2796,
-				494,
-				3006,
-				65,
-				1931,
-				3570,
-				2750,
-				3065,
-				3029,
-				3030,
-				1309,
-				2364,
-				2365,
-				2551,
-				2535,
-				2584,
-				1157,
-				2749,
-				1802,
-				2621,
-				3249,
-				3531,
-				3474,
-				2366,
-				1572,
-				3569,
-				3571,
-				3611,
-				1299,
-				1254
-			});
-
-			public static bool[] GamepadSmartQuickReach = ItemID.Sets.Factory.CreateBoolSet(new int[]
-			{
-				2798,
-				2797,
-				3030,
-				3262,
-				3278,
-				3279,
-				3280,
-				3281,
-				3282,
-				3283,
-				3284,
-				3285,
-				3286,
-				3287,
-				3288,
-				3289,
-				3290,
-				3291,
-				3292,
-				3315,
-				3316,
-				3317,
-				3389,
-				2798,
-				65,
-				1931,
-				3570,
-				2750,
-				3065,
-				3029,
-				1256,
-				1244,
-				3014,
-				113,
-				218,
-				495
-			});
-
-			public static bool[] Yoyo = ItemID.Sets.Factory.CreateBoolSet(new int[]
-			{
-				3262,
-				3278,
-				3279,
-				3280,
-				3281,
-				3282,
-				3283,
-				3284,
-				3285,
-				3286,
-				3287,
-				3288,
-				3289,
-				3290,
-				3291,
-				3292,
-				3315,
-				3316,
-				3317,
-				3389
-			});
-
-			public static bool[] AlsoABuildingItem = ItemID.Sets.Factory.CreateBoolSet(new int[]
-			{
-				3031,
-				205,
-				1128,
-				207,
-				206,
-				3032,
-				849,
-				3620,
-				509,
-				851,
-				850,
-				3625,
-				510,
-				1071,
-				1543,
-				1072,
-				1544,
-				1100,
-				1545
-			});
-
-			public static bool[] LockOnIgnoresCollision = ItemID.Sets.Factory.CreateBoolSet(new int[]
-			{
-				64,
-				3570,
-				1327,
-				3006,
-				1227,
-				788,
-				756,
-				1228,
-				65,
-				3065,
-				3473,
-				3051,
-				1309,
-				2364,
-				2365,
-				2551,
-				2535,
-				2584,
-				1157,
-				2749,
-				1802,
-				2621,
-				3249,
-				3531,
-				3474,
-				2366,
-				1572,
-				3014,
-				3569,
-				3571
-			});
-
-			public static int[] LockOnAimAbove = ItemID.Sets.Factory.CreateIntSet(0, new int[]
-			{
-				1256,
-				15,
-				1244,
-				15,
-				3014,
-				15,
-				3569,
-				15,
-				3571,
-				15
-			});
-
-			public static float?[] LockOnAimCompensation = ItemID.Sets.Factory.CreateCustomSet<float?>(null, new object[]
-			{
-				1336,
-				0.2f,
-				157,
-				0.29f,
-				2590,
-				0.4f,
-				160,
-				0.4f
-			});
-
-			public static bool[] SingleUseInGamepad = ItemID.Sets.Factory.CreateBoolSet(new int[]
-			{
-				8,
-				427,
-				3004,
-				523,
-				433,
-				429,
-				974,
-				1333,
-				1245,
-				3114,
-				430,
-				3045,
-				428,
-				2274,
-				431,
-				432
+				VortexBeater,
+				Phantasm
 			});
 		}
 	}
