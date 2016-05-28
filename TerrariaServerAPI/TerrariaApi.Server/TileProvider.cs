@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace TerrariaApi.Server
 {
@@ -21,11 +19,6 @@ namespace TerrariaApi.Server
         /// The tile heap is a flat list of tiles, 13-bytes each full of tile header data.
         /// </remarks>
         protected byte[] tileHeap;
-
-        protected HeapTile lastTile;
-
-        protected readonly object syncRoot = new object();
-
         /// <summary>
         /// Retrieves the Terraria.Tile instance at X and Y position.  Used for ABI compatibility with all of
         /// TSAPI's tile accessor mechansims.
@@ -70,18 +63,7 @@ namespace TerrariaApi.Server
         /// its backing store.        /// </remarks>
         protected virtual Terraria.Tile GetTile(int x, int y)
         {
-            HeapTile tile;
-            
-            lock (syncRoot)
-            {
-                if (lastTile != null && x == lastTile.x && y == lastTile.y)
-                {
-                    return lastTile;
-                }
-                tile = lastTile = new HeapTile(tileHeap, x, y);
-            }
-
-            return tile;
+            return new HeapTile(tileHeap, x, y);
         }
 
         /// <summary>
