@@ -43,7 +43,27 @@ namespace Terraria
 			return MathHelper.WrapAngle(single1);
 		}
 
-		public static float AngleTowards(this float curAngle, float targetAngle, float maxChange)
+        public static void WriteConsoleBar(int barWidth, int percent)
+        {
+            char barShade = '\u2592';
+            char barFull = '\u2588';
+
+            Console.Write($"{percent} % ");
+            int pc = (int)(((decimal)percent / 100) * barWidth);
+            for (int i = 0; i < barWidth; i++)
+            {
+                if (i < pc)
+                {
+                    Console.Write(barFull);
+                }
+                else
+                {
+                    Console.Write(barShade);
+                }
+            }
+        }
+
+        public static float AngleTowards(this float curAngle, float targetAngle, float maxChange)
 		{
 			curAngle = MathHelper.WrapAngle(curAngle);
 			targetAngle = MathHelper.WrapAngle(targetAngle);
@@ -779,5 +799,51 @@ namespace Terraria
 		public delegate void LaserLineFraming(int stage, Vector2 currentPosition, float distanceLeft, Rectangle lastFrame, out float distanceCovered, out Rectangle frame, out Vector2 origin, out Color color);
 
 		public delegate bool PerLinePoint(int x, int y);
+
+		#region 1.3.1
+		public static bool RectangleLineCollision(Vector2 rectTopLeft, Vector2 rectBottomRight, Vector2 lineStart, Vector2 lineEnd)
+		{
+			if (lineStart.Between(rectTopLeft, rectBottomRight) || lineEnd.Between(rectTopLeft, rectBottomRight))
+			{
+				return true;
+			}
+			Vector2 p = new Vector2(rectBottomRight.X, rectTopLeft.Y);
+			Vector2 vector = new Vector2(rectTopLeft.X, rectBottomRight.Y);
+			Vector2[] array = new Vector2[]
+			{
+				rectTopLeft.ClosestPointOnLine(lineStart, lineEnd),
+				p.ClosestPointOnLine(lineStart, lineEnd),
+				vector.ClosestPointOnLine(lineStart, lineEnd),
+				rectBottomRight.ClosestPointOnLine(lineStart, lineEnd)
+			};
+			for (int i = 0; i < array.Length; i++)
+			{
+				if (array[0].Between(rectTopLeft, vector))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static Vector2 ClosestPointOnLine(this Vector2 P, Vector2 A, Vector2 B)
+		{
+			Vector2 value = P - A;
+			Vector2 vector = B - A;
+			float num = vector.LengthSquared();
+			float num2 = Vector2.Dot(value, vector);
+			float num3 = num2 / num;
+			if (num3 < 0f)
+			{
+				return A;
+			}
+			if (num3 > 1f)
+			{
+				return B;
+			}
+			return A + vector * num3;
+		}
+		#endregion
+
 	}
 }

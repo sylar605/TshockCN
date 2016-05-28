@@ -27,11 +27,11 @@ using TerrariaApi.Server;
 
 namespace TShockAPI
 {
-    [Obsolete("This class is no longer used")]
-    public class PacketBufferer : IDisposable
+	[Obsolete("This class is no longer used")]
+	public class PacketBufferer : IDisposable
 	{
 		/*
-        /// <summary>
+		/// <summary>
 		/// Maximum number of bytes to send per update per socket
 		/// </summary>
 		public int BytesPerUpdate { get; set; }
@@ -49,7 +49,6 @@ namespace TShockAPI
 		Command flush;
 #endif
 */
-
 		public PacketBufferer(TShock p)
 		{
 			/*plugin = p;
@@ -164,8 +163,8 @@ namespace TShockAPI
 
 		public bool SendBytes(RemoteClient client, byte[] buffer)
 		{
-            /*return SendBytes(client, buffer, 0, buffer.Length);*/
-            return false;
+			/*return SendBytes(client, buffer, 0, buffer.Length);*/
+			return false;
 		}
 
 		public void BufferBytes(RemoteClient client, byte[] buffer)
@@ -269,8 +268,8 @@ namespace TShockAPI
 */
 	}
 
-    [Obsolete("This class is no longer used")]
-    public class PacketBuffer : List<byte>
+	[Obsolete("This class is no longer used")]
+	public class PacketBuffer : List<byte>
 	{
 		/*public byte[] GetBytes(int max)
 		{

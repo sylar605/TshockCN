@@ -191,7 +191,7 @@ namespace TShockAPI
 			TSPlayer.Server.SendMessage(log, color);
 			foreach (TSPlayer player in TShock.Players)
 			{
-				if (player != null && player != excludedPlayer && player.Active && player.Group.HasPermission(Permissions.logs) && 
+				if (player != null && player != excludedPlayer && player.Active && player.HasPermission(Permissions.logs) && 
 						player.DisplayLogs && TShock.Config.DisableSpewLogs == false)
 					player.SendMessage(log, color);
 			}
@@ -345,17 +345,11 @@ namespace TShockAPI
 				item.netDefaults(i);
 				if (String.IsNullOrWhiteSpace(item.name))
 					continue;
-                if (String.IsNullOrWhiteSpace(item.cname))
-                    continue;
-                if (item.name.ToLower() == nameLower)
+				if (item.name.ToLower() == nameLower)
 					return new List<Item> { item };
-                if (item.cname.ToLower() == nameLower)
-                    return new List<Item> { item };
-                if (item.name.ToLower().StartsWith(nameLower))
+				if (item.name.ToLower().StartsWith(nameLower))
 					found.Add(item.Clone());
-                if (item.cname.ToLower().StartsWith(nameLower))
-                    found.Add(item.Clone());
-            }
+			}
 			return found;
 		}
 
@@ -616,7 +610,7 @@ namespace TShockAPI
 		{
 			if (!player.ConnectionAlive)
 				return true;
-			if (force || !player.Group.HasPermission(Permissions.immunetokick))
+			if (force || !player.HasPermission(Permissions.immunetokick))
 			{
 				string playerName = player.Name;
 				player.SilentKickInProgress = silent;
@@ -648,7 +642,7 @@ namespace TShockAPI
 		{
 			if (!player.ConnectionAlive)
 				return true;
-			if (force || !player.Group.HasPermission(Permissions.immunetoban))
+			if (force || !player.HasPermission(Permissions.immunetoban))
 			{
 				string ip = player.IP;
 				string uuid = player.UUID;
