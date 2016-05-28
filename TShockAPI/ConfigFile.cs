@@ -32,433 +32,421 @@ namespace TShockAPI
 	{
 		/// <summary>InvasionMultiplier - The equation for calculating invasion size = 100 + (multiplier * (number of active players > 200 hp)).</summary>
 		[Description(
-			"入侵怪物数量=这个数字*200血以上玩家数量 + 100"
+			"The equation for calculating invasion size is 100 + (multiplier * (number of active players with greater than 200 health))."
 			)]
 		public int InvasionMultiplier = 1;
 
 		/// <summary>DefaultMaximumSpawns - The default max spawns per wave.</summary>
-		[Description("默认最大刷怪数量。数字越大，怪物越多。")]
+		[Description("The default maximum mobs that will spawn per wave. Higher means more mobs in that wave.")]
 		public int DefaultMaximumSpawns = 5;
 
 		/// <summary>DefaultSpawnRate - The default spawn rate.</summary>
-		[Description("默认刷怪频率。数字越小，刷怪越快。")]
+		[Description("The delay between waves. Lower values lead to more mobs.")]
 		public int DefaultSpawnRate = 600;
 
 		/// <summary>ServerPort - The configured server port.</summary>
-		[Description("服务器端口。")]
+		[Description("The port the server runs on.")]
 		public int ServerPort = 7777;
 
 		/// <summary>EnableWhitelist - boolean if the whitelist functionality should be turned on.</summary>
-		[Description("是否开启白名单。")]
+		[Description("Enable or disable the whitelist based on IP addresses in whitelist.txt")]
 		public bool EnableWhitelist;
 
 		/// <summary>InfiniteInvasion - Whether or not infinite invasion mode should be on.</summary>
 		[Description(
-			"是否开启无限入侵（2000000+只怪物）。"
+			"Enable the ability for invasion size to never decrease. Make sure to run /invade, and note that this adds 2 million+ goblins to the spawn queue for the map."
 			)]
 		public bool InfiniteInvasion;
 
 		/// <summary>PvPMode - The server PvP mode (normal, always, or disabled).</summary>
-		[Description("\"normal\"普通模式 \"always\"强制PVP模式 \"disabled\"禁止PVP模式。")]
+		[Description("Set the server pvp mode. Valid types are, \"normal\", \"always\", and \"disabled.\"")]
 		public string PvPMode = "normal";
 
 		/// <summary>SpawnProtection - Enables the spawn protection system.</summary>
-		[Description("是否进行复活点保护。")]
+		[Description("Prevents tiles from being placed within SpawnProtectionRadius of the default spawn.")]
 		public bool SpawnProtection = true;
 
 		/// <summary>SpawnProtectionRadius - The spawn protection tile radius.</summary>
-		[Description("复活点保护的范围。")]
+		[Description("Radius from spawn tile for SpawnProtection.")]
 		public int SpawnProtectionRadius = 10;
 
 		/// <summary>MaxSlots - The server's max slots.</summary>
 		[Description(
-			"最大玩家数量。"
+			"Max slots for the server. If you want people to be kicked with \"Server is full\" set this to how many players you want max and then set Terraria max players to 2 higher."
 			)]
 		public int MaxSlots = 8;
 
 		/// <summary>RangeChecks - Whether or not the anti-grief system based on range should be enabled.</summary>
-		[Description("范围检查。")]
+		[Description("Global protection agent for any block distance based anti-grief check.")]
 		public bool RangeChecks = true;
 
 		/// <summary>DisableBuild - Whether or not building should be enabled.</summary>
-		[Description("全图保护。")]
+		[Description("Disables any building; placing of blocks")]
 		public bool DisableBuild;
 
 		/// <summary>SuperAdminChatRGB - The chat color for the superadmin group.</summary>
-		[Description("超级管理员聊天颜色。")]
+		[Description("#.#.#. = Red/Blue/Green - RGB Colors for the Admin Chat Color. Max value: 255")]
 		public int[] SuperAdminChatRGB = { 255, 0, 0 };
 
 		/// <summary>SuperAdminChatPrefix - The superadmin chat prefix.</summary>
-		[Description("超级管理员聊天前缀。")]
-		public string SuperAdminChatPrefix = "(管理员) ";
+		[Description("Super admin group chat prefix")]
+		public string SuperAdminChatPrefix = "(Admin) ";
 
 		/// <summary>SuperAdminChatSuffix - The superadmin chat suffix.</summary>
-		[Description("超级管理员聊天后缀。")]
+		[Description("Super admin group chat suffix")]
 		public string SuperAdminChatSuffix = "";
 
 		/// <summary>BackupInterval - The backup frequency in minutes.</summary>
 		[Description(
-			"备份间隔 单位分钟。")]
+			"Backup frequency in minutes. So, a value of 60 = 60 minutes. Backups are stored in the \\tshock\\backups folder.")]
 		public int BackupInterval;
 
 		/// <summary>BackupKeepFor - Backup max age in minutes.</summary>
-		[Description("地图备份保留时间。")]
+		[Description("How long backups are kept in minutes. 2880 = 2 days.")]
 		public int BackupKeepFor = 60;
 
 		/// <summary>RememberLeavePos - Whether or not to remember where an IP player was when they left.</summary>
 		[Description(
-			"记录玩家最后位置，下次进入服务器时传送回去。"
+			"Remembers where a player left off. It works by remembering the IP, NOT the character.  \neg. When you try to disconnect, and reconnect to be automatically placed at spawn, you'll be at your last location. Note: Won't save after server restarts."
 			)]
 		public bool RememberLeavePos;
 
 		/// <summary>HardcoreOnly - Whether or not HardcoreOnly should be enabled.</summary>
-		[Description("仅允许困难模式的玩家进入服务器。")]
+		[Description("Hardcore players ONLY. This means softcore players cannot join.")]
 		public bool HardcoreOnly;
 
 		/// <summary>MediumcoreOnly - Whether or not MediumCore only players should be enabled.</summary>
-		[Description("仅允许中等模式的玩家进入服务器。")]
+		[Description("Mediumcore players ONLY. This means softcore players cannot join.")]
 		public bool MediumcoreOnly;
 
 		/// <summary>KickOnMediumcoreDeath - Whether or not to kick mediumcore players on death.</summary>
-		[Description("踢出死亡的中等难度的玩家。")]
+		[Description("Kicks a mediumcore player on death.")]
 		public bool KickOnMediumcoreDeath;
 
 		/// <summary>BanOnMediumcoreDeath - Whether or not to ban mediumcore players on death.</summary>
-		[Description("封禁死亡的中等难度的玩家。")]
+		[Description("Bans a mediumcore player on death.")]
 		public bool BanOnMediumcoreDeath;
 
-		[Description("是否自动保存地图，建议开启。")]
+		[Description("Enable/disable Terraria's built in auto save.")]
 		public bool AutoSave = true;
-		[Description("自动保存的时候是否进行提示。")]
+		[Description("Enable/disable save announcements.")]
 		public bool AnnounceSave = true;
 
-		[Description("允许输错密码次数。")]
+		[Description("Number of failed login attempts before kicking the player.")]
 		public int MaximumLoginAttempts = 3;
 
-		[Description("远程服务器名。")]
+		[Description("Used when replying to a rest /status request or sent to the client when UseServerName is true.")]
 		public string ServerName = "";
-		[Description("用服务器名代替地图名。")]
+		[Description("Sends ServerName in place of the world name to clients.")]
 		public bool UseServerName = false;
-		[Description("没吊用。")]
+		[Description("Not implemented.")]
 		public string MasterServer = "127.0.0.1";
 
-		[Description("数据库类型，\"sqlite\" 或 \"mysql\"")]
+		[Description("Valid types are \"sqlite\" and \"mysql\"")]
 		public string StorageType = "sqlite";
 
-		[Description("MySQL主机名。")]
+		[Description("The MySQL hostname and port to direct connections to")]
 		public string MySqlHost = "localhost:3306";
-		[Description("数据库名。")]
+		[Description("Database name to connect to")]
 		public string MySqlDbName = "";
-		[Description("数据库用户名。")]
+		[Description("Database username to connect with")]
 		public string MySqlUsername = "";
-		[Description("数据库密码。")]
+		[Description("Database password to connect with")]
 		public string MySqlPassword = "";
 
-		[Description("封禁死亡的中等难度的玩家。")]
-		public string MediumcoreBanReason = "死亡而被封禁";
-		[Description("踢出死亡的中等难度的玩家。")]
-		public string MediumcoreKickReason = "死亡而被踢出";
+		[Description("Bans a mediumcore player on death.")]
+		public string MediumcoreBanReason = "Death results in a ban";
+		[Description("Kicks a mediumcore player on death.")]
+		public string MediumcoreKickReason = "Death results in a kick";
 
-		[Description("使用GetGroupForIPExpensive。")]
+		[Description("Enables DNS resolution of incoming connections with GetGroupForIPExpensive.")]
 		public bool EnableDNSHostResolution;
 
-		[Description("自动封禁IP。")]
+		[Description("Enables kicking of banned users by matching their IP Address.")]
 		public bool EnableIPBans = true;
 
-		[Description("自动封禁UUID。")]
+		[Description("Enables kicking of banned users by matching their client UUID.")]
 		public bool EnableUUIDBans = true;
 
-		[Description("自动封禁玩家名。")]
+		[Description("Enables kicking of banned users by matching their Character Name.")]
 		public bool EnableBanOnUsernames;
 
-		[Description("默认注册玩家所在组。")]
+		[Description("Selects the default group name to place new registrants under.")]
 		public string DefaultRegistrationGroupName = "default";
 
-		[Description("默认未注册玩家所在组。")]
+		[Description("Selects the default group name to place non registered users under")]
 		public string DefaultGuestGroupName = "guest";
 
-		[Description("不对玩家显示日志。")]
+		[Description("Force-disable printing logs to players with the log permission.")]
 		public bool DisableSpewLogs = true;
 
-		[Description("预防OnSecondUpdate刷出大量日志。")]
+		[Description("Prevents OnSecondUpdate checks from writing to the log file")]
 		public bool DisableSecondUpdateLogs = false;
 
-		[Description("密码加密算法 \"sha512\", \"sha256\", \"md5\"。")]
+		[Description("Valid types are \"sha512\", \"sha256\", \"md5\", append with \"-xp\" for the xp supported algorithms.")]
 		public string HashAlgorithm = "sha512";
 
-<<<<<<< HEAD
 		[Obsolete("PacketBuffered is no longer used")]
 		[Description("Buffers up the packets and sends them out at the end of each frame.")]
-=======
-		[Description("缓冲包。")]
->>>>>>> e2683b6... 手动加入RYH修改的文件
 		public bool BufferPackets = true;
 
-		[Description("服务器满时提示信息。")]
-		public string ServerFullReason = "服务器已满。";
+		[Description("String that is used when kicking people when the server is full.")]
+		public string ServerFullReason = "Server is full";
 
-		[Description("不在白名单而被踢时提示信息。")]
-		public string WhitelistKickReason = "你不在白名单里。";
+		[Description("String that is used when a user is kicked due to not being on the whitelist.")]
+		public string WhitelistKickReason = "You are not on the whitelist.";
 
-		[Description("服务器爆满时提示信息。")]
-		public string ServerFullNoReservedReason = "服务器爆满。";
+		[Description("String that is used when kicking people when the server is full with no reserved slots.")]
+		public string ServerFullNoReservedReason = "Server is full. No reserved slots open.";
 
-		[Description("崩溃时保存地图。")]
+		[Description("This will save the world if Terraria crashes from an unhandled exception.")]
 		public bool SaveWorldOnCrash = true;
 
-		[Description("显示玩家IP国家")]
+		[Description("This will announce a player's location on join")]
 		public bool EnableGeoIP;
 
-		[Description("远程端口要求强制认证。")]
+		[Description("This will turn on token requirement for the public REST API endpoints.")]
 		public bool EnableTokenEndpointAuthentication;
 
-		[Description("远程控制。")]
+		[Description("Enable/disable the rest api.")]
 		public bool RestApiEnabled;
 
-		[Description("远程控制端口。")]
+		[Description("This is the port which the rest api will listen on.")]
 		public int RestApiPort = 7878;
 
-		[Description("禁止墓碑。")]
+		[Description("Disable tombstones for all players.")]
 		public bool DisableTombstones = true;
 
-		[Description("对管理员显示玩家IP。")]
+		[Description("Displays a player's IP on join to everyone who has the log permission.")]
 		public bool DisplayIPToAdmins;
 
-		[Description("自动踢出代理玩家。")]
+		[Description("Kicks users using a proxy as identified with the GeoIP database.")]
 		public bool KickProxyUsers = true;
 
-		[Description("锁定肉山前。")]
+		[Description("Disables hardmode, can't never be activated. Overrides /starthardmode.")]
 		public bool DisableHardmode;
 
-		[Description("禁止打地牢骷髅。")]
+		[Description("Disables the dungeon guardian from being spawned by player packets, this will instead force a respawn.")]
 		public bool DisableDungeonGuardian;
 
-		[Description("禁止小丑丢炸弹")]
+		[Description("Disables clown bomb projectiles from spawning.")]
 		public bool DisableClownBombs;
 
-		[Description("禁止雪人丢雪球")]
+		[Description("Disables snow ball projectiles from spawning.")]
 		public bool DisableSnowBalls;
 
 		[Description(
-			"聊天格式 {0}组名 {1}前缀 {2}玩家名 {3}后缀 {4}说的话"
+			"Changes ingame chat format: {0} = Group Name, {1} = Group Prefix, {2} = Player Name, {3} = Group Suffix, {4} = Chat Message"
 			)]
 		public string ChatFormat = "{1}{2}{3}: {4}";
 
-		[Description("头顶显示聊天文字。格式同上。")]
+		[Description("Change the player name when using chat above heads. This begins with a player name wrapped in brackets, as per Terraria's formatting. Same formatting as ChatFormat(minus the text aka {4}).")]
 		public string ChatAboveHeadsFormat = "{2}";
 
-		[Description("锁定时间。normal正常 day白天 night晚上。")]
+		[Description("Force the world time to be normal, day, or night.")]
 		public string ForceTime = "normal";
 
-		[Description("每秒方块破坏上限")]
+		[Description("Disables/reverts a player if this number of tile kills is exceeded within 1 second.")]
 		public int TileKillThreshold = 60;
 
-		[Description("每秒方块放置上限")]
+		[Description("Disables/reverts a player if this number of tile places is exceeded within 1 second.")]
 		public int TilePlaceThreshold = 20;
 
-		[Description("每秒液体放置上限")]
+		[Description("Disables a player if this number of liquid sets is exceeded within 1 second.")]
 		public int TileLiquidThreshold = 15;
 
-		[Description("每秒弹幕发射上限")]
+		[Description("Disable a player if this number of projectiles is created within 1 second.")]
 		public int ProjectileThreshold = 50;
 
-		[Description("忽略弹幕碎片")]
+		[Description("Ignore shrapnel from crystal bullets for projectile threshold.")]
 		public bool ProjIgnoreShrapnel = true;
 
-		[Description("强制登录。")]
+		[Description("Requires all players to register or login before being allowed to play.")]
 		public bool RequireLogin;
 
 		[Description(
-			"禁止隐身PVP"
+			"Disables invisibility potions from being used in PvP (Note, can be used in the client, but the effect isn't sent to the rest of the server)."
 			)]
 		public bool DisableInvisPvP;
 
-		[Description("石化后可移动距离。")]
+		[Description("The maximum distance players disabled for various reasons can move from.")]
 		public int MaxRangeForDisabled = 10;
 
-		[Description("服务器密码")]
+		[Description("Server password required to join the server.")]
 		public string ServerPassword = "";
 
-		[Description("保护领地里的箱子")]
+		[Description("Protect chests with region and build permissions.")]
 		public bool RegionProtectChests;
 
-		[Description("禁止进服前登录。")]
+		[Description("Disable users from being able to login with account password when joining.")]
 		public bool DisableLoginBeforeJoin;
 
-		[Description("强制密码登录。")]
+		[Description("Disable users from being able to login with their client UUID.")]
 		public bool DisableUUIDLogin;
 
-		[Description("踢出异常客户端。")]
+		[Description("Kick clients that don't send a UUID to the server.")]
 		public bool KickEmptyUUID;
 
-		[Description("允许自由注册。")]
+		[Description("Allows users to register any username with /register.")]
 		public bool AllowRegisterAnyUsername;
 
-		[Description("允许自由登录。")]
+		[Description("Allows users to login with any username with /login.")]
 		public bool AllowLoginAnyUsername = true;
 
-		[Description("攻击力上限。")]
+		[Description("The maximum damage a player/npc can inflict.")]
 		public int MaxDamage = 1175;
 
-		[Description("弹幕攻击力上限。")]
+		[Description("The maximum damage a projectile can inflict.")]
 		public int MaxProjDamage = 1175;
 
-		[Description("踢出受伤超过攻击力上限的玩家")]
+		[Description("Kicks a user if set to true, if they inflict more damage then the max damage.")]
 		public bool KickOnDamageThresholdBroken = false;
 
-		[Description("忽略弹幕更新检查")]
+		[Description("Ignores checking to see if player 'can' update a projectile.")]
 		public bool IgnoreProjUpdate = false;
 
-		[Description("忽略弹幕消灭检查")]
+		[Description("Ignores checking to see if player 'can' kill a projectile.")]
 		public bool IgnoreProjKill = false;
 
-		[Description("忽略所有no clip检查（什么鬼）")]
+		[Description("Ignores all no clip checks for players.")]
 		public bool IgnoreNoClip = false;
 
-		[Description("地图被保护时允许玩家使用寒冰魔杖")]
+		[Description("Allow ice placement even when user does not have canbuild.")]
 		public bool AllowIce = false;
 
-		[Description("允许血腥传播")]
+		[Description("Allows crimson to spread when a world is hardmode.")]
 		public bool AllowCrimsonCreep = true;
 
-		[Description("允许腐化传播")]
+		[Description("Allows corruption to spread when a world is hardmode.")]
 		public bool AllowCorruptionCreep = true;
 
-		[Description("允许神圣传播")]
+		[Description("Allows hallow to spread when a world is hardmode.")]
 		public bool AllowHallowCreep = true;
 
-		[Description("雕像200像素刷物品上限")]
+		[Description("How many things a statue can spawn within 200 pixels(?) before it stops spawning. Default = 3")]
 		public int StatueSpawn200 = 3;
 
-		[Description("雕像600像素刷物品上限")]
+		[Description("How many things a statue can spawn within 600 pixels(?) before it stops spawning. Default = 6")]
 		public int StatueSpawn600 = 6;
 
-		[Description("雕像全图刷物品上限")]
+		[Description("How many things a statue spawns can exist in the world before it stops spawning. Default = 10")]
 		public int StatueSpawnWorld = 10;
 
-		[Description("预防命令刷出被封禁物品。")]
+		[Description("Prevent banned items from being /i or /give.")]
 		public bool PreventBannedItemSpawn = false;
 
-		[Description("玩家死后不能修改地图。")]
+		[Description("Prevent players from interacting with the world if dead.")]
 		public bool PreventDeadModification = true;
 
-		[Description("头顶显示聊天文字。")]
+		[Description("Displays chat messages above players' heads, but will disable chat prefixes to compensate.")]
 		public bool EnableChatAboveHeads = false;
 
-		[Description("开启圣诞")]
+		[Description("Force Christmas-only events to occur all year.")]
 		public bool ForceXmas = false;
 
-		[Description("允许特定组用命令刷出被封禁物品。")]
+		[Description("Allows groups on the banned item allowed list to spawn banned items.")]
 		public bool AllowAllowedGroupsToSpawnBannedItems = false;
 
-		[Description("忽略箱子中的作弊物品。")]
+		[Description("Allows stacks in chests to be beyond the stack limit")]
 		public bool IgnoreChestStacksOnLoad = false;
 
-		[Description("日志保存文件夹。")]
+		[Description("The path of the directory where logs should be written into.")]
 		public string LogPath = "tshock";
 
-		[Description("保存SQL记录至文件。")]
+		[Description("Save logs to an SQL database instead of a text file. Default = false")]
 		public bool UseSqlLogs = false;
 
-		[Description("SQL记录前失败次数")] 
+		[Description("Number of times the SQL log must fail to insert logs before falling back to the text log")] 
 		public int RevertToTextLogsOnSqlFailures = 10;
 
-		[Description("预防非法放置方式")]
+		[Description("Prevents players from placing tiles with an invalid style.")]
 		public bool PreventInvalidPlaceStyle = true;
 
-		[Description("服务器广播颜色。")]
+		[Description("#.#.#. = Red/Blue/Green - RGB Colors for broadcasts. Max value: 255.")]
 		public int[] BroadcastRGB = { 127, 255, 212 };
 
 		// TODO: Get rid of this when the old REST permission model is removed.
 		[Description(
-			"远程使用新的权限"
+			"Whether the REST API should use the new permission model. Note: The old permission model will become depracted in the future."
 			)]
 		public bool RestUseNewPermissionModel = true;
 
 		[Description("A dictionary of REST tokens that external applications may use to make queries to your server.")]
 		public Dictionary<string, SecureRest.TokenData> ApplicationRestTokens = new Dictionary<string, SecureRest.TokenData>();
 
-		[Description("预留空位数。")]
+		[Description("The number of reserved slots past your max server slot that can be joined by reserved players")]
 		public int ReservedSlots = 20;
 
-		[Description("预留空位数。")]
+		[Description("The number of reserved slots past your max server slot that can be joined by reserved players")]
 		public bool LogRest = false;
 
-		[Description("复活时间。")]
+		[Description("The number of seconds a player must wait before being respawned.")]
 		public int RespawnSeconds = 5;
 
-		[Description("Boss战复活时间。")]
+		[Description("The number of seconds a player must wait before being respawned if there is a boss nearby.")]
 		public int RespawnBossSeconds = 10;
 
-		[Description("每秒涂漆上限")]
+		[Description("Disables a player if this number of tiles is painted within 1 second.")]
 		public int TilePaintThreshold = 15;
 
-		[Description("开启最大缓冲。")]
+		[Description("Enables max packet bufferer size.")]
 		public bool EnableMaxBytesInBuffer = false;
 
-		[Description("缓冲大小。")]
+		[Description("Number of bytes in the packet buffer before we disconnect the player.")]
 		public int MaxBytesInBuffer = 5242880;
 
-		[Description("强制万圣。")]
+		[Description("Forces your world to be in Halloween mode regardless of the data.")]
 		public bool ForceHalloween = false;
 
-		[Description("允许任何人破坏草和罐子。")]
+		[Description("Allows anyone to break grass, pots, etc.")]
 		public bool AllowCutTilesAndBreakables = false;
 
-		[Description("命令标志")]
+		[Description("Specifies which string starts a command.")]
 		public string CommandSpecifier = "/";
 
-		[Description("静默命令标志")]
+		[Description("Specifies which string starts a command silently.")]
 		public string CommandSilentSpecifier = ".";
 		
-		[Description("困难难度死亡踢出")]
+		[Description("Kicks a hardcore player on death.")]
 		public bool KickOnHardcoreDeath;
 		
-		[Description("困难难度死亡封禁")]
+		[Description("Bans a hardcore player on death.")]
 		public bool BanOnHardcoreDeath;
 		
-		[Description("困难难度死亡封禁")]
-		public string HardcoreBanReason = "死亡而被封禁";
+		[Description("Bans a hardcore player on death.")]
+		public string HardcoreBanReason = "Death results in a ban";
 		
-		[Description("困难难度死亡踢出")]
-		public string HardcoreKickReason = "死亡而被踢出";
+		[Description("Kicks a hardcore player on death.")]
+		public string HardcoreKickReason = "Death results in a kick";
 
-		[Description("匿名召唤Boss或入侵")]
+		[Description("Whether bosses or invasions should be anonymously spawned.")]
 		public bool AnonymousBossInvasions = true;
 
-		[Description("最大血量")]
+		[Description("The maximum allowable HP, before equipment buffs.")]
 		public int MaxHP = 500;
 
-		[Description("最大魔法")]
+		[Description("The maximum allowable MP, before equipment buffs.")]
 		public int MaxMP = 200;
 
-		[Description("玩家退出时保存地图")]
+		[Description("Determines if the server should save the world if the last player exits.")]
 		public bool SaveWorldOnLastPlayerExit = true;
 
-		[Description("BCrypt加密工作因子")]
+		[Description("Determines the BCrypt work factor to use. If increased, all passwords will be upgraded to new work-factor on verify. The number of computational rounds is 2^n. Increase with caution. Range: 5-31.")]
 		public int BCryptWorkFactor = 7;
 
-		[Description("最小密码长度")]
+		[Description("The minimum password length for new user accounts. Minimum value is 4.")]
 		public int MinimumPasswordLength = 4;
 
-		[Description("远程请求间隔")]
+		[Description("The maximum REST requests in the bucket before denying requests. Minimum value is 5.")]
 		public int RESTMaximumRequestsPerInterval = 5;
 
-		[Description("远程请求减少速度")]
+		[Description("How often in minutes the REST requests bucket is decreased by one. Minimum value is 1 minute.")]
 		public int RESTRequestBucketDecreaseIntervalMinutes = 1;
 
-		[Description("远程请求只限制错误密码")]
+		[Description("Whether we should limit only the max failed login requests, or all login requests")]
 		public bool RESTLimitOnlyFailedLoginRequests = true;
 
-<<<<<<< HEAD
 		[Description("Show backup autosave messages.")] public bool ShowBackupAutosaveMessages = true;
-=======
-		[Obsolete("This is being removed in future versions of TShock due to Terraria fixes.")]
-		[Description("允许使用挖掘机，非常危险，可能被毁服。")] public bool
-			VeryDangerousDoNotChangeEnableDrillContainmentUnit = true;
-
-		[Description("显示自动保存信息")] public bool ShowBackupAutosaveMessages = true;
->>>>>>> e2683b6... 手动加入RYH修改的文件
 
 		/// <summary>
 		/// Reads a configuration file from a given path
@@ -468,7 +456,7 @@ namespace TShockAPI
 		public static ConfigFile Read(string path)
 		{
 			if (!File.Exists(path))
-				{DumpDescriptions();{DumpDescriptions();{DumpDescriptions();{DumpDescriptions();{DumpDescriptions();return new ConfigFile();}}}}}
+				return new ConfigFile();
 			using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
 			{
 				return Read(fs);
@@ -544,13 +532,13 @@ namespace TShockAPI
 				var def = field.GetValue(defaults);
 
 				sb.AppendLine("{0}  ".SFormat(name));
-				sb.AppendLine("类型: {0}  ".SFormat(type));
-				sb.AppendLine("描述: {0}  ".SFormat(desc));
-				sb.AppendLine("默认值: \"{0}\"  ".SFormat(def));
+				sb.AppendLine("Type: {0}  ".SFormat(type));
+				sb.AppendLine("Description: {0}  ".SFormat(desc));
+				sb.AppendLine("Default: \"{0}\"  ".SFormat(def));
 				sb.AppendLine();
 			}
 
-			File.WriteAllText("Config介绍.txt", sb.ToString());
+			File.WriteAllText("ConfigDescriptions.txt", sb.ToString());
 		}
 	}
 }

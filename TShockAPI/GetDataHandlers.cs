@@ -3438,7 +3438,7 @@ namespace TShockAPI
 
 			if (Main.npc[id].townNPC && !args.Player.HasPermission(Permissions.hurttownnpc))
 			{
-				args.Player.SendErrorMessage("你没有权限伤害这萌萌的NPC。");
+				args.Player.SendErrorMessage("You do not have permission to hurt this NPC.");
 				args.Player.SendData(PacketTypes.NpcUpdate, "", id);
 				return true;
 			}
@@ -3469,7 +3469,7 @@ namespace TShockAPI
 
 			if (type == 1 && TShock.Config.DisableDungeonGuardian)
 			{
-				args.Player.SendMessage("地牢守卫者把你送回了复活点。", Color.Purple);
+				args.Player.SendMessage("The Dungeon Guardian returned you to your spawn point", Color.Purple);
 				args.Player.Spawn();
 				return true;
 			}
@@ -3593,12 +3593,12 @@ namespace TShockAPI
 			}
 			if (spawnboss && !args.Player.HasPermission(Permissions.summonboss))
 			{
-				args.Player.SendErrorMessage("你没有权限召唤Boss。");
+				args.Player.SendErrorMessage("You don't have permission to summon a boss.");
 				return true;
 			}
 			if (invasion && !args.Player.HasPermission(Permissions.startinvasion))
 			{
-				args.Player.SendErrorMessage("你没有权限召唤入侵。");
+				args.Player.SendErrorMessage("You don't have permission to start an invasion.");
 				return true;
 			}
 			if (!spawnboss && !invasion)
@@ -3635,17 +3635,13 @@ namespace TShockAPI
 					boss = "a Goblin Invasion";
 					break;
 				default:
-					boss = String.Format("{0}", npc.name);
+					boss = String.Format("the {0}", npc.name);
 					break;
 			}
 			if (TShock.Config.AnonymousBossInvasions)
-				TShock.Utils.SendLogs(string.Format("{0} 召唤了 {1}。", args.Player.Name, boss), Color.PaleVioletRed, args.Player);
+				TShock.Utils.SendLogs(string.Format("{0} summoned {1}!", args.Player.Name, boss), Color.PaleVioletRed, args.Player);
 			else
-<<<<<<< HEAD
 				TShock.Utils.Broadcast(String.Format("{0} summoned {1}!", args.Player.Name, boss), 175, 75, 255);
-=======
-				TShock.Utils.Broadcast(String.Format("{0} 召唤了 {1}，并被系统记录。", args.Player.Name, boss), 175, 75, 255);
->>>>>>> e2683b6... 手动加入RYH修改的文件
 			return false;
 		}
 
