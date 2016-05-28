@@ -122,7 +122,7 @@ namespace Terraria.GameContent.Tile_Entities
 			return tETrainingDummy.ID;
 		}
 
-		public override void ReadExtraData(BinaryReader reader, bool networkSend)
+		public override void ReadExtraData(BinaryReader reader)
 		{
 			this.npc = reader.ReadInt16();
 		}
@@ -175,7 +175,7 @@ namespace Terraria.GameContent.Tile_Entities
 			return false;
 		}
 
-		public override void WriteExtraData(BinaryWriter writer, bool networkSend)
+		public override void WriteExtraData(BinaryWriter writer)
 		{
 			writer.Write((short)this.npc);
 		}

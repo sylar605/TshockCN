@@ -92,7 +92,11 @@ namespace Terraria.Net
 
 		public static void SendData(int player, ISocket socket, NetPacket packet)
 		{
-            Netplay.Clients[player].Socket.AsyncSend(packet.Buffer.Data, 0, packet.Length, new SocketSendCallback(Netplay.Clients[player].ServerWriteCallBack));
+			Netplay.Clients[player].sendQueue.AllocAndSet(packet.Length, (BinaryWriter bw) =>
+			{
+				bw.Write(packet.Buffer.Data, 0, packet.Length);
+				return true;
+			});
 		}
 
 		private static void UpdateStats(int length)

@@ -1,4 +1,4 @@
-
+using NATUPNPLib;
 using System;
 using System.IO;
 using System.Net;
@@ -29,7 +29,7 @@ namespace Terraria
 		public static bool spamCheck = false;
 		public static bool anyClients = false;
 
-		public static void ResetNetDiag()
+        public static void ResetNetDiag()
 		{
 			Main.rxMsg = 0;
 			Main.rxData = 0;
@@ -44,15 +44,15 @@ namespace Terraria
 				{
 					for (int k = 0; k < Main.maxSectionsY; k++)
 					{
-						Clients[i].TileSections[j, k] = false;
+						Netplay.Clients[i].TileSections[j, k] = false;
 					}
 				}
 			}
 		}
 		public static void AddBan(int plr)
 		{
-			RemoteAddress remoteAddress = Clients[plr].Socket.GetRemoteAddress();
-			using (StreamWriter streamWriter = new StreamWriter(BanFilePath, true))
+			RemoteAddress remoteAddress = Netplay.Clients[plr].Socket.GetRemoteAddress();
+			using (StreamWriter streamWriter = new StreamWriter(Netplay.BanFilePath, true))
 			{
 				streamWriter.WriteLine("//" + Main.player[plr].name);
 				streamWriter.WriteLine(remoteAddress.ToString());
@@ -63,9 +63,9 @@ namespace Terraria
 			try
 			{
 				string identifier = address.GetIdentifier();
-				if (File.Exists(BanFilePath))
+				if (File.Exists(Netplay.BanFilePath))
 				{
-					using (StreamReader streamReader = new StreamReader(BanFilePath))
+					using (StreamReader streamReader = new StreamReader(Netplay.BanFilePath))
 					{
 						string a;
 						while ((a = streamReader.ReadLine()) != null)
@@ -90,13 +90,13 @@ namespace Terraria
 		}
 		public static void newRecent()
 		{
-			if (Connection.Socket.GetRemoteAddress().Type != AddressType.Tcp)
+			if (Netplay.Connection.Socket.GetRemoteAddress().Type != AddressType.Tcp)
 			{
 				return;
 			}
 			for (int i = 0; i < Main.maxMP; i++)
 			{
-				if (Main.recentIP[i].ToLower() == ServerIPText.ToLower() && Main.recentPort[i] == ListenPort)
+				if (Main.recentIP[i].ToLower() == Netplay.ServerIPText.ToLower() && Main.recentPort[i] == Netplay.ListenPort)
 				{
 					for (int j = i; j < Main.maxMP - 1; j++)
 					{
@@ -112,21 +112,21 @@ namespace Terraria
 				Main.recentPort[k] = Main.recentPort[k - 1];
 				Main.recentWorld[k] = Main.recentWorld[k - 1];
 			}
-			Main.recentIP[0] = ServerIPText;
-			Main.recentPort[0] = ListenPort;
+			Main.recentIP[0] = Netplay.ServerIPText;
+			Main.recentPort[0] = Netplay.ListenPort;
 			Main.recentWorld[0] = Main.worldName;
 			Main.SaveRecent();
 		}
 		public static void SocialClientLoop(object threadContext)
 		{
 			ISocket socket = (ISocket)threadContext;
-			ClientLoopSetup(socket.GetRemoteAddress());
-			Connection.Socket = socket;
+			Netplay.ClientLoopSetup(socket.GetRemoteAddress());
+			Netplay.Connection.Socket = socket;
 		}
 		public static void TcpClientLoop(object threadContext)
 		{
-			RemoteAddress address = new TcpAddress(ServerIP, ListenPort);
-			ClientLoopSetup(address);
+			RemoteAddress address = new TcpAddress(Netplay.ServerIP, Netplay.ListenPort);
+			Netplay.ClientLoopSetup(address);
 			Main.menuMode = 14;
 			bool flag = true;
 			while (flag)
@@ -134,12 +134,12 @@ namespace Terraria
 				flag = false;
 				try
 				{
-					Connection.Socket.Connect(new TcpAddress(ServerIP, ListenPort));
+					Netplay.Connection.Socket.Connect(new TcpAddress(Netplay.ServerIP, Netplay.ListenPort));
 					flag = false;
 				}
 				catch
 				{
-					if (!disconnect && Main.gameMenu)
+					if (!Netplay.disconnect && Main.gameMenu)
 					{
 						flag = true;
 					}
@@ -148,7 +148,7 @@ namespace Terraria
 		}
 		private static void ClientLoopSetup(RemoteAddress address)
 		{
-			ResetNetDiag();
+			Netplay.ResetNetDiag();
 			Main.ServerSideCharacter = false;
 			if (Main.rand == null)
 			{
@@ -173,15 +173,15 @@ namespace Terraria
 			{
 				Main.statusText = "Connecting to " + address.GetFriendlyName();
 			}
-			disconnect = false;
-			Connection = new RemoteServer();
-			Connection.ReadBuffer = new byte[1024];
+			Netplay.disconnect = false;
+			Netplay.Connection = new RemoteServer();
+			Netplay.Connection.ReadBuffer = new byte[1024];
 		}
 		private static int FindNextOpenClientSlot()
 		{
 			for (int i = 0; i < Main.maxNetPlayers; i++)
 			{
-				if (!Clients[i].Socket.IsConnected())
+				if (!Netplay.Clients[i].Socket.IsConnected())
 				{
 					return i;
 				}
@@ -190,10 +190,11 @@ namespace Terraria
 		}
 		private static void OnConnectionAccepted(ISocket client)
 		{
-			int num = FindNextOpenClientSlot();
+			int num = Netplay.FindNextOpenClientSlot();
 			if (num != -1)
 			{
-				Clients[num].Socket = client;
+				Netplay.Clients[num].Socket = client;
+				Netplay.Clients[num].sendQueue.StartThread();
 
 				Console.WriteLine(client.GetRemoteAddress() + " is connecting to slot {0}...", num);
 			}
@@ -218,20 +219,20 @@ namespace Terraria
 		}
 		public static void OnConnectedToSocialServer(ISocket client)
 		{
-			StartSocialClient(client);
+			Netplay.StartSocialClient(client);
 		}
 		private static bool StartListening()
 		{
-			return TcpListener.StartListening(new SocketConnectionAccepted(OnConnectionAccepted));
+			return Netplay.TcpListener.StartListening(new SocketConnectionAccepted(Netplay.OnConnectionAccepted));
 		}
 		private static void StopListening()
 		{
 
-			TcpListener.StopListening();
+			Netplay.TcpListener.StopListening();
 		}
 		public static void ServerLoop(object threadContext)
 		{
-			ResetNetDiag();
+			Netplay.ResetNetDiag();
 			if (Main.rand == null)
 			{
 				Main.rand = new Random((int)DateTime.Now.Ticks);
@@ -244,34 +245,34 @@ namespace Terraria
 			Main.menuMode = 14;
 			Main.statusText = "Starting server...";
 			Main.netMode = 2;
-			disconnect = false;
+			Netplay.disconnect = false;
 			for (int i = 0; i < 256; i++)
 			{
-				Clients[i] = new RemoteClient();
-				Clients[i].Reset();
-				Clients[i].Id = i;
-				Clients[i].ReadBuffer = new byte[1024];
+				Netplay.Clients[i] = new RemoteClient();
+				Netplay.Clients[i].Reset();
+				Netplay.Clients[i].Id = i;
+				Netplay.Clients[i].ReadBuffer = new byte[1024];
 			}
-			TcpListener = new TcpSocket();
-			if (!disconnect)
+			Netplay.TcpListener = new TcpSocket();
+			if (!Netplay.disconnect)
 			{
-				if (!StartListening())
+				if (!Netplay.StartListening())
 				{
 					Main.menuMode = 15;
 					Main.statusText = "Tried to run two servers on the same PC";
-					disconnect = true;
+					Netplay.disconnect = true;
 				}
 				Main.statusText = "Server started";
 			}
 			int num = 0;
-			while (!disconnect)
+			while (!Netplay.disconnect)
 			{
-				if (!IsListening)
+				if (!Netplay.IsListening)
 				{
 					int num2 = -1;
 					for (int j = 0; j < Main.maxNetPlayers; j++)
 					{
-						if (!Clients[j].Socket.IsConnected())
+						if (!Netplay.Clients[j].Socket.IsConnected())
 						{
 							num2 = j;
 							break;
@@ -283,8 +284,8 @@ namespace Terraria
 						{
 							try
 							{
-								StartListening();
-								IsListening = true;
+								Netplay.StartListening();
+								Netplay.IsListening = true;
 								goto IL_16A;
 							}
 							catch
@@ -292,8 +293,8 @@ namespace Terraria
 								goto IL_16A;
 							}
 						}
-						StartListening();
-						IsListening = true;
+						Netplay.StartListening();
+						Netplay.IsListening = true;
 					}
 				}
 			IL_16A:
@@ -304,146 +305,141 @@ namespace Terraria
 					{
 						NetMessage.CheckBytes(k);
 					}
-					if (Clients[k].PendingTermination)
+					if (Netplay.Clients[k].PendingTermination)
 					{
-						ServerApi.Hooks.InvokeServerLeave(Clients[k].Id);
-						Clients[k].Reset();
+						ServerApi.Hooks.InvokeServerLeave(Netplay.Clients[k].Id);
+						Netplay.Clients[k].Reset();
 						NetMessage.syncPlayers(sendInventory: false, sendPlayerInfo: false);
 					}
 					else
 					{
-						if (Clients[k].Socket.IsConnected())
+						if (Netplay.Clients[k].Socket.IsConnected())
 						{
-							if (!Clients[k].IsActive)
+							if (!Netplay.Clients[k].IsActive)
 							{
-								Clients[k].State = 0;
+								Netplay.Clients[k].State = 0;
 							}
-							Clients[k].IsActive = true;
+							Netplay.Clients[k].IsActive = true;
 							num3++;
-							if (!Clients[k].IsReading)
+							if (!Netplay.Clients[k].IsReading)
 							{
 								try
 								{
-									if (Clients[k].Socket.IsDataAvailable())
+									if (Netplay.Clients[k].Socket.IsDataAvailable())
 									{
-										Clients[k].IsReading = true;
-										Clients[k].Socket.AsyncReceive(Clients[k].ReadBuffer, 0, Clients[k].ReadBuffer.Length, new SocketReceiveCallback(Clients[k].ServerReadCallBack), null);
+										Netplay.Clients[k].IsReading = true;
+										Netplay.Clients[k].Socket.AsyncReceive(Netplay.Clients[k].ReadBuffer, 0, Netplay.Clients[k].ReadBuffer.Length, new SocketReceiveCallback(Netplay.Clients[k].ServerReadCallBack), null);
 									}
 								}
 								catch
 								{
-									Clients[k].PendingTermination = true;
+									Netplay.Clients[k].PendingTermination = true;
 								}
 							}
-							if (Clients[k].StatusMax > 0 && Clients[k].StatusText2 != "")
+							if (Netplay.Clients[k].StatusMax > 0 && Netplay.Clients[k].StatusText2 != "")
 							{
-								if (Clients[k].StatusCount >= Clients[k].StatusMax)
+								if (Netplay.Clients[k].StatusCount >= Netplay.Clients[k].StatusMax)
 								{
-									Clients[k].StatusText = string.Concat(new object[]
+									Netplay.Clients[k].StatusText = string.Concat(new object[]
 									{
 										"(",
-										Clients[k].Socket.GetRemoteAddress(),
+										Netplay.Clients[k].Socket.GetRemoteAddress(),
 										") ",
-										Clients[k].Name,
+										Netplay.Clients[k].Name,
 										" ",
-										Clients[k].StatusText2,
+										Netplay.Clients[k].StatusText2,
 										": Complete!"
 									});
-									Clients[k].StatusText2 = "";
-									Clients[k].StatusMax = 0;
-									Clients[k].StatusCount = 0;
+									Netplay.Clients[k].StatusText2 = "";
+									Netplay.Clients[k].StatusMax = 0;
+									Netplay.Clients[k].StatusCount = 0;
 									continue;
 								}
-								Clients[k].StatusText = string.Concat(new object[]
+								Netplay.Clients[k].StatusText = string.Concat(new object[]
 								{
 									"(",
-									Clients[k].Socket.GetRemoteAddress(),
+									Netplay.Clients[k].Socket.GetRemoteAddress(),
 									") ",
-									Clients[k].Name,
+									Netplay.Clients[k].Name,
 									" ",
-									Clients[k].StatusText2,
+									Netplay.Clients[k].StatusText2,
 									": ",
-									(int)((float)Clients[k].StatusCount / (float)Clients[k].StatusMax * 100f),
+									(int)((float)Netplay.Clients[k].StatusCount / (float)Netplay.Clients[k].StatusMax * 100f),
 									"%"
 								});
 								continue;
 							}
 							else
 							{
-								if (Clients[k].State == 0)
+								if (Netplay.Clients[k].State == 0)
 								{
-									Clients[k].StatusText = string.Concat(new object[]
+									Netplay.Clients[k].StatusText = string.Concat(new object[]
 									{
 										"(",
-										Clients[k].Socket.GetRemoteAddress(),
+										Netplay.Clients[k].Socket.GetRemoteAddress(),
 										") ",
-										Clients[k].Name,
+										Netplay.Clients[k].Name,
 										" is connecting..."
 									});
 									continue;
 								}
-								if (Clients[k].State == 1)
+								if (Netplay.Clients[k].State == 1)
 								{
-									Clients[k].StatusText = string.Concat(new object[]
+									Netplay.Clients[k].StatusText = string.Concat(new object[]
 									{
 										"(",
-										Clients[k].Socket.GetRemoteAddress(),
+										Netplay.Clients[k].Socket.GetRemoteAddress(),
 										") ",
-										Clients[k].Name,
+										Netplay.Clients[k].Name,
 										" is sending player data..."
 									});
 									continue;
 								}
-								if (Clients[k].State == 2)
+								if (Netplay.Clients[k].State == 2)
 								{
-									Clients[k].StatusText = string.Concat(new object[]
+									Netplay.Clients[k].StatusText = string.Concat(new object[]
 									{
 										"(",
-										Clients[k].Socket.GetRemoteAddress(),
+										Netplay.Clients[k].Socket.GetRemoteAddress(),
 										") ",
-										Clients[k].Name,
+										Netplay.Clients[k].Name,
 										" requested world information"
 									});
 									continue;
 								}
-								if (Clients[k].State == 3 || Clients[k].State != 10)
+								if (Netplay.Clients[k].State == 3 || Netplay.Clients[k].State != 10)
 								{
 									continue;
 								}
 								try
 								{
-									Clients[k].StatusText = string.Concat(new object[]
+									Netplay.Clients[k].StatusText = string.Concat(new object[]
 									{
 										"(",
-										Clients[k].Socket.GetRemoteAddress(),
+										Netplay.Clients[k].Socket.GetRemoteAddress(),
 										") ",
-										Clients[k].Name,
+										Netplay.Clients[k].Name,
 										" is playing"
 									});
 									continue;
 								}
 								catch
 								{
-									Clients[k].PendingTermination = true;
+									Netplay.Clients[k].PendingTermination = true;
 									continue;
 								}
 							}
 						}
-						if (Clients[k].IsActive)
+						if (Netplay.Clients[k].IsActive)
 						{
-							Clients[k].PendingTermination = true;
+							Netplay.Clients[k].PendingTermination = true;
 						}
 						else
 						{
-							Clients[k].StatusText2 = "";
+							Netplay.Clients[k].StatusText2 = "";
 							if (k < 255)
 							{
-								bool active = Main.player[k].active;
 								Main.player[k].active = false;
-								if (active)
-								{
-									Player.Hooks.PlayerDisconnect(k);
-								}
 							}
 						}
 					}
@@ -471,18 +467,18 @@ namespace Terraria
 				}
 				if (num3 == 0)
 				{
-					anyClients = false;
+					Netplay.anyClients = false;
 				}
 				else
 				{
-					anyClients = true;
+					Netplay.anyClients = true;
 				}
-				IsServerRunning = true;
+				Netplay.IsServerRunning = true;
 			}
-			StopListening();
+			Netplay.StopListening();
 			for (int l = 0; l < 256; l++)
 			{
-				Clients[l].Reset();
+				Netplay.Clients[l].Reset();
 			}
 			if (Main.menuMode != 15)
 			{
@@ -503,19 +499,15 @@ namespace Terraria
 		}
 		public static void StartSocialClient(ISocket socket)
 		{
-			ThreadPool.QueueUserWorkItem(new WaitCallback(SocialClientLoop), socket);
+			ThreadPool.QueueUserWorkItem(new WaitCallback(Netplay.SocialClientLoop), socket);
 		}
 		public static void StartTcpClient()
 		{
-			ThreadPool.QueueUserWorkItem(new WaitCallback(TcpClientLoop), 1);
+			ThreadPool.QueueUserWorkItem(new WaitCallback(Netplay.TcpClientLoop), 1);
 		}
 		public static void StartServer()
 		{
-			Thread t = new Thread(ServerLoop);
-			t.Name = "Server Loop";
-			t.Start();
-			
-			//ThreadPool.QueueUserWorkItem(new WaitCallback(Netplay.ServerLoop), 1);
+			ThreadPool.QueueUserWorkItem(new WaitCallback(Netplay.ServerLoop), 1);
 		}
 		public static bool SetRemoteIP(string remoteAddress)
 		{
@@ -524,8 +516,8 @@ namespace Terraria
 				IPAddress iPAddress;
 				if (IPAddress.TryParse(remoteAddress, out iPAddress))
 				{
-					ServerIP = iPAddress;
-					ServerIPText = iPAddress.ToString();
+					Netplay.ServerIP = iPAddress;
+					Netplay.ServerIPText = iPAddress.ToString();
 					bool result = true;
 					return result;
 				}
@@ -535,8 +527,8 @@ namespace Terraria
 				{
 					if (addressList[i].AddressFamily == AddressFamily.InterNetwork)
 					{
-						ServerIP = addressList[i];
-						ServerIPText = remoteAddress;
+						Netplay.ServerIP = addressList[i];
+						Netplay.ServerIPText = remoteAddress;
 						bool result = true;
 						return result;
 					}
@@ -558,7 +550,7 @@ namespace Terraria
 			{
 				if (i < 256)
 				{
-					Clients[i] = new RemoteClient();
+					Netplay.Clients[i] = new RemoteClient();
 				}
 				NetMessage.buffer[i] = new MessageBuffer();
 				NetMessage.buffer[i].whoAmI = i;

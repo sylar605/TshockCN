@@ -1,7 +1,6 @@
 
 using System;
 using System.Collections.Generic;
-using Terraria.ID;
 using TerrariaApi.Server;
 
 namespace Terraria
@@ -2465,104 +2464,71 @@ namespace Terraria
 			return new Vector2(-1f, -1f);
 		}
 
-		public static bool SwitchTiles(Vector2 Position, int Width, int Height, Vector2 oldPosition, int objType)
+		public static bool SwitchTiles(object TriggeringObject, Vector2 Position, int Width, int Height, Vector2 oldPosition, int objType)
 		{
-			int num = (int)(Position.X / 16f) - 1;
-			int num2 = (int)((Position.X + (float)Width) / 16f) + 2;
-			int num3 = (int)(Position.Y / 16f) - 1;
-			int num4 = (int)((Position.Y + (float)Height) / 16f) + 2;
-			if (num < 0)
+			Vector2 vector2 = new Vector2();
+			int x = (int)(Position.X / 16f) - 1;
+			int num = (int)((Position.X + (float)Width) / 16f) + 2;
+			int y = (int)(Position.Y / 16f) - 1;
+			int y1 = (int)((Position.Y + (float)Height) / 16f) + 2;
+			if (x < 0)
 			{
-				num = 0;
+				x = 0;
 			}
-			if (num2 > Main.maxTilesX)
+			if (num > Main.maxTilesX)
 			{
-				num2 = Main.maxTilesX;
+				num = Main.maxTilesX;
 			}
-			if (num3 < 0)
+			if (y < 0)
 			{
-				num3 = 0;
+				y = 0;
 			}
-			if (num4 > Main.maxTilesY)
+			if (y1 > Main.maxTilesY)
 			{
-				num4 = Main.maxTilesY;
+				y1 = Main.maxTilesY;
 			}
-			for (int i = num; i < num2; i++)
+			for (int i = x; i < num; i++)
 			{
-				for (int j = num3; j < num4; j++)
+				for (int j = y; j < y1; j++)
 				{
-					if (Main.tile[i, j] != null)
+					if (Main.tile[i, j] != null && Main.tile[i, j].active() && (Main.tile[i, j].type == 135 || Main.tile[i, j].type == 210))
 					{
-						int type = (int)Main.tile[i, j].type;
-						if (Main.tile[i, j].active() && (type == 135 || type == 210 || type == 442))
+						vector2.X = (float)(i * 16);
+						vector2.Y = (float)(j * 16 + 12);
+						if (Position.X + (float)Width > vector2.X && Position.X < vector2.X + 16f && Position.Y + (float)Height > vector2.Y && (double)Position.Y < (double)vector2.Y + 4.01)
 						{
-							Vector2 vector;
-							vector.X = (float)(i * 16);
-							vector.Y = (float)(j * 16 + 12);
-							bool flag = false;
-							if (objType == 4)
+							if (Main.tile[i, j].type == 210)
 							{
-								if (type == 442)
-								{
-									float r1StartX = 0f;
-									float r1StartY = 0f;
-									float r1Width = 0f;
-									float r1Height = 0f;
-									switch (Main.tile[i, j].frameX / 22)
-									{
-									case 0:
-										r1StartX = (float)(i * 16);
-										r1StartY = (float)(j * 16 + 16 - 10);
-										r1Width = 16f;
-										r1Height = 10f;
-										break;
-									case 1:
-										r1StartX = (float)(i * 16);
-										r1StartY = (float)(j * 16);
-										r1Width = 16f;
-										r1Height = 10f;
-										break;
-									case 2:
-										r1StartX = (float)(i * 16);
-										r1StartY = (float)(j * 16);
-										r1Width = 10f;
-										r1Height = 16f;
-										break;
-									case 3:
-										r1StartX = (float)(i * 16 + 16 - 10);
-										r1StartY = (float)(j * 16);
-										r1Width = 10f;
-										r1Height = 16f;
-										break;
-									}
-									if (Utils.FloatIntersect(r1StartX, r1StartY, r1Width, r1Height, Position.X, Position.Y, (float)Width, (float)Height) && !Utils.FloatIntersect(r1StartX, r1StartY, r1Width, r1Height, oldPosition.X, oldPosition.Y, (float)Width, (float)Height))
-									{
-										Wiring.HitSwitch(i, j);
-										NetMessage.SendData(59, -1, -1, "", i, (float)j, 0f, 0f, 0, 0, 0);
-										return true;
-									}
-								}
-								flag = true;
+								WorldGen.ExplodeMine(i, j);
 							}
-							if (!flag && Position.X + (float)Width > vector.X && Position.X < vector.X + 16f && Position.Y + (float)Height > vector.Y && (double)Position.Y < (double)vector.Y + 4.01)
+							else if (oldPosition.X + (float)Width <= vector2.X || oldPosition.X >= vector2.X + 16f || oldPosition.Y + (float)Height <= vector2.Y || (double)oldPosition.Y >= (double)vector2.Y + 16.01)
 							{
-								if (type == 210)
+								int num1 = Main.tile[i, j].frameY / 18;
+								bool flag = true;
+								if ((num1 == 4 || num1 == 2 || num1 == 3 || num1 == 6) && objType != 1)
 								{
-									WorldGen.ExplodeMine(i, j);
+									flag = false;
 								}
-								else if (type != 442 && (oldPosition.X + (float)Width <= vector.X || oldPosition.X >= vector.X + 16f || oldPosition.Y + (float)Height <= vector.Y || (double)oldPosition.Y >= (double)vector.Y + 16.01))
+								if (num1 == 5 && objType == 1)
 								{
-									int num5 = (int)(Main.tile[i, j].frameY / 18);
-									bool flag2 = true;
-									if ((num5 == 4 || num5 == 2 || num5 == 3 || num5 == 6) && objType != 1)
+									flag = false;
+								}
+								if (flag)
+								{
+									bool handled = false;
+									if (TriggeringObject is NPC)
 									{
-										flag2 = false;
+										handled = ServerApi.Hooks.InvokeNpcTriggerPressurePlate((NPC)TriggeringObject, i, j);
 									}
-									if (num5 == 5 && (objType == 1 || objType == 4))
+									else if (TriggeringObject is Projectile)
 									{
-										flag2 = false;
+										handled = ServerApi.Hooks.InvokeProjectileTriggerPressurePlate((Projectile)TriggeringObject, i, j);
 									}
-									if (flag2)
+									else if (TriggeringObject is Player)
+									{
+										handled = ServerApi.Hooks.InvokePlayerTriggerPressurePlate((Player)TriggeringObject, i, j);
+									}
+									if (!handled)
 									{
 										Wiring.HitSwitch(i, j);
 										NetMessage.SendData(59, -1, -1, "", i, (float)j, 0f, 0f, 0, 0, 0);
@@ -3313,200 +3279,5 @@ namespace Terraria
 			}
 			return false;
 		}
-
-		#region 1.3.1
-		public static List<Point> GetEntityEdgeTiles(Entity entity, bool left = true, bool right = true, bool up = true, bool down = true)
-		{
-			int num = (int)entity.position.X;
-			int num2 = (int)entity.position.Y;
-			int arg_1E_0 = num % 16;
-			int arg_23_0 = num2 % 16;
-			int num3 = (int)entity.Right.X;
-			int num4 = (int)entity.Bottom.Y;
-			if (num % 16 == 0)
-			{
-				num--;
-			}
-			if (num2 % 16 == 0)
-			{
-				num2--;
-			}
-			if (num3 % 16 == 0)
-			{
-				num3++;
-			}
-			if (num4 % 16 == 0)
-			{
-				num4++;
-			}
-			int num5 = num3 / 16 - num / 16 + 1;
-			int num6 = num4 / 16 - num2 / 16;
-			List<Point> list = new List<Point>();
-			num /= 16;
-			num2 /= 16;
-			for (int i = num; i < num + num5; i++)
-			{
-				if (up)
-				{
-					list.Add(new Point(i, num2));
-				}
-				if (down)
-				{
-					list.Add(new Point(i, num2 + num6));
-				}
-			}
-			for (int j = num2; j < num2 + num6; j++)
-			{
-				if (left)
-				{
-					list.Add(new Point(num, j));
-				}
-				if (right)
-				{
-					list.Add(new Point(num + num5, j));
-				}
-			}
-			return list;
-		}
-
-		public static void StepConveyorBelt(Entity entity, float gravDir)
-		{
-			if (entity is Player)
-			{
-				Player player = (Player)entity;
-				if (Math.Abs(player.gfxOffY) > 2f || player.grapCount > 0 || player.pulley)
-				{
-					return;
-				}
-			}
-			int num = 0;
-			int num2 = 0;
-			bool flag = false;
-			int num3 = (int)entity.position.Y;
-			int arg_4D_0 = entity.height;
-			entity.Hitbox.Inflate(2, 2);
-			Vector2 arg_65_0 = entity.TopLeft;
-			Vector2 arg_6C_0 = entity.TopRight;
-			Vector2 arg_73_0 = entity.BottomLeft;
-			Vector2 arg_7A_0 = entity.BottomRight;
-			List<Point> entityEdgeTiles = Collision.GetEntityEdgeTiles(entity, false, false, true, true);
-			Vector2 vector = new Vector2(0.0001f);
-			foreach (Point current in entityEdgeTiles)
-			{
-				Tile tile = Main.tile[current.X, current.Y];
-				if (tile != null && tile.active() && tile.nactive())
-				{
-					int num4 = TileID.Sets.ConveyorDirection[(int)tile.type];
-					if (num4 != 0)
-					{
-						Vector2 lineStart;
-						Vector2 lineStart2;
-						lineStart.X = (lineStart2.X = (float)(current.X * 16));
-						Vector2 lineEnd;
-						Vector2 lineEnd2;
-						lineEnd.X = (lineEnd2.X = (float)(current.X * 16 + 16));
-						switch (tile.slope())
-						{
-						case 1:
-							lineStart2.Y = (float)(current.Y * 16);
-							lineEnd2.Y = (lineEnd.Y = (lineStart.Y = (float)(current.Y * 16 + 16)));
-							break;
-						case 2:
-							lineEnd2.Y = (float)(current.Y * 16);
-							lineStart2.Y = (lineEnd.Y = (lineStart.Y = (float)(current.Y * 16 + 16)));
-							break;
-						case 3:
-							lineEnd.Y = (lineStart2.Y = (lineEnd2.Y = (float)(current.Y * 16)));
-							lineStart.Y = (float)(current.Y * 16 + 16);
-							break;
-						case 4:
-							lineStart.Y = (lineStart2.Y = (lineEnd2.Y = (float)(current.Y * 16)));
-							lineEnd.Y = (float)(current.Y * 16 + 16);
-							break;
-						default:
-							if (tile.halfBrick())
-							{
-								lineStart2.Y = (lineEnd2.Y = (float)(current.Y * 16 + 8));
-							}
-							else
-							{
-								lineStart2.Y = (lineEnd2.Y = (float)(current.Y * 16));
-							}
-							lineStart.Y = (lineEnd.Y = (float)(current.Y * 16 + 16));
-							break;
-						}
-						int num5 = 0;
-						if (!TileID.Sets.Platforms[(int)tile.type] && Collision.CheckAABBvLineCollision2(entity.position - vector, entity.Size + vector * 2f, lineStart, lineEnd))
-						{
-							num5--;
-						}
-						if (Collision.CheckAABBvLineCollision2(entity.position - vector, entity.Size + vector * 2f, lineStart2, lineEnd2))
-						{
-							num5++;
-						}
-						if (num5 != 0)
-						{
-							flag = true;
-							num += num4 * num5 * (int)gravDir;
-							if (tile.leftSlope())
-							{
-								num2 += (int)gravDir * -num4;
-							}
-							if (tile.rightSlope())
-							{
-								num2 -= (int)gravDir * -num4;
-							}
-						}
-					}
-				}
-			}
-			if (!flag)
-			{
-				return;
-			}
-			if (num != 0)
-			{
-				num = Math.Sign(num);
-				num2 = Math.Sign(num2);
-				Vector2 vector2 = Vector2.Normalize(new Vector2((float)num * gravDir, (float)num2)) * 2.5f;
-				Vector2 velocity = vector2;
-				Vector2 value = Collision.TileCollision(entity.position, velocity, entity.width, entity.height, false, false, (int)gravDir);
-				entity.position += value;
-				velocity = new Vector2(0f, 2.5f * gravDir);
-				value = Collision.TileCollision(entity.position, velocity, entity.width, entity.height, false, false, (int)gravDir);
-				entity.position += value;
-			}
-		}
-
-		public static List<Point> GetTilesIn(Vector2 TopLeft, Vector2 BottomRight)
-		{
-			List<Point> list = new List<Point>();
-			Point point = TopLeft.ToTileCoordinates();
-			Point point2 = BottomRight.ToTileCoordinates();
-			int num = Utils.Clamp<int>(point.X, 0, Main.maxTilesX - 1);
-			int num2 = Utils.Clamp<int>(point.Y, 0, Main.maxTilesY - 1);
-			int num3 = Utils.Clamp<int>(point2.X, 0, Main.maxTilesX - 1);
-			int num4 = Utils.Clamp<int>(point2.Y, 0, Main.maxTilesY - 1);
-			for (int i = num; i <= num3; i++)
-			{
-				for (int j = num2; j <= num4; j++)
-				{
-					if (Main.tile[i, j] != null)
-					{
-						list.Add(new Point(i, j));
-					}
-				}
-			}
-			return list;
-		}
-
-		public static bool CheckAABBvLineCollision2(Vector2 aabbPosition, Vector2 aabbDimensions, Vector2 lineStart, Vector2 lineEnd)
-		{
-			float num = 0f;
-			return Utils.RectangleLineCollision(aabbPosition, aabbPosition + aabbDimensions, lineStart, lineEnd) || Collision.CheckAABBvLineCollision(aabbPosition, aabbDimensions, lineStart, lineEnd, 0.0001f, ref num);
-		}
-
-
-		#endregion
 	}
 }

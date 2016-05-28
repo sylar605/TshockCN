@@ -37,21 +37,13 @@ namespace TShockAPI
 			{
 				initialized = true;
 				serverId = Guid.NewGuid().ToString(); // Gets reset every server restart
-				// ThreadPool.QueueUserWorkItem(SendUpdate);
-				Thread t = new Thread(() => {
-					do {
-						Thread.Sleep(1000 * 60 * 5);
-						SendUpdate(null);
-					} while(true);
-				});
-				t.IsBackground = true;
-				t.Name = "TShock Stat Tracker Thread";
-				t.Start();
+				ThreadPool.QueueUserWorkItem(SendUpdate);
 			}
 		}
 
 		private void SendUpdate(object info)
 		{
+			Thread.Sleep(1000 * 60 * 5);
 			JsonData data;
 
 			if(ServerApi.RunningMono)
@@ -113,6 +105,8 @@ namespace TShockAPI
 					failed = true;
 				}
 			}
+
+			ThreadPool.QueueUserWorkItem(SendUpdate);
 		}
 	}
 
