@@ -1,0 +1,27 @@
+2016-05-28 11:40:30 - TShock: INFO: TShock was improperly shut down. Please use the exit command in the future to prevent this.
+2016-05-28 11:40:32 - TextLog: INFO: TShock 4.3.14.0 (Yoraiz0r R0cks) now running.
+2016-05-28 11:40:32 - TShock: INFO: AutoSave Enabled
+2016-05-28 11:40:32 - TShock: INFO: Backups Disabled
+2016-05-28 11:40:32 - TShock: INFO: Welcome to TShock for Terraria. Initialization complete.
+2016-05-28 11:45:12 - TextLog: INFO: Sylar (127.0.0.1) from 'guest' group joined. (1/8)
+2016-05-28 11:45:12 - Utils: INFO: Broadcast: Sylar has joined.
+2016-05-28 11:45:30 - Utils: INFO: Sylar executed: /auth 4629976.
+2016-05-28 11:46:12 - TextLog: INFO: mz (119.101.185.203) from 'guest' group joined. (2/8)
+2016-05-28 11:46:12 - Utils: INFO: Broadcast: mz has joined.
+2016-05-28 11:46:16 - Utils: INFO: mz executed: /help.
+2016-05-28 11:46:32 - Utils: INFO: Broadcast: (Admin) Sylar: 妈的血月
+2016-05-28 11:46:36 - Utils: INFO: Broadcast: mz: 。
+2016-05-28 11:46:55 - Utils: INFO: Sylar executed: /time 8:00.
+2016-05-28 11:47:13 - Utils: INFO: mz executed: /motd.
+2016-05-28 11:47:21 - TextLog: INFO: mz registered an account: "mz".
+2016-05-28 11:47:25 - Commands: INFO: mz authenticated successfully as user: mz.
+2016-05-28 11:47:26 - Utils: INFO: Broadcast: mz: 1
+2016-05-28 11:47:30 - Utils: INFO: mz executed: /help.
+2016-05-28 11:48:36 - Utils: INFO: Broadcast: (Admin) Sylar: 我去吃饭了 TS丢群里
+2016-05-28 11:48:42 - Utils: INFO: Broadcast: Sylar has left.
+2016-05-28 11:48:42 - TextLog: INFO: Sylar disconnected.
+2016-05-28 11:51:48 - Utils: INFO: Broadcast: mz has left.
+2016-05-28 11:51:48 - TextLog: INFO: mz disconnected.
+2016-05-28 11:51:48 - Utils: INFO: Broadcast: Saving world. Momentary lag might result from this.
+2016-05-28 11:51:51 - Utils: INFO: Broadcast: World saved.
+2016-05-28 11:51:51 - SaveManager: INFO: World saved at (C:\Users\i\Documents\My Games\Terraria\Worlds\5-22.wld)
