@@ -1,4 +1,4 @@
-﻿/*
+/*
 TShock, a server mod for Terraria
 Copyright (C) 2011-2015 Nyx Studios (fka. The TShock Team)
 
@@ -45,7 +45,7 @@ namespace TShockAPI
 	/// This is the TShock main class. TShock is a plugin on the TerrariaServerAPI, so it extends the base TerrariaPlugin.
 	/// TShock also complies with the API versioning system, and defines its required API version here.
 	/// </summary>
-	[ApiVersion(1, 22)]
+	[ApiVersion(1, 23)]
 	public class TShock : TerrariaPlugin
 	{
 		/// <summary>VersionNum - The version number the TerrariaAPI will return back to the API. We just use the Assembly info.</summary>
@@ -66,6 +66,11 @@ namespace TShockAPI
 		private static string LogPath = LogPathDefault;
 		/// <summary>LogClear - Determines whether or not the log file should be cleared on initialization.</summary>
 		private static bool LogClear;
+
+		/// <summary>
+		/// Set by the command line, disables the '/restart' command.
+		/// </summary>
+		internal static bool NoRestart;
 
 		/// <summary>Players - Contains all TSPlayer objects for accessing TSPlayers currently on the server</summary>
 		public static TSPlayer[] Players = new TSPlayer[Main.maxPlayers];
@@ -99,9 +104,9 @@ namespace TShockAPI
 		public static IDbConnection DB;
 		/// <summary>OverridePort - Determines if TShock should override the server port.</summary>
 		public static bool OverridePort;
-        /// <summary>PacketBuffer - Static reference to the packet bufferer system, which buffers packets to clients for better performance.</summary>
-        [Obsolete("PacketBufferer is no longer used", true)]
-        public static PacketBufferer PacketBuffer;
+		/// <summary>PacketBuffer - Static reference to the packet bufferer system, which buffers packets to clients for better performance.</summary>
+		[Obsolete("PacketBufferer is no longer used", true)]
+		public static PacketBufferer PacketBuffer;
 		/// <summary>Geo - Static reference to the GeoIP system which determines the location of an IP address.</summary>
 		public static GeoIPCountry Geo;
 		/// <summary>RestApi - Static reference to the Rest API authentication manager.</summary>
@@ -262,7 +267,7 @@ namespace TShockAPI
 				if (File.Exists(Path.Combine(SavePath, "tshock.pid")))
 				{
 					Log.ConsoleInfo(
-						"TShock被异常关闭。请使用{0}exit 正常退出。", Commands.Specifier);
+						"TShock was improperly shut down. Please use the exit command in the future to prevent this.");
 					File.Delete(Path.Combine(SavePath, "tshock.pid"));
 				}
 				File.WriteAllText(Path.Combine(SavePath, "tshock.pid"),
@@ -291,7 +296,7 @@ namespace TShockAPI
 				if (Config.EnableGeoIP && File.Exists(geoippath))
 					Geo = new GeoIPCountry(geoippath);
 
-				Log.ConsoleInfo("TShock {0} ({1}) 汉化版 Beta 5 正在运行.", Version, VersionCodename);ConfigFile.DumpDescriptions();
+				Log.ConsoleInfo("TShock {0} ({1}) now running.", Version, VersionCodename);
 
 				ServerApi.Hooks.GamePostInitialize.Register(this, OnPostInit);
 				ServerApi.Hooks.GameUpdate.Register(this, OnUpdate);
@@ -323,18 +328,17 @@ namespace TShockAPI
 				if (Config.RestApiEnabled)
 					RestApi.Start();
 
-				
-				Log.ConsoleInfo("自动保存 " + (Config.AutoSave ? "已开启" : "已关闭"));
-				Log.ConsoleInfo("自动备份 " + (Backups.Interval > 0 ? "已开启" : "已关闭"));
+				Log.ConsoleInfo("AutoSave " + (Config.AutoSave ? "Enabled" : "Disabled"));
+				Log.ConsoleInfo("Backups " + (Backups.Interval > 0 ? "Enabled" : "Disabled"));
 
 				if (Initialized != null)
 					Initialized();
 
-				Log.ConsoleInfo("欢迎使用TShock 初始化完毕");
+				Log.ConsoleInfo("Welcome to TShock for Terraria. Initialization complete.");
 			}
 			catch (Exception ex)
 			{
-				Log.Error("初始化错误");
+				Log.Error("Fatal Startup Exception");
 				Log.Error(ex.ToString());
 				Environment.Exit(1);
 			}
@@ -681,17 +685,22 @@ namespace TShockAPI
 
 							break;
 						}
-                    case "--provider-token":
-                        {
-                            TShock.StatTracker.ProviderToken = parms[++i];
-                            break;
-                        }
-                    case "--stats-optout":
-                        {
-                            TShock.StatTracker.OptOut = true;
-                            break;
-                        }
-                }
+					case "--provider-token":
+						{
+							TShock.StatTracker.ProviderToken = parms[++i];
+							break;
+						}
+					case "--stats-optout":
+						{
+							TShock.StatTracker.OptOut = true;
+							break;
+						}
+					case "--no-restart":
+						{
+							TShock.NoRestart = true;
+							break;
+						}
+				}
 			}
 		}
 
@@ -745,8 +754,8 @@ namespace TShockAPI
 				var r = new Random((int)DateTime.Now.ToBinary());
 				AuthToken = r.Next(100000, 10000000);
 				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.WriteLine("TShock提示：进入游戏 输入{0}auth {1}认证成管理员", Commands.Specifier, AuthToken);
-				Console.WriteLine("本条提示将一直显示，直到输入{0}auth-verify 关闭认证系统", Commands.Specifier);
+				Console.WriteLine("TShock Notice: To become SuperAdmin, join the game and type {0}auth {1}", Commands.Specifier, AuthToken);
+				Console.WriteLine("This token will display until disabled by verification. ({0}auth-verify)", Commands.Specifier);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				FileTools.CreateFile(Path.Combine(SavePath, "authcode.txt"));
 				using (var tw = new StreamWriter(Path.Combine(SavePath, "authcode.txt")))
@@ -762,9 +771,9 @@ namespace TShockAPI
 				}
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.WriteLine(
-					"TShock提示：认证码已保存到authcode.txt中。请更改或者通过以下方法认证为超级管理员。");
-				Console.WriteLine("进入游戏输入{0}auth {1}认证成管理员", Commands.Specifier, AuthToken);
-				Console.WriteLine("本条提示将一直显示，直到输入{0}auth-verify 关闭认证系统", Commands.Specifier);
+					"TShock Notice: authcode.txt is still present, and the AuthToken located in that file will be used.");
+				Console.WriteLine("To become superadmin, join the game and type {0}auth {1}", Commands.Specifier, AuthToken);
+				Console.WriteLine("This token will display until disabled by verification. ({0}auth-verify)", Commands.Specifier);
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 			else
@@ -886,7 +895,7 @@ namespace TShockAPI
 					{
 						if (player.TileKillThreshold >= Config.TileKillThreshold)
 						{
-							player.Disable("到达 砖块破坏 上限。", flags);
+							player.Disable("Reached TileKill threshold.", flags);
 							TSPlayer.Server.RevertTiles(player.TilesDestroyed);
 							player.TilesDestroyed.Clear();
 						}
@@ -895,16 +904,19 @@ namespace TShockAPI
 					{
 						player.TileKillThreshold = 0;
 						//We don't want to revert the entire map in case of a disable.
-						player.TilesDestroyed.Clear();
+						lock (player.TilesDestroyed)
+							player.TilesDestroyed.Clear();
 					}
 
 					if (player.TilesCreated != null)
 					{
 						if (player.TilePlaceThreshold >= Config.TilePlaceThreshold)
 						{
-							player.Disable("到达 砖块放置 上限。", flags);
-							TSPlayer.Server.RevertTiles(player.TilesCreated);
-							player.TilesCreated.Clear();
+							player.Disable("Reached TilePlace threshold", flags);
+							lock (player.TilesCreated) {
+								TSPlayer.Server.RevertTiles(player.TilesCreated);
+								player.TilesCreated.Clear();
+							}
 						}
 					}
 					if (player.TilePlaceThreshold > 0)
@@ -943,7 +955,7 @@ namespace TShockAPI
 
 					if (player.TileLiquidThreshold >= Config.TileLiquidThreshold)
 					{
-						player.Disable("到达 液体放置 上限。", flags);
+						player.Disable("Reached TileLiquid threshold", flags);
 					}
 					if (player.TileLiquidThreshold > 0)
 					{
@@ -952,7 +964,7 @@ namespace TShockAPI
 
 					if (player.ProjectileThreshold >= Config.ProjectileThreshold)
 					{
-						player.Disable("到达 弹幕发射 上限。", flags);
+						player.Disable("Reached projectile threshold", flags);
 					}
 					if (player.ProjectileThreshold > 0)
 					{
@@ -961,7 +973,7 @@ namespace TShockAPI
 
 					if (player.PaintThreshold >= Config.TilePaintThreshold)
 					{
-						player.Disable("到达 涂漆 上限。", flags);
+						player.Disable("Reached paint threshold", flags);
 					}
 					if (player.PaintThreshold > 0)
 					{
@@ -977,12 +989,12 @@ namespace TShockAPI
 					{
 						if (CheckIgnores(player))
 						{
-                            player.Disable(flags: flags);
-                        }
+							player.Disable(flags: flags);
+						}
 						else if (Itembans.ItemIsBanned(player.TPlayer.inventory[player.TPlayer.selectedItem].name, player))
 						{
-							player.Disable("携带违禁品: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name, flags);
-							player.SendErrorMessage("携带违禁品: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name);
+							player.Disable($"holding banned item: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}", flags);
+							player.SendErrorMessage($"You are holding a banned item: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}");
 						}
 					}
 					else if (!Main.ServerSideCharacter || (Main.ServerSideCharacter && player.IsLoggedIn))
@@ -990,10 +1002,10 @@ namespace TShockAPI
 						string check = "none";
 						foreach (Item item in player.TPlayer.inventory)
 						{
-							if (!player.Group.HasPermission(Permissions.ignorestackhackdetection) && (item.stack > item.maxStack || item.stack < 0) &&
+							if (!player.HasPermission(Permissions.ignorestackhackdetection) && (item.stack > item.maxStack || item.stack < 0) &&
 								item.type != 0)
 							{
-								check = "移除超过上限的物品 " + item.name + " (" + item.stack + "个)  上限：" + item.maxStack;
+								check = "Remove item " + item.name + " (" + item.stack + ") exceeds max stack of " + item.maxStack;
 								player.SendErrorMessage(check);
 								break;
 							}
@@ -1008,9 +1020,9 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "移除 装备/饰品 " + item.name;
+								check = "Remove armor/accessory " + item.name;
 
-								player.SendErrorMessage("你穿着被封禁的装备 {0}。", check);
+								player.SendErrorMessage("You are wearing banned equipment. {0}", check);
 								break;
 							}
 						}
@@ -1021,9 +1033,9 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "移除 染料 " + item.name;
+								check = "Remove dye " + item.name;
 
-								player.SendErrorMessage("你穿着被封禁的装备 {0}。", check);
+								player.SendErrorMessage("You are wearing banned equipment. {0}", check);
 								break;
 							}
 						}
@@ -1034,9 +1046,9 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "移除 特殊装备 " + item.name;
+								check = "Remove misc equip " + item.name;
 
-								player.SendErrorMessage("你穿着被封禁的装备 {0}。", check);
+								player.SendErrorMessage("You are wearing banned equipment. {0}", check);
 								break;
 							}
 						}
@@ -1047,9 +1059,9 @@ namespace TShockAPI
 								player.SetBuff(BuffID.Frozen, 330, true);
 								player.SetBuff(BuffID.Stoned, 330, true);
 								player.SetBuff(BuffID.Webbed, 330, true);
-								check = "移除 特殊染料 " + item.name;
+								check = "Remove misc dye " + item.name;
 
-								player.SendErrorMessage("你穿着被封禁的装备 {0}。", check);
+								player.SendErrorMessage("You are wearing banned equipment. {0}", check);
 								break;
 							}
 						}
@@ -1058,11 +1070,11 @@ namespace TShockAPI
 						if (CheckIgnores(player))
 						{
                             player.Disable(flags: flags);
-                        }
+						}
 						else if (Itembans.ItemIsBanned(player.TPlayer.inventory[player.TPlayer.selectedItem].name, player))
 						{
-							player.Disable("携带违禁品: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name, flags);
-							player.SendErrorMessage("携带违禁品: "+player.TPlayer.inventory[player.TPlayer.selectedItem].name);
+							player.Disable($"holding banned item: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}", flags);
+							player.SendErrorMessage($"You are holding a banned item: {player.TPlayer.inventory[player.TPlayer.selectedItem].name}");
 						}
 					}
 
@@ -1090,7 +1102,7 @@ namespace TShockAPI
 		/// <param name="empty">empty - True/false if the server is empty; determines if we should use Utils.ActivePlayers() for player count or 0.</param>
 		private void SetConsoleTitle(bool empty)
 		{
-			Console.Title = string.Format("{0}{1}/{2} @ {3}:{4} (TShock汉化版 Terraria v{5}) Beta 5 - Touhou汉化组",
+			Console.Title = string.Format("{0}{1}/{2} @ {3}:{4} (TShock for Terraria v{5})",
 					!string.IsNullOrWhiteSpace(Config.ServerName) ? Config.ServerName + " - " : "",
 					empty ? 0 : Utils.ActivePlayers(),
 					Config.MaxSlots, Netplay.ServerIP.ToString(), Netplay.ListenPort, Version);
@@ -1165,7 +1177,7 @@ namespace TShockAPI
 				{
 					if (Config.KickProxyUsers)
 					{
-						Utils.ForceKick(player, "禁止使用代理。", true, false);
+						Utils.ForceKick(player, "Proxies are not allowed.", true, false);
 						args.Handled = true;
 						return;
 					}
@@ -1187,7 +1199,7 @@ namespace TShockAPI
 
 			if (Config.KickEmptyUUID && String.IsNullOrWhiteSpace(player.UUID))
 			{
-				Utils.ForceKick(player, "客户端异常，请重新连接。", true);
+				Utils.ForceKick(player, "Your client did not send a UUID, this server is not configured to accept such a client.", true);
 				args.Handled = true;
 				return;
 			}
@@ -1217,7 +1229,7 @@ namespace TShockAPI
 					DateTime exp;
 					if (!DateTime.TryParse(ban.Expiration, out exp))
 					{
-						player.Disconnect("你被永久封禁 " + ban.Reason);
+						player.Disconnect("You are banned forever: " + ban.Reason);
 					}
 					else
 					{
@@ -1225,27 +1237,27 @@ namespace TShockAPI
 						int months = ts.Days / 30;
 						if (months > 0)
 						{
-							player.Disconnect(String.Format("你被封禁 {0} 月 {2} 日: {4}",
+							player.Disconnect(String.Format("You are banned for {0} month{1} and {2} day{3}: {4}",
 								months, months == 1 ? "" : "s", ts.Days, ts.Days == 1 ? "" : "s", ban.Reason));
 						}
 						else if (ts.Days > 0)
 						{
-							player.Disconnect(String.Format("你被封禁 {0} 日 {2} 时: {4}",
+							player.Disconnect(String.Format("You are banned for {0} day{1} and {2} hour{3}: {4}",
 								ts.Days, ts.Days == 1 ? "" : "s", ts.Hours, ts.Hours == 1 ? "" : "s", ban.Reason));
 						}
 						else if (ts.Hours > 0)
 						{
-							player.Disconnect(String.Format("你被封禁 {0} 时 {2} 分: {4}",
+							player.Disconnect(String.Format("You are banned for {0} hour{1} and {2} minute{3}: {4}",
 								ts.Hours, ts.Hours == 1 ? "" : "s", ts.Minutes, ts.Minutes == 1 ? "" : "s", ban.Reason));
 						}
 						else if (ts.Minutes > 0)
 						{
-							player.Disconnect(String.Format("你被封禁 {0} 分 {2} 秒: {4}",
+							player.Disconnect(String.Format("You are banned for {0} minute{1} and {2} second{3}: {4}",
 								ts.Minutes, ts.Minutes == 1 ? "" : "s", ts.Seconds, ts.Seconds == 1 ? "" : "s", ban.Reason));
 						}
 						else
 						{
-							player.Disconnect(String.Format("你被封禁 {0} 秒: {2}",
+							player.Disconnect(String.Format("You are banned for {0} second{1}: {2}",
 								ts.Seconds, ts.Seconds == 1 ? "" : "s", ban.Reason));
 						}
 					}
@@ -1264,8 +1276,8 @@ namespace TShockAPI
 			if (tsplr != null && tsplr.ReceivedInfo)
 			{
 				if (!tsplr.SilentKickInProgress && tsplr.State >= 3)
-					Utils.Broadcast(tsplr.Name + " 离开游戏。", Color.Yellow);
-				Log.Info("{0} 断开连接。", tsplr.Name);
+					Utils.Broadcast(tsplr.Name + " has left.", Color.Yellow);
+				Log.Info("{0} disconnected.", tsplr.Name);
 
 				if (tsplr.IsLoggedIn && !tsplr.IgnoreActionsForClearingTrashCan && Main.ServerSideCharacter && (!tsplr.Dead || tsplr.TPlayer.difficulty != 2))
 				{
@@ -1315,7 +1327,7 @@ namespace TShockAPI
 
 			if (args.Text.Length > 500)
 			{
-				Utils.Kick(tsplr, "禁止超长文本。", true);
+				Utils.Kick(tsplr, "Crash attempt via long chat packet.", true);
 				args.Handled = true;
 				return;
 			}
@@ -1329,19 +1341,19 @@ namespace TShockAPI
 				}
 				catch (Exception ex)
 				{
-					Log.ConsoleError("执行命令时发生错误。");
+					Log.ConsoleError("An exeption occurred executing a command.");
 					Log.Error(ex.ToString());
 				}
 			}
 			else
 			{
-				if (!tsplr.Group.HasPermission(Permissions.canchat))
+				if (!tsplr.HasPermission(Permissions.canchat))
 				{
 					args.Handled = true;
 				}
 				else if (tsplr.mute)
 				{
-					tsplr.SendErrorMessage("你被禁言了。");
+					tsplr.SendErrorMessage("You are muted!");
 					args.Handled = true;
 				}
 				else if (!TShock.Config.EnableChatAboveHeads)
@@ -1399,7 +1411,7 @@ namespace TShockAPI
 			if (args.Command == "autosave")
 			{
 				Main.autoSave = Config.AutoSave = !Config.AutoSave;
-				Log.ConsoleInfo("自动保存 " + (Config.AutoSave ? "已开启" : "已关闭"));
+				Log.ConsoleInfo("AutoSave " + (Config.AutoSave ? "Enabled" : "Disabled"));
 			}
 			else if (args.Command.StartsWith(Commands.Specifier) || args.Command.StartsWith(Commands.SilentSpecifier))
 			{
@@ -1474,18 +1486,18 @@ namespace TShockAPI
 									   player.Group.Name, player.Country, TShock.Utils.ActivePlayers(),
 									   TShock.Config.MaxSlots);
 				if (!player.SilentJoinInProgress)
-					Utils.Broadcast(string.Format("{0} ({1}) 进入游戏。", player.Name, player.Country), Color.Yellow);
+					Utils.Broadcast(string.Format("{0} ({1}) has joined.", player.Name, player.Country), Color.Yellow);
 			}
 			else
 			{
-				Log.Info("{0} ({1})  用户组'{2}' 进入游戏。({3}/{4})", player.Name, player.IP,
+				Log.Info("{0} ({1}) from '{2}' group joined. ({3}/{4})", player.Name, player.IP,
 									   player.Group.Name, TShock.Utils.ActivePlayers(), TShock.Config.MaxSlots);
 				if (!player.SilentJoinInProgress)
-					Utils.Broadcast(player.Name + " 进入游戏。", Color.Yellow);
+					Utils.Broadcast(player.Name + " has joined.", Color.Yellow);
 			}
 
 			if (Config.DisplayIPToAdmins)
-				Utils.SendLogs(string.Format("{0} 进入游戏。IP: {1}", player.Name, player.IP), Color.Blue);
+				Utils.SendLogs(string.Format("{0} has joined. IP: {1}", player.Name, player.IP), Color.Blue);
 
 			Utils.ShowFileToUser(player, "motd.txt");
 
@@ -1502,12 +1514,12 @@ namespace TShockAPI
 				if (Main.ServerSideCharacter)
 				{
 					player.SendErrorMessage(
-						player.IgnoreActionsForInventory = String.Format("本服务器强制开荒。请{0}注册 或 {0}登入 进行游戏。", Commands.Specifier));
+						player.IgnoreActionsForInventory = String.Format("Server side characters is enabled! Please {0}register or {0}login to play!", Commands.Specifier));
 					player.LoginHarassed = true;
 				}
 				else if (Config.RequireLogin)
 				{
-					player.SendErrorMessage("请{0}注册 或 {0}登入 进行游戏。", Commands.Specifier);
+					player.SendErrorMessage("Please {0}register or {0}login to play!", Commands.Specifier);
 					player.LoginHarassed = true;
 				}
 			}
@@ -1517,7 +1529,7 @@ namespace TShockAPI
 			if (Config.RememberLeavePos && (RememberedPos.GetLeavePos(player.Name, player.IP) != Vector2.Zero) && !player.LoginHarassed)
 			{
 				player.RPPending = 3;
-				player.SendInfoMessage("你将被传送到最后所在位置。");
+				player.SendInfoMessage("You will be teleported to your last known location...");
 			}
 
 			args.Handled = true;
@@ -1653,7 +1665,7 @@ namespace TShockAPI
 		/// <returns>bool - True if the player should not be able to modify a tile.</returns>
 		public static bool CheckTilePermission(TSPlayer player, int tileX, int tileY, short tileType, GetDataHandlers.EditAction actionType)
 		{
-			if (!player.Group.HasPermission(Permissions.canbuild))
+			if (!player.HasPermission(Permissions.canbuild))
 			{
 				if (TShock.Config.AllowIce && actionType != GetDataHandlers.EditAction.PlaceTile)
 				{
@@ -1668,7 +1680,7 @@ namespace TShockAPI
 
 					if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.BPm) > 2000)
 					{
-						player.SendErrorMessage("你没有建筑权限。");
+						player.SendErrorMessage("You do not have permission to build!");
 						player.BPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 					}
 					return true;
@@ -1682,18 +1694,18 @@ namespace TShockAPI
 
 				if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.BPm) > 2000)
 				{
-					player.SendErrorMessage("你没有建筑权限。");
+					player.SendErrorMessage("You do not have permission to build!");
 					player.BPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
 				return true;
 			}
 
-			if (!player.Group.HasPermission(Permissions.editregion) && !Regions.CanBuild(tileX, tileY, player) &&
+			if (!player.HasPermission(Permissions.editregion) && !Regions.CanBuild(tileX, tileY, player) &&
 				Regions.InArea(tileX, tileY))
 			{
 				if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.RPm) > 2000)
 				{
-					player.SendErrorMessage("这个领地被保护了。");
+					player.SendErrorMessage("This region is protected from changes.");
 					player.RPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
 				return true;
@@ -1701,11 +1713,11 @@ namespace TShockAPI
 
 			if (Config.DisableBuild)
 			{
-				if (!player.Group.HasPermission(Permissions.antibuild))
+				if (!player.HasPermission(Permissions.antibuild))
 				{
 					if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.WPm) > 2000)
 					{
-						player.SendErrorMessage("全图被保护了。");
+						player.SendErrorMessage("The world is protected from changes.");
 						player.WPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 					}
 					return true;
@@ -1714,13 +1726,13 @@ namespace TShockAPI
 
 			if (Config.SpawnProtection)
 			{
-				if (!player.Group.HasPermission(Permissions.editspawn))
+				if (!player.HasPermission(Permissions.editspawn))
 				{
 					if (CheckSpawn(tileX, tileY))
 					{
 						if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.SPm) > 2000)
 						{
-							player.SendErrorMessage("复活点被保护了。");
+							player.SendErrorMessage("Spawn is protected from changes.");
 							player.SPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 						}
 						return true;
@@ -1738,30 +1750,30 @@ namespace TShockAPI
 		/// <returns>bool - True if the player should not be able to modify the tile.</returns>
 		public static bool CheckTilePermission(TSPlayer player, int tileX, int tileY, bool paint = false)
 		{
-			if ((!paint && !player.Group.HasPermission(Permissions.canbuild)) ||
-				(paint && !player.Group.HasPermission(Permissions.canpaint)))
+			if ((!paint && !player.HasPermission(Permissions.canbuild)) ||
+				(paint && !player.HasPermission(Permissions.canpaint)))
 			{
 				if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.BPm) > 2000)
 				{
 					if (paint)
 					{
-						player.SendErrorMessage("你没有涂漆权限。");
+						player.SendErrorMessage("You do not have permission to paint!");
 					}
 					else
 					{
-						player.SendErrorMessage("你没有建筑权限。");
+						player.SendErrorMessage("You do not have permission to build!");
 					}
 					player.BPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
 				return true;
 			}
 
-			if (!player.Group.HasPermission(Permissions.editregion) && !Regions.CanBuild(tileX, tileY, player) &&
+			if (!player.HasPermission(Permissions.editregion) && !Regions.CanBuild(tileX, tileY, player) &&
 				Regions.InArea(tileX, tileY))
 			{
 				if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.RPm) > 2000)
 				{
-					player.SendErrorMessage("这个领地被保护了。");
+					player.SendErrorMessage("This region is protected from changes.");
 					player.RPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 				}
 				return true;
@@ -1769,11 +1781,11 @@ namespace TShockAPI
 
 			if (Config.DisableBuild)
 			{
-				if (!player.Group.HasPermission(Permissions.antibuild))
+				if (!player.HasPermission(Permissions.antibuild))
 				{
 					if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.WPm) > 2000)
 					{
-						player.SendErrorMessage("全图被保护了。");
+						player.SendErrorMessage("The world is protected from changes.");
 						player.WPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 					}
 					return true;
@@ -1782,13 +1794,13 @@ namespace TShockAPI
 
 			if (Config.SpawnProtection)
 			{
-				if (!player.Group.HasPermission(Permissions.editspawn))
+				if (!player.HasPermission(Permissions.editspawn))
 				{
 					if (CheckSpawn(tileX, tileY))
 					{
 						if (((DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - player.SPm) > 1000)
 						{
-							player.SendErrorMessage("复活点被保护了。");
+							player.SendErrorMessage("Spawn is protected from changes.");
 							player.SPm = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 						}
 						return true;
@@ -1852,7 +1864,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("发现物品数量作弊。 移除 物品 {0} ({1}) 并重新加入。", item.name, inventory[i].stack),
+								String.Format("Stack cheat detected. Remove item {0} ({1}) and then rejoin", item.name, inventory[i].stack),
 								Color.Cyan);
 						}
 					}
@@ -1871,7 +1883,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("发现物品数量作弊。 移除 装备 {0} ({1}) 并重新加入。", item.name, armor[index].stack),
+								String.Format("Stack cheat detected. Remove armor {0} ({1}) and then rejoin", item.name, armor[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1890,7 +1902,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("发现物品数量作弊。 移除 染料 {0} ({1}) 并重新加入。", item.name, dye[index].stack),
+								String.Format("Stack cheat detected. Remove dye {0} ({1}) and then rejoin", item.name, dye[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1910,7 +1922,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("发现物品数量作弊。 移除 物品 {0} ({1}) 并重新加入。", item.name, miscEquips[index].stack),
+								String.Format("Stack cheat detected. Remove item {0} ({1}) and then rejoin", item.name, miscEquips[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1932,7 +1944,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("发现物品数量作弊。 移除 物品染料 {0} ({1}) 并重新加入。", item.name, miscDyes[index].stack),
+								String.Format("Stack cheat detected. Remove item dye {0} ({1}) and then rejoin", item.name, miscDyes[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1955,7 +1967,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("发现物品数量作弊。 移除 猪猪罐物品 {0} ({1}) 并重新加入。", item.name, piggy[index].stack),
+								String.Format("Stack cheat detected. Remove Piggy-bank item {0} ({1}) and then rejoin", item.name, piggy[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1978,7 +1990,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("发现物品数量作弊。 移除 保险箱物品 {0} ({1}) 并重新加入。", item.name, safe[index].stack),
+								String.Format("Stack cheat detected. Remove Safe item {0} ({1}) and then rejoin", item.name, safe[index].stack),
 								Color.Cyan);
 						}
 					}
@@ -1996,7 +2008,7 @@ namespace TShockAPI
 						{
 							check = true;
 							player.SendMessage(
-								String.Format("发现物品数量作弊。 移除 垃圾桶物品 {0} ({1}) 并重新加入。", item.name, trash.stack),
+								String.Format("Stack cheat detected. Remove trash item {0} ({1}) and then rejoin", item.name, trash.stack),
 								Color.Cyan);
 						}
 					}

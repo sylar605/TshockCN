@@ -8,7 +8,6 @@
     <AssemblyName>TerrariaServer</AssemblyName>
     <OutputType>Exe</OutputType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -21,6 +20,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -34,6 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -90,14 +91,11 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>tshock_logo.ico</ApplicationIcon>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\prebuilts\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.IO.Compression" />
@@ -161,11 +159,15 @@
     <Compile Include="TerrariaApi.Server\TaskExt.cs" />
     <Compile Include="TerrariaApi.Server\TerrariaPlugin.cs" />
     <Compile Include="TerrariaApi.Server\TileProvider.cs" />
+    <Compile Include="Terraria\GameContent\PressurePlateHelper.cs" />
+    <Compile Include="Terraria\GameContent\Tile_Entities\TELogicSensor.cs" />
+    <Compile Include="Terraria\GameContent\UI\WiresUI.cs" />
     <Compile Include="Terraria\ID\NPCID.cs" />
+    <Compile Include="Terraria\ID\RecipeGroupID.cs" />
     <Compile Include="Terraria\IStaticPortMapping.cs" />
     <Compile Include="Terraria\IStaticPortMappingCollection.cs" />
     <Compile Include="Terraria\Net\Sockets\EventArgs\WriteFailedEventArgs.cs" />
-    <Compile Include="Terraria\Net\Sockets\SendQueue.cs" />
+    <Compile Include="Terraria\RecipeGroup.cs" />
     <Compile Include="Terraria\StreamExt.cs" />
     <Compile Include="Terraria\StreamGenericExt.cs" />
     <Compile Include="Terraria\Terraria.GameContent.UI\EmoteBubble.cs" />
@@ -971,6 +973,8 @@
     </Compile>
     <Compile Include="XNA\Color.cs" />
     <Compile Include="IPackedVector.cs" />
+    <Compile Include="XNA\HalfUtils.cs" />
+    <Compile Include="XNA\HalfVector2.cs" />
     <Compile Include="XNA\MathHelper.cs" />
     <Compile Include="XNA\Matrix.cs" />
     <Compile Include="XNA\PackUtils.cs" />
@@ -983,7 +987,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 %28x86 和 x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -1006,7 +1010,7 @@
     <Folder Include="TerrariaApi.Server\Framework\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="tshock_logo.ico" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

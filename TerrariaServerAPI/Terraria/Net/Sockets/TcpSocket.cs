@@ -129,7 +129,9 @@ namespace Terraria.Net.Sockets
 			
 			try
 			{
-				this._connection.GetStream().Write(data, offset, size);
+                this._connection.GetStream().BeginWrite(data, offset, size, this.SendCallback, new Tuple<SocketSendCallback, object>(callback, state));
+
+				//this._connection.GetStream().Write(data, offset, size);
 			}
 			catch (Exception ex)
 			{
@@ -209,7 +211,11 @@ namespace Terraria.Net.Sockets
 			try
 			{
 				this._listener.Start();
-				ThreadPool.QueueUserWorkItem(new WaitCallback(this.ListenLoop));
+				Thread t = new Thread(ListenLoop);
+				t.IsBackground = true;
+				t.Name = "Listen Loop";
+				t.Start();
+				//ThreadPool.QueueUserWorkItem(new WaitCallback(this.ListenLoop));
 				return true;
 			}
 			catch
