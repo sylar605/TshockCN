@@ -1,0 +1,4 @@
+This server is running TShock for Terraria.
+ Type /help for a list of commands.
+%255,000,000%Current map: %map%
+Current players: %players%
