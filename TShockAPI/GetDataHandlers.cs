@@ -1305,7 +1305,7 @@ namespace TShockAPI
 				args.Player.PlayerData.StoreSlot(slot, type, prefix, stack);
 			}
 			else if (Main.ServerSideCharacter && TShock.Config.DisableLoginBeforeJoin && !bypassTrashCanCheck &&
-				args.Player.HasSentInventory && !args.Player.Group.HasPermission(Permissions.bypassssc))
+				args.Player.HasSentInventory && !args.Player.HasPermission(Permissions.bypassssc))
 			{
 				// The player might have moved an item to their trash can before they performed a single login attempt yet.
 				args.Player.IgnoreActionsForClearingTrashCan = true;
@@ -1329,7 +1329,7 @@ namespace TShockAPI
 			if (OnPlayerHP(plr, cur, max) || cur <= 0 || max <= 0 || args.Player.IgnoreSSCPackets)
 				return true;
 
-			if (max > TShock.Config.MaxHP && !args.Player.Group.HasPermission(Permissions.ignorehp))
+			if (max > TShock.Config.MaxHP && !args.Player.HasPermission(Permissions.ignorehp))
 			{
 				args.Player.Disable("Maximum HP beyond limit", DisableFlags.WriteToLogAndConsole);
 				return true;
@@ -1358,7 +1358,7 @@ namespace TShockAPI
 			if (OnPlayerMana(plr, cur, max) || cur < 0 || max < 0 || args.Player.IgnoreSSCPackets)
 				return true;
 
-			if (max > TShock.Config.MaxMP && !args.Player.Group.HasPermission(Permissions.ignoremp))
+			if (max > TShock.Config.MaxMP && !args.Player.HasPermission(Permissions.ignoremp))
 			{
 				args.Player.Disable("Maximum MP beyond limit", DisableFlags.WriteToLogAndConsole);
 				return true;
@@ -1476,17 +1476,17 @@ namespace TShockAPI
 
 					if (Main.ServerSideCharacter)
 					{
-						if (!group.HasPermission(Permissions.bypassssc))
+						if (!args.Player.HasPermission(Permissions.bypassssc))
 						{
 							args.Player.PlayerData.RestoreCharacter(args.Player);
 						}
 					}
 					args.Player.LoginFailsBySsi = false;
 
-					if (group.HasPermission(Permissions.ignorestackhackdetection))
+					if (args.Player.HasPermission(Permissions.ignorestackhackdetection))
 						args.Player.IgnoreActionsForCheating = "none";
 
-					if (group.HasPermission(Permissions.usebanneditem))
+					if (args.Player.HasPermission(Permissions.usebanneditem))
 						args.Player.IgnoreActionsForDisabledArmor = "none";
 
 					args.Player.Group = group;
@@ -1551,7 +1551,7 @@ namespace TShockAPI
 
 					if (Main.ServerSideCharacter)
 					{
-						if (group.HasPermission(Permissions.bypassssc))
+						if (args.Player.HasPermission(Permissions.bypassssc))
 						{
 							args.Player.IgnoreActionsForClearingTrashCan = false;
 						}
@@ -1559,10 +1559,10 @@ namespace TShockAPI
 					}
 					args.Player.LoginFailsBySsi = false;
 
-					if (group.HasPermission(Permissions.ignorestackhackdetection))
+					if (args.Player.HasPermission(Permissions.ignorestackhackdetection))
 						args.Player.IgnoreActionsForCheating = "none";
 
-					if (group.HasPermission(Permissions.usebanneditem))
+					if (args.Player.HasPermission(Permissions.usebanneditem))
 						args.Player.IgnoreActionsForDisabledArmor = "none";
 
 					args.Player.Group = group;
@@ -1614,13 +1614,13 @@ namespace TShockAPI
 				return true;
 			}
 
-			if (!args.Player.Group.HasPermission(Permissions.ignorestackhackdetection))
+			if (!args.Player.HasPermission(Permissions.ignorestackhackdetection))
 			{
 				TShock.HackedInventory(args.Player);
 			}
 
 			if (TShock.Utils.ActivePlayers() + 1 > TShock.Config.MaxSlots &&
-				!args.Player.Group.HasPermission(Permissions.reservedslot))
+				!args.Player.HasPermission(Permissions.reservedslot))
 			{
 				TShock.Utils.ForceKick(args.Player, TShock.Config.ServerFullReason, true);
 				return true;
@@ -1681,7 +1681,7 @@ namespace TShockAPI
 				isTrapdoor = true;
 			}
 
-			if (args.Player.Group.HasPermission(Permissions.allowclientsideworldedit) && !isTrapdoor)
+			if (args.Player.HasPermission(Permissions.allowclientsideworldedit) && !isTrapdoor)
 				return false;
 
 			if (OnSendTileSquare(size, tileX, tileY))
@@ -1854,12 +1854,13 @@ namespace TShockAPI
 		/// </summary>
 		private static Dictionary<int, int> projectileCreatesTile = new Dictionary<int, int>
 		{
-			{ 17, TileID.Dirt },
-			{ 42, TileID.Sand },
-			{ 65, TileID.Ebonsand },
-			{ 68, TileID.Pearlsand },
-			{ 354, TileID.Crimsand },
+			{ ProjectileID.DirtBall, TileID.Dirt },
+			{ ProjectileID.SandBallGun, TileID.Sand },
+			{ ProjectileID.EbonsandBallGun, TileID.Ebonsand },
+			{ ProjectileID.PearlSandBallGun, TileID.Pearlsand },
+			{ ProjectileID.CrimsandBallGun, TileID.Crimsand },
 		};
+
 		/// <summary>
 		/// Extra place style limits for strange hardcoded values in Terraria
 		/// </summary>
@@ -1991,7 +1992,7 @@ namespace TShockAPI
 						args.Player.SendTileSquare(tileX, tileY, 4);
 						return true;
 					}
-					// If the tile is a hammer tile and they aren't selecting an hammer, they're hacking.
+					// If the tile is a hammer tile and they aren't selecting a hammer, they're hacking.
 					else if (Main.tileHammer[tile.type] && ((args.Player.TPlayer.mount.Type != 8 && selectedItem.hammer == 0) && !ItemID.Sets.Explosives[selectedItem.netID] && args.Player.RecentFuse == 0))
 					{
 						args.Player.SendTileSquare(tileX, tileY, 4);
@@ -2029,7 +2030,12 @@ namespace TShockAPI
 					}
 
 					// If they aren't selecting the item which creates the tile or wall, they're hacking.
-					if ((editData != 127 && editData != 213) && editData != (action == EditAction.PlaceTile ? selectedItem.createTile : selectedItem.createWall))
+					if ((editData != TileID.MagicalIceBlock
+						&& editData != TileID.Rope
+						&& editData != TileID.SilkRope
+						&& editData != TileID.VineRope
+						&& editData != TileID.WebRope)
+						&& editData != (action == EditAction.PlaceTile ? selectedItem.createTile : selectedItem.createWall))
 					{
 						args.Player.SendTileSquare(tileX, tileY, 4);
 						return true;
@@ -2045,7 +2051,7 @@ namespace TShockAPI
 						args.Player.SendTileSquare(tileX, tileY, 3);
 						return true;
 					}
-					if (action == EditAction.PlaceTile && editData == 21)
+					if (action == EditAction.PlaceTile && editData == TileID.Containers)
 					{
 						if (TShock.Utils.MaxChests())
 						{
@@ -2064,7 +2070,9 @@ namespace TShockAPI
 				else if (action == EditAction.PlaceWire || action == EditAction.PlaceWire2 || action == EditAction.PlaceWire3)
 				{
 					// If they aren't selecting a wrench, they're hacking.
-					if (selectedItem.type != 509 && selectedItem.type != 850 && selectedItem.type != 851)
+					if (selectedItem.type != ItemID.Wrench
+						&& selectedItem.type != ItemID.BlueWrench
+						&& selectedItem.type != ItemID.GreenWrench)
 					{
 						args.Player.SendTileSquare(tileX, tileY, 1);
 						return true;
@@ -2074,7 +2082,7 @@ namespace TShockAPI
 					action == EditAction.KillWire2 || action == EditAction.KillWire3)
 				{
 					// If they aren't selecting the wire cutter, they're hacking.
-					if (selectedItem.type != 510)
+					if (selectedItem.type != ItemID.WireCutter)
 					{
 						args.Player.SendTileSquare(tileX, tileY, 1);
 						return true;
@@ -2083,7 +2091,7 @@ namespace TShockAPI
 				else if (action == EditAction.PlaceActuator)
 				{
 					// If they aren't selecting the actuator, they're hacking.
-					if (selectedItem.type != 849)
+					if (selectedItem.type != ItemID.Actuator)
 					{
 						args.Player.SendTileSquare(tileX, tileY, 1);
 						return true;
@@ -2107,7 +2115,12 @@ namespace TShockAPI
 				}
 
 				// Ignore rope placement range
-				if ((editData != TileID.Rope || action != EditAction.PlaceTile) && TShock.CheckRangePermission(args.Player, tileX, tileY))
+				if ((editData != TileID.Rope 
+					|| editData != TileID.SilkRope
+					|| editData != TileID.VineRope
+					|| editData != TileID.WebRope
+					|| action != EditAction.PlaceTile)
+					&& TShock.CheckRangePermission(args.Player, tileX, tileY))
 				{
 					args.Player.SendTileSquare(tileX, tileY, 4);
 					return true;
@@ -2133,21 +2146,23 @@ namespace TShockAPI
 					return true;
 				}
 
-				if ((action == EditAction.PlaceTile || action == EditAction.PlaceWall) && !args.Player.Group.HasPermission(Permissions.ignoreplacetiledetection))
+				if ((action == EditAction.PlaceTile || action == EditAction.PlaceWall) && !args.Player.HasPermission(Permissions.ignoreplacetiledetection))
 				{
 					args.Player.TilePlaceThreshold++;
 					var coords = new Vector2(tileX, tileY);
-					if (!args.Player.TilesCreated.ContainsKey(coords))
-						args.Player.TilesCreated.Add(coords, Main.tile[tileX, tileY]);
+					lock (args.Player.TilesCreated)
+						if (!args.Player.TilesCreated.ContainsKey(coords))
+							args.Player.TilesCreated.Add(coords, Main.tile[tileX, tileY]);
 				}
 
 				if ((action == EditAction.KillTile || action == EditAction.KillTileNoItem || action == EditAction.KillWall) && Main.tileSolid[Main.tile[tileX, tileY].type] &&
-					!args.Player.Group.HasPermission(Permissions.ignorekilltiledetection))
+					!args.Player.HasPermission(Permissions.ignorekilltiledetection))
 				{
 					args.Player.TileKillThreshold++;
 					var coords = new Vector2(tileX, tileY);
-					if (!args.Player.TilesDestroyed.ContainsKey(coords))
-						args.Player.TilesDestroyed.Add(coords, Main.tile[tileX, tileY]);
+					lock (args.Player.TilesDestroyed)
+						if (!args.Player.TilesDestroyed.ContainsKey(coords))
+							args.Player.TilesDestroyed.Add(coords, Main.tile[tileX, tileY]);
 				}
 				return false;
 			}
@@ -2222,7 +2237,11 @@ namespace TShockAPI
 			}
 
 			// Ignore rope placement range
-			if (type != TileID.Rope && TShock.CheckRangePermission(args.Player, x, y))
+			if ((type != TileID.Rope
+					|| type != TileID.SilkRope
+					|| type != TileID.VineRope
+					|| type != TileID.WebRope)
+					&& TShock.CheckRangePermission(args.Player, x, y))
 			{
 				args.Player.SendTileSquare(x, y, 4);
 				return true;
@@ -2235,12 +2254,13 @@ namespace TShockAPI
 				return true;
 			}
 
-			if (!args.Player.Group.HasPermission(Permissions.ignoreplacetiledetection))
+			if (!args.Player.HasPermission(Permissions.ignoreplacetiledetection))
 			{
 				args.Player.TilePlaceThreshold++;
 				var coords = new Vector2(x, y);
-				if (!args.Player.TilesCreated.ContainsKey(coords))
-					args.Player.TilesCreated.Add(coords, Main.tile[x, y]);
+				lock (args.Player.TilesCreated)
+					if (!args.Player.TilesCreated.ContainsKey(coords))
+						args.Player.TilesCreated.Add(coords, Main.tile[x, y]);
 			}
 
 			return false;
@@ -2437,7 +2457,7 @@ namespace TShockAPI
 					return true;
 				}
 
-				if (!args.Player.Group.HasPermission(Permissions.ignorenoclipdetection) &&
+				if (!args.Player.HasPermission(Permissions.ignorenoclipdetection) &&
 					TSCheckNoclip(pos, args.TPlayer.width, args.TPlayer.height) && !TShock.Config.IgnoreNoClip
 					&& !args.TPlayer.tongued)
 				{
@@ -2617,7 +2637,7 @@ namespace TShockAPI
 				return true;
 			}
 			
-			if (dmg > TShock.Config.MaxProjDamage && !args.Player.Group.HasPermission(Permissions.ignoredamagecap))
+			if (dmg > TShock.Config.MaxProjDamage && !args.Player.HasPermission(Permissions.ignoredamagecap))
 			{
 				args.Player.Disable(String.Format("Projectile damage is higher than {0}.", TShock.Config.MaxProjDamage), DisableFlags.WriteToLogAndConsole);
 				args.Player.RemoveProjectile(ident, owner);
@@ -2631,7 +2651,7 @@ namespace TShockAPI
 			}
 
 			bool hasPermission = !TShock.CheckProjectilePermission(args.Player, index, type);
-			if (!TShock.Config.IgnoreProjUpdate && !hasPermission && !args.Player.Group.HasPermission(Permissions.ignoreprojectiledetection))
+			if (!TShock.Config.IgnoreProjUpdate && !hasPermission && !args.Player.HasPermission(Permissions.ignoreprojectiledetection))
 			{
 				if (type == ProjectileID.BlowupSmokeMoonlord 
 					|| type == ProjectileID.PhantasmalEye
@@ -2668,7 +2688,7 @@ namespace TShockAPI
 				return true;
 			}
 
-			if (!args.Player.Group.HasPermission(Permissions.ignoreprojectiledetection))
+			if (!args.Player.HasPermission(Permissions.ignoreprojectiledetection))
 			{
 				if (type == ProjectileID.CrystalShard && TShock.Config.ProjIgnoreShrapnel) // Ignore crystal shards
 				{
@@ -2831,7 +2851,7 @@ namespace TShockAPI
 				return true;
 			}
 
-			if (!args.Player.Group.HasPermission(Permissions.ignoreliquidsetdetection))
+			if (!args.Player.HasPermission(Permissions.ignoreliquidsetdetection))
 			{
 				args.Player.TileLiquidThreshold++;
 			}
@@ -3149,7 +3169,7 @@ namespace TShockAPI
 			if (OnUpdateNPCHome(id, x, y, homeless))
 				return true;
 
-			if (!args.Player.Group.HasPermission(Permissions.movenpc))
+			if (!args.Player.HasPermission(Permissions.movenpc))
 			{
 				args.Player.SendErrorMessage("You do not have permission to relocate NPCs.");
 				args.Player.SendData(PacketTypes.UpdateNPCHome, "", id, Main.npc[id].homeTileX, Main.npc[id].homeTileY,
@@ -3217,15 +3237,6 @@ namespace TShockAPI
 				return false;
 			}
 
-			if (type == BuffID.DrillMount && !TShock.Config.VeryDangerousDoNotChangeEnableDrillContainmentUnit)
-			{
-				TShock.Log.ConsoleInfo("The configuration option disabling the drill containment unit will be removed at a future date.");
-				TShock.Log.ConsoleInfo("As of Terraria 1.3.0.5, this option is no longer defaulted to kick DCU users.");
-				TShock.Log.ConsoleInfo("This is because the DCU is now covered by TShock protection systems.");
-				TShock.Utils.ForceKick(TShock.Players[id], "The Drill Containment Unit is disabled.");
-				return true;
-			}
-
 			args.Player.SendData(PacketTypes.PlayerAddBuff, "", id);
 			return true;
 		}
@@ -3281,7 +3292,7 @@ namespace TShockAPI
 
 			Item item = new Item();
 			item.netDefaults(type);
-			if ((stacks > item.maxStack || stacks <= 0) || (TShock.Itembans.ItemIsBanned(item.name, args.Player) && !args.Player.Group.HasPermission(Permissions.allowdroppingbanneditems)))
+			if ((stacks > item.maxStack || stacks <= 0) || (TShock.Itembans.ItemIsBanned(item.name, args.Player) && !args.Player.HasPermission(Permissions.allowdroppingbanneditems)))
 			{
 				args.Player.SendData(PacketTypes.ItemDrop, "", id);
 				return true;
@@ -3338,7 +3349,7 @@ namespace TShockAPI
 				return true;
 			}
 
-			if (dmg > TShock.Config.MaxDamage && !args.Player.Group.HasPermission(Permissions.ignoredamagecap) && id != args.Player.Index)
+			if (dmg > TShock.Config.MaxDamage && !args.Player.HasPermission(Permissions.ignoredamagecap) && id != args.Player.Index)
 			{
 				if (TShock.Config.KickOnDamageThresholdBroken)
 				{
@@ -3404,7 +3415,7 @@ namespace TShockAPI
 			if (Main.npc[id] == null)
 				return true;
 
-			if (dmg > TShock.Config.MaxDamage && !args.Player.Group.HasPermission(Permissions.ignoredamagecap))
+			if (dmg > TShock.Config.MaxDamage && !args.Player.HasPermission(Permissions.ignoredamagecap))
 			{
 				if (TShock.Config.KickOnDamageThresholdBroken)
 				{
@@ -3425,9 +3436,9 @@ namespace TShockAPI
 				return true;
 			}
 
-			if (Main.npc[id].townNPC && !args.Player.Group.HasPermission(Permissions.hurttownnpc))
+			if (Main.npc[id].townNPC && !args.Player.HasPermission(Permissions.hurttownnpc))
 			{
-				args.Player.SendErrorMessage("你没有权限伤害这萌萌的NPC。");
+				args.Player.SendErrorMessage("You do not have permission to hurt this NPC.");
 				args.Player.SendData(PacketTypes.NpcUpdate, "", id);
 				return true;
 			}
@@ -3458,7 +3469,7 @@ namespace TShockAPI
 
 			if (type == 1 && TShock.Config.DisableDungeonGuardian)
 			{
-				args.Player.SendMessage("地牢守卫者把你送回了复活点。", Color.Purple);
+				args.Player.SendMessage("The Dungeon Guardian returned you to your spawn point", Color.Purple);
 				args.Player.Spawn();
 				return true;
 			}
@@ -3519,15 +3530,6 @@ namespace TShockAPI
 				{
 					args.TPlayer.buffTime[i] = 0;
 				}
-
-				if (buff == BuffID.DrillMount && !TShock.Config.VeryDangerousDoNotChangeEnableDrillContainmentUnit)
-				{
-					TShock.Log.ConsoleInfo("The configuration option disabling the drill containment unit will be removed at a future date.");
-					TShock.Log.ConsoleInfo("As of Terraria 1.3.0.5, this option is no longer defaulted to kick DCU users.");
-					TShock.Log.ConsoleInfo("This is because the DCU is now covered by TShock protection systems.");
-					TShock.Utils.ForceKick(TShock.Players[id], "The Drill Containment Unit is disabled.");
-					return true;
-				}
 			}
 
 
@@ -3560,42 +3562,43 @@ namespace TShockAPI
 					case -5:
                     case -6:
                     case -7:
+        				case -8:
 						invasion = true;
 						break;
                     case 4:
                     case 13:
                     case 50:
-                    case 126:
-                    case 125:
-                    case 134:
-                    case 127:
-                    case 128:
-                    case 131:
-                    case 129:
-                    case 130:
+					case 75:
+					case 125:
+					case 126:
+					case 127:
+					case 128:
+					case 129:
+					case 130:
+					case 131:
+					case 134:
                     case 222:
                     case 245:
                     case 266:
                     case 370:
-                    case 75:
-                    case 398:
-                    case 439:
+					case 398:
+					case 422:
+					case 439:
                     case 493:
                     case 507:
-                    case 422:
                     case 517:
 						spawnboss = true;
 						break;
 				}
 			}
-			if (spawnboss && !args.Player.Group.HasPermission(Permissions.summonboss))
+			if (spawnboss && !args.Player.HasPermission(Permissions.summonboss))
 			{
-				args.Player.SendErrorMessage("你没有权限召唤Boss。");
+				args.Player.SendErrorMessage("You don't have permission to summon a boss.");
 				return true;
 			}
-			if (invasion && !args.Player.Group.HasPermission(Permissions.startinvasion))
+			if (invasion && !args.Player.HasPermission(Permissions.startinvasion))
 			{
-				args.Player.SendErrorMessage("你没有权限召唤入侵。");
+				args.Player.SendErrorMessage("You don't have permission to start an invasion.");
 				return true;
 			}
 			if (!spawnboss && !invasion)
@@ -3607,29 +3610,38 @@ namespace TShockAPI
 			string boss;
 			switch (Type)
 			{
+				case -8:
+					boss = "a Moon Lord";
+					break;
+				case -7:
+					boss = "a Martian invasion";
+					break;
+				case -6:
+					boss = "an eclipse";
+					break;
 				case -5:
-					boss = "霜月";
+					boss = "a frost moon";
 					break;
 				case -4:
-					boss = "南瓜月";
+					boss = "a pumpkin moon";
 					break;
 				case -3:
-					boss = "海盗入侵";
+					boss = "the Pirates";
 					break;
 				case -2:
-					boss = "雪人军团";
+					boss = "the Snow Legion";
 					break;
 				case -1:
-					boss = "哥布林入侵";
+					boss = "a Goblin Invasion";
 					break;
 				default:
-					boss = String.Format("{0}", npc.name);
+					boss = String.Format("the {0}", npc.name);
 					break;
 			}
 			if (TShock.Config.AnonymousBossInvasions)
-				TShock.Utils.SendLogs(string.Format("{0} 召唤了 {1}。", args.Player.Name, boss), Color.PaleVioletRed, args.Player);
+				TShock.Utils.SendLogs(string.Format("{0} summoned {1}!", args.Player.Name, boss), Color.PaleVioletRed, args.Player);
 			else
-				TShock.Utils.Broadcast(String.Format("{0} 召唤了 {1}，并被系统记录。", args.Player.Name, boss), 175, 75, 255);
+				TShock.Utils.Broadcast(String.Format("{0} summoned {1}!", args.Player.Name, boss), 175, 75, 255);
 			return false;
 		}
 
@@ -3670,7 +3682,7 @@ namespace TShockAPI
 				return true;
 			}
 
-			if (!args.Player.Group.HasPermission(Permissions.ignorepaintdetection))
+			if (!args.Player.HasPermission(Permissions.ignorepaintdetection))
 			{
 				args.Player.PaintThreshold++;
 			}
@@ -3714,7 +3726,7 @@ namespace TShockAPI
 				return true;
 			}
 
-			if (!args.Player.Group.HasPermission(Permissions.ignorepaintdetection))
+			if (!args.Player.HasPermission(Permissions.ignorepaintdetection))
 			{
 				args.Player.PaintThreshold++;
 			}
@@ -3753,7 +3765,7 @@ namespace TShockAPI
 			}
 
 			//Rod of Discord teleport (usually (may be used by modded clients to teleport))
-			if (type == 0 && !args.Player.Group.HasPermission(Permissions.rod))
+			if (type == 0 && !args.Player.HasPermission(Permissions.rod))
 			{
 				args.Player.SendErrorMessage("You do not have permission to teleport.");
 				args.Player.Teleport(args.TPlayer.position.X, args.TPlayer.position.Y);
@@ -3774,7 +3786,7 @@ namespace TShockAPI
 					return true;
 				}
 
-				if (!args.Player.Group.HasPermission(Permissions.wormhole))
+				if (!args.Player.HasPermission(Permissions.wormhole))
 				{
 					args.Player.SendErrorMessage("You do not have permission to teleport.");
 					args.Player.Teleport(args.TPlayer.position.X, args.TPlayer.position.Y);
