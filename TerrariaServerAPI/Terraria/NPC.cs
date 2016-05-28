@@ -3645,8 +3645,7 @@ namespace Terraria
 				this.townNPC = true;
 				this.friendly = true;
 				this.name = "Merchant";
-                this.cname = "商人";
-                this.width = 18;
+				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
 				this.damage = 10;
@@ -3661,8 +3660,7 @@ namespace Terraria
 				this.townNPC = true;
 				this.friendly = true;
 				this.name = "Nurse";
-                this.cname = "护士";
-                this.width = 18;
+				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
 				this.damage = 10;
@@ -3676,8 +3674,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "军火商";
-                this.name = "Arms Dealer";
+				this.name = "Arms Dealer";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -3692,8 +3689,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "树妖";
-                this.name = "Dryad";
+				this.name = "Dryad";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -3724,9 +3720,8 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-				this.cname = "向导";
-                this.name = "Guide";
-                this.width = 18;
+				this.name = "Guide";
+				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
 				this.damage = 10;
@@ -3738,8 +3733,7 @@ namespace Terraria
 			}
 			else if (this.type == 23)
 			{
-                this.name = "Meteor Head";
-                this.name = "Meteor Head";
+				this.name = "Meteor Head";
 				this.width = 22;
 				this.height = 22;
 				this.aiStyle = 5;
@@ -3904,8 +3898,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "老人";
-                this.name = "Old Man";
+				this.name = "Old Man";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -3920,8 +3913,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "矿工";
-                this.name = "Demolitionist";
+				this.name = "Demolitionist";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -4194,8 +4186,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "裁缝";
-                this.name = "Clothier";
+				this.name = "Clothier";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -5125,8 +5116,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "哥布林工匠";
-                this.name = "Goblin Tinkerer";
+				this.name = "Goblin Tinkerer";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -5142,8 +5132,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "巫师";
-                this.name = "Wizard";
+				this.name = "Wizard";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -5383,8 +5372,7 @@ namespace Terraria
 			else if (this.type == 123)
 			{
 				this.friendly = true;
-                this.cname = "被捆绑的电工妹";
-                this.name = "Bound Mechanic";
+				this.name = "Bound Mechanic";
 				this.width = 18;
 				this.height = 34;
 				this.aiStyle = 0;
@@ -5401,8 +5389,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.name = "电工妹";
-                this.name = "Mechanic";
+				this.name = "Mechanic";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -5750,8 +5737,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "圣诞老人";
-                this.name = "Santa Claus";
+				this.name = "Santa Claus";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -5999,8 +5985,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "蘑菇人";
-                this.name = "Truffle";
+				this.name = "Truffle";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -6279,8 +6264,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "蒸汽师";
-                this.name = "Steampunker";
+				this.name = "Steampunker";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -6754,8 +6738,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "染料商人";
-                this.name = "Dye Trader";
+				this.name = "Dye Trader";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -6770,8 +6753,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "派对女孩";
-                this.name = "Party Girl";
+				this.name = "Party Girl";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -6786,8 +6768,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "电子人";
-                this.name = "Cyborg";
+				this.name = "Cyborg";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -7060,8 +7041,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "粉刷匠";
-                this.name = "Painter";
+				this.name = "Painter";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -7076,8 +7056,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "巫医";
-                this.name = "Witch Doctor";
+				this.name = "Witch Doctor";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -7092,8 +7071,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "海盗";
-                this.name = "Pirate";
+				this.name = "Pirate";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -8875,8 +8853,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "造型师";
-                this.name = "Stylist";
+				this.name = "Stylist";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -9076,8 +9053,7 @@ namespace Terraria
 				this.townNPC = true;
 				this.friendly = true;
 				this.name = "Travelling Merchant";
-                this.cname = "游商";
-                this.width = 18;
+				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
 				this.damage = 10;
@@ -9091,8 +9067,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "渔夫";
-                this.name = "Angler";
+				this.name = "Angler";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -9875,8 +9850,7 @@ namespace Terraria
 			{
 				this.friendly = true;
 				this.name = "Skeleton Merchant";
-                this.cname = "骷髅商人";
-                this.width = 18;
+				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
 				this.damage = 10;
@@ -10222,8 +10196,7 @@ namespace Terraria
 			{
 				this.townNPC = true;
 				this.friendly = true;
-                this.cname = "收税官";
-                this.name = "Tax Collector";
+				this.name = "Tax Collector";
 				this.width = 18;
 				this.height = 40;
 				this.aiStyle = 7;
@@ -62914,7 +62887,7 @@ namespace Terraria
 					this.oldDirection = this.direction;
 					this.position += this.velocity;
 				}
-				if (Main.netMode != 1 && !this.noTileCollide && this.lifeMax > 1 && Collision.SwitchTiles(this, this.position, this.width, this.height, this.oldPosition, 2) && (this.type == 46 || this.type == 148 || this.type == 149 || this.type == 303 || this.type == 361 || this.type == 362 || this.type == 364 || this.type == 366 || this.type == 367 || (this.type >= 442 && this.type <= 448)))
+				if (Main.netMode != 1 && !this.noTileCollide && this.lifeMax > 1 && Collision.SwitchTiles(this.position, this.width, this.height, this.oldPosition, 2) && (this.type == 46 || this.type == 148 || this.type == 149 || this.type == 303 || this.type == 361 || this.type == 362 || this.type == 364 || this.type == 366 || this.type == 367 || (this.type >= 442 && this.type <= 448)))
 				{
 					this.ai[0] = 1f;
 					this.ai[1] = 400f;
@@ -64879,5 +64852,33 @@ namespace Terraria
 				Item.NewItem((int)position.X, (int)position.Y, w, h, itemId, stack, broadcast, prefix, nodelay, reverseLookup);
 			}
 		}
-	}
+
+        #region 1.3.1
+		public static bool[] npcsFoundForCheckActive = new bool[540];
+		public bool SpawnedFromStatue;
+
+		public static void ClearFoundActiveNPCs()
+		{
+			for (int i = 0; i < NPC.npcsFoundForCheckActive.Length; i++)
+			{
+				NPC.npcsFoundForCheckActive[i] = false;
+			}
+		}
+
+		public static void UpdateFoundActiveNPCs()
+		{
+			for (int i = 0; i < 200; i++)
+			{
+				NPC nPC = Main.npc[i];
+				if (nPC.active && nPC.type >= 0 && nPC.type < 540)
+				{
+					NPC.npcsFoundForCheckActive[nPC.type] = true;
+				}
+			}
+		}
+
+        #endregion
+
+
+    }
 }

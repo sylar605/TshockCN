@@ -18,7 +18,7 @@ namespace TerrariaApi.Server
 	{
 		public const string PluginsPath = "ServerPlugins";
 
-		public static readonly Version ApiVersion = new Version(1, 22, 0, 0);
+		public static readonly Version ApiVersion = new Version(1, 23, 0, 0);
 		private static Main game;
 		private static readonly Dictionary<string, Assembly> loadedAssemblies = new Dictionary<string, Assembly>();
 		private static readonly List<PluginContainer> plugins = new List<PluginContainer>();
@@ -263,7 +263,7 @@ namespace TerrariaApi.Server
 				if (ignoredFiles.Contains(fileNameWithoutExtension))
 				{
 					LogWriter.ServerWriteLine(
-						string.Format("{0}加载时被忽视", fileNameWithoutExtension), TraceLevel.Verbose);
+						string.Format("{0} was ignored from being loaded.", fileNameWithoutExtension), TraceLevel.Verbose);
 
 					continue;
 				}
@@ -304,7 +304,7 @@ namespace TerrariaApi.Server
 							if (apiVersion.Major != ApiVersion.Major || apiVersion.Minor != ApiVersion.Minor)
 							{
 								LogWriter.ServerWriteLine(
-									string.Format("插件\"{0}\"使用的API版本({1})不正确",
+									string.Format("Plugin \"{0}\" is designed for a different Server API version ({1}) and was ignored.",
 									type.FullName, apiVersion.ToString(2)), TraceLevel.Warning);
 
 								continue;
@@ -356,12 +356,12 @@ namespace TerrariaApi.Server
 				{
 					// Broken plugins better stop the entire server init.
 					throw new InvalidOperationException(string.Format(
-						"插件 \"{0}\" 在加载时发生错误", current.Plugin.Name), ex);
+						"Plugin \"{0}\" has thrown an exception during initialization.", current.Plugin.Name), ex);
 				}
 
 				initTimeWatch.Stop();
 				LogWriter.ServerWriteLine(string.Format(
-					"插件 {0} v{1} (作者 {2}) 加载完毕.", current.Plugin.Name, current.Plugin.Version, current.Plugin.Author),
+					"Plugin {0} v{1} (by {2}) initiated.", current.Plugin.Name, current.Plugin.Version, current.Plugin.Author),
 					TraceLevel.Info);
 			}
 

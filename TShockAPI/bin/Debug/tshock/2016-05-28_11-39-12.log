@@ -1,0 +1,4 @@
+2016-05-28 11:39:12 - TShock: ERROR: Fatal Startup Exception
+2016-05-28 11:39:12 - TShock: ERROR: System.Exception: Could not find a database library (probably Sqlite3.dll)
+   在 TShockAPI.DB.BanManager..ctor(IDbConnection db)
+   在 TShockAPI.TShock.Initialize()
